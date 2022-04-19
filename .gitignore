@@ -5,6 +5,6 @@
 Results*
 results*
 .DS_Store
-.html
-.pdf
+*.html
+*.pdf
 
