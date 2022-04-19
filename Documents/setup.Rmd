@@ -117,20 +117,20 @@ cape_geno <- readRDS(file.path(singlescan.dir, "cross_geno.RDS"))
 ```
 
 ```{r singlescan}
-singlescan_obj_file <- file.path(singlescan.dir, "cross_geno.RDS")
+singlescan_obj_file <- file.path(singlescan.dir, "cross_singlescan.RDS")
 
-#if(!file.exists(singlescan_obj_file)){
+if(!file.exists(singlescan_obj_file)){
   singlescan_obj <- singlescan(cape_obj, cape_geno, 
     kin_obj = NULL, n_perm = cape_obj$singlescan_perm, 
     alpha = cape_obj$alpha, verbose = TRUE, run_parallel = FALSE, 
     n_cores = 4, model_family = "gaussian", overwrite_alert = FALSE)
   saveRDS(singlescan_obj, singlescan_obj_file)
-#}else{
-#  singlescan_obj <- readRDS(singlescan_obj_file)
-#}
+}else{
+  singlescan_obj <- readRDS(singlescan_obj_file)
+}
 ```
 
-```{r plot_singlescan, eval = FALSE}
+```{r plot_singlescan}
 for(i in 1:ncol(singlescan_obj)){
   plot_singlescan(cape_obj, singlescan_obj, chr = NULL, 
     traits = colnames(cape_obj$pheno)[i], standardized = TRUE, color_scheme = "other", 
@@ -139,7 +139,7 @@ for(i in 1:ncol(singlescan_obj)){
 }
 ```
 
-```{r run_cape, eval = FALSE}
+```{r run_cape}
 results.dir <- here("Results", "general")
 final_obj <- run_cape(pheno_obj, geno_obj, 
   results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
@@ -153,7 +153,7 @@ final_obj <- run_cape(pheno_obj, geno_obj,
 First we look at motifs in this network. There is no enrichment of any 
 type of motif.
 
-```{r motif_enrichment, eval = FALSE}
+```{r motif_enrichment}
 motif.file <- here("Documents", "Motif.Distributions.pdf")
 
 if(!file.exists(motif.file)){
