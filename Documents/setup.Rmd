@@ -131,12 +131,7 @@ if(!file.exists(singlescan_obj_file)){
 ```
 
 ```{r plot_singlescan}
-for(i in 1:ncol(singlescan_obj)){
-  plot_singlescan(cape_obj, singlescan_obj, chr = NULL, 
-    traits = colnames(cape_obj$pheno)[i], standardized = TRUE, color_scheme = "other", 
-    allele_labels = NULL, include_covars = TRUE, show_selected = FALSE, 
-    line_type = "l", lwd = 1, pch = 16, cex = 1, covar_label_size = 0.7)
-}
+plot_singlescan(cape_obj, singlescan_obj)
 ```
 
 ```{r run_cape}
