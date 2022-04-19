@@ -13,4 +13,4 @@ cd $SLURM_SUBMIT_DIR
 
 module load singularity
 
-singularity exec /projects/carter-lab/atyler/Containers/CCA_transcripts.sif R -e 'rmarkdown::render(here::here("Documents", "setup.Rmd"))'
+singularity exec /projects/carter-lab/atyler/Containers/som.sif R -e 'rmarkdown::render(here::here("Documents", "setup.Rmd"))'

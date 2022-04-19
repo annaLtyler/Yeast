@@ -3,9 +3,10 @@
 *.RData
 *.RDS
 .Ruserdata
-Results*
-results*
+*.csv
+*.jpg
 *.DS_Store
 *.html
 *.pdf
+*.png
 
