@@ -1,0 +1,170 @@
+
+## cluster main effects
+
+I'm going to try looking at the main effects and maybe binning based on effect.
+
+```{r singlescan}
+t.stat.thresh = 3
+single <- readRDS(file.path(results_dir, "cross_singlescan.RDS"))
+effects <- single$singlescan_effects
+pheatmap(effects[,,1], scale = "column")
+tstats <- single$singlescan_t_stats
+big.effects <- which(abs(tstats[,,1]) >= t.stat.thresh, arr.ind = TRUE)
+effect.size <- apply(big.effects, 1, function(x) effects[x[1],x[2],1])
+
+#for each unique gene, group all alleles with the same direction of effect
+#plot_variant_influences(final_obj, standardize = TRUE)
+```
+
+## Parse results
+
+The following code looks at the results from this run.
+
+### Motifs
+
+First we look at motifs in this network. There is no enrichment of any 
+type of motif.
+
+```{r}
+motif.obj <- find.motifs(final_obj)
+motif.count <- count.motifs(motif.obj)
+motif.enrich <- motif.enrichment(final_obj)
+```
+
+
+```{r simplify}
+#stop()
+var_inf <- write_variant_influences(final_obj, p_or_q = 0.01, write_file = FALSE, 
+include_main_effects = TRUE)
+
+plot_variant_influences(final_obj, scale_effects = "log10", show_marker_labels = TRUE)
+
+#look at main effects of alleles
+main_effects_idx <- union(which(var_inf[,"Target"] == "GAL"), which(var_inf[,"Target"] == "YPD"))
+main_effects <- var_inf[main_effects_idx,]
+#head(main_effects)
+int_idx <- setdiff(1:nrow(var_inf), main_effects_idx)
+just_int <- var_inf[int_idx,]
+#head(just_int)
+```
+
+
+```{r net}
+net <- graph_from_edgelist(just_int[,c("Source", "Target")], directed = TRUE)
+E(net)$weight <- as.numeric(just_int[,"Effect"])
+plot(net)
+
+indeg <- degree(net, mode = "in")
+outdeg <- degree(net, mode = "out")
+deg <- degree(net)
+
+pdf("~/Desktop/test.pdf", width = 5, height = 12)
+par(mar = c(4,8, 4,4))
+barplot(sort(deg), las = 2, horiz = TRUE, cex.names = 0.7, main = "Degree")
+barplot(sort(indeg), las = 2, horiz = TRUE, cex.names = 0.7, main = "In Degree")
+barplot(sort(outdeg), las = 2, horiz = TRUE, cex.names = 0.7, main = "Out Degree")
+plot.with.model(indeg, outdeg, xlab = "in degree", ylab = "out degree")
+text(indeg, outdeg, labels = V(net)$name, cex = 0.5, pos = 3, offset = 0.2)
+dev.off()
+
+adj.mat <- as.matrix(as_adjacency_matrix(net, attr = "weight"))
+
+
+
+comm <- cluster_walktrap(net)
+plot(net, vertex.color = comm$membership, layout = layout_on_grid)
+
+cl <- sort(unique(comm$membership))
+lapply(cl, function(x) V(net)$name[which(comm$membership == x)])
+```
+
+```{r effects}
+ypd.effects <- main_effects[which(main_effects[,"Target"] == "YPD"),]
+hist(as.numeric(ypd.effects[,"Effect"]), breaks = 25)
+
+gal.effects <- main_effects[which(main_effects[,"Target"] == "GAL"),]
+hist(as.numeric(gal.effects[,"Effect"]), breaks = 25)
+
+boxplot(list("GAL" = as.numeric(gal.effects[,"Effect"]), "YPD" = as.numeric(ypd.effects[,"Effect"])))
+
+gene.pairs <- pair.matrix(names(roi), ordered = TRUE, self.pairs = TRUE)
+allele.pairs <- pair.matrix(alleles, ordered = TRUE, self.pairs = TRUE)
+#dim(gene.pairs)
+
+inf_pairs <- as.matrix(var_inf[,c("Source", "Target")])
+
+split.source <- strsplit(sapply(strsplit(inf_pairs[,1], "_"), function(x) x[1]), "-")
+source.gene <- sapply(split.source, function(x) x[1])
+source.allele <- sapply(split.source, function(x) x[2])
+
+split.target <- strsplit(sapply(strsplit(inf_pairs[,2], "_"), function(x) x[1]), "-")
+target.gene <- sapply(split.target, function(x) x[1])
+target.allele <- sapply(split.target, function(x) x[2])
+
+inf_genes <- cbind(source.gene, target.gene)
+inf_alleles <- cbind(source.allele, target.allele)
+dim(unique(inf_genes))
+dim(unique(inf_alleles))
+
+paired_effects <- paired_alleles <- vector(mode = "list", length = nrow(gene.pairs))
+names(paired_effects) <- names(paired_alleles) <- apply(gene.pairs, 1, function(x) paste(x, collapse = " -> "))
+for(i in 1:nrow(gene.pairs)){
+  pair.idx <- intersect(which(inf_genes[,1] == gene.pairs[i,1]), which(inf_genes[,2] == gene.pairs[i,2]))
+  paired_effects[[i]] <- var_inf[pair.idx,,drop=FALSE]
+  paired_alleles[[i]] <- inf_alleles[pair.idx,,drop=FALSE]
+}
+
+pdf("~/Desktop/effects.pdf", width = 7, height = 15)
+par(mar = c(4,10,4,4))
+mean_effect <- sapply(paired_effects, function(x) mean(as.numeric(x[,"Effect"]), na.rm = TRUE))
+barplot(sort(mean_effect), las = 2, horiz = TRUE)
+dev.off()
+
+
+effect.mat <- matrix(NA, nrow = length(roi), ncol = length(roi))
+rownames(effect.mat) <- colnames(effect.mat) <- names(roi)
+for(i in 1:nrow(gene.pairs)){
+  effect.mat[gene.pairs[i,1], gene.pairs[i,2]] <- median(as.numeric(paired_effects[[i]][,"Effect"]))
+}
+effect.mat[which(!is.finite(effect.mat))] <- 0
+pheatmap(effect.mat)
+
+all_effects <- lapply(paired_effects, function(x) as.numeric(x[,"Effect"]))
+par(mar = c(4,10,4,4))
+boxplot(all_effects, horizontal = TRUE, las = 2)
+abline(v = 0)
+
+plot.new()
+plot.window(xlim = c(1, length(all_effects)), 
+  ylim = c(min(unlist(all_effects)), max(unlist(all_effects))))
+for(i in 1:length(all_effects)){
+  if(length(all_effects[[i]]) > 0){
+    text(x = jitter(i, length(all_effects[[i]])), y = all_effects[[i]],
+    labels = apply(paired_alleles[[i]], 1, function(x) paste(x, collapse = "->")), cex = 0.5)
+  }
+}
+axis(2);abline(h = 0)
+
+allele_edges <- graph_from_edgelist(Reduce("rbind", paired_alleles), directed = TRUE)
+E(allele_edges)$weight <- Reduce("c", all_effects)
+
+#pdf("~/Desktop/allele_net.pdf")
+#plot(allele_edges, edge.color = colors.from.values(E(allele_edges)$weight, use.pheatmap.colors = TRUE))
+#dev.off()
+
+effect_net <- graph_from_adjacency_matrix(effect.mat, mode = "directed", weighted = TRUE)
+plot(effect_net, edge.color = colors.from.values(E(effect_net)$weight, use.pheatmap.colors = TRUE),
+edge.width = abs(E(effect_net)$weight)^2, edge.arrow.size = 2, layout = layout_on_grid)
+
+allele.mat <- matrix(0, nrow = length(alleles), ncol = length(alleles))
+rownames(allele.mat) <- colnames(allele.mat) <- alleles
+for(i in 1:nrow(inf_alleles)){
+  allele.mat[inf_alleles[i,1], inf_alleles[i,2]] <- allele.mat[inf_alleles[i,1], inf_alleles[i,2]] + 1
+  }
+pheatmap(allele.mat, cluster_rows = FALSE, cluster_cols = FALSE)
+
+```
+
+I think the allele effects are going to matter here.
+Can we visualize both main effects and interactions in a way that separates
+out alleles in an interpretable way?

@@ -1,0 +1,106 @@
+---
+title: "Yeast CAPE"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: yes
+    toc_float: yes
+---
+
+
+## Introduction
+
+The purpose of this workflow is to test out the yeast data from Aimee Dudley and Gareth Cromie.
+
+
+```{r load_code}
+library(here)
+all.fun <- list.files(here("Code"), full.names = TRUE)
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+#load local version of cape code
+needed.libraries <- c("pheatmap")
+load_libraries(needed.libraries)
+load_latest_cape(here("Code", "cape"))
+```
+
+
+Load file and run cape.
+
+```{r read_data}
+pop <- read_population(filename = here("Data", "scaffold_72h_data_rqtl1_form_new_11_16_21.csv"),
+  id_col = 1, na_strings = NA)
+#str(pop)
+
+cross_obj <- cape2mpp(pop)
+pheno_obj <- cross_obj[[1]]
+
+#log transform the phenotypes
+pheno_obj$pheno <- apply(pheno_obj$pheno, 2, log10)
+#mean center
+pheno_obj$pheno <- apply(pheno_obj$pheno, 2, function(x) x - mean(x, na.rm = TRUE))
+
+#str(pheno_obj)
+geno_obj <- cross_obj[[2]]$geno
+#str(geno_obj)
+```
+
+## Allele Frequency
+
+```{r allele_freq}
+allele_freq <- apply(geno_obj, 3, colMeans)
+max.freq <- max(allele_freq)
+
+chr.idx <- lapply(unique(pheno_obj$chromosome), function(x) which(pheno_obj$chromosome == x))
+#quartz()
+plot.new()
+plot.window(xlim = c(0, ncol(allele_freq)), ylim = c(0, max(allele_freq)))
+par(xpd = TRUE)
+for(ch in 1:length(chr.idx)){
+    text(x = mean(chr.idx[[ch]]), y = (max.freq*-0.05), labels = ch)
+    if(ch %% 2 == 0){
+      draw.rectangle(min(chr.idx[[ch]]), max(chr.idx[[ch]]), 0, max.freq, fill = "gray80",
+      border = "gray80")
+    }
+  }
+par(xpd = FALSE)
+for(i in 1:nrow(allele_freq)){
+  points(allele_freq[i,], type = "l", col = i)
+}
+axis(2)
+mtext(side = 3, "Allele Frequencies")
+```
+
+## Trait Structure
+
+The following correlation heat map shows that there are some pretty highly
+correlated traits.
+
+```{r trait_cor}
+trait.cor <- cor(pheno_obj$pheno, use = "pairwise.complete.obs")
+pheatmap(trait.cor, display_numbers = TRUE)
+```
+
+The following plot shows the first two PCs of the trait correlation matrix.
+The traits split into two major groups along the 1st PC, and then two more
+minor groups along the second. 
+
+```{r trait_decomp}
+trait.cor.decomp <- plot.decomp(trait.cor, label.points = TRUE)
+pick.traits <- colnames(trait.cor)[which(trait.cor.decomp$u[,1] < 0)]
+```
+
+```{r run_cape}
+results.dir <- here("Results", "general")
+final_obj <- run_cape(pheno_obj, geno_obj, 
+  results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
+  initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
+  param_file = file.path(results.dir, "cape.parameters.yml"), 
+  yaml_params = NULL, results_path = results.dir)
+```
+
