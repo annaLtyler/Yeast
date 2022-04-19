@@ -118,14 +118,15 @@ cape_geno <- readRDS(file.path(singlescan.dir, "cross_geno.RDS"))
 
 ```{r singlescan}
 singlescan_obj_file <- file.path(singlescan.dir, "cross_geno.RDS")
+
 if(!file.exists(singlescan_obj_file)){
-singlescan_obj <- singlescan(cape_obj, cape_geno, 
-  kin_obj = NULL, n_perm = cape_obj$singlescan_perm, 
-  alpha = cape_obj$alpha, verbose = TRUE, run_parallel = FALSE, 
-  n_cores = 4, model_family = "gaussian", overwrite_alert = FALSE)
-saveRDS(singlescan_obj, singlescan_obj_file)
+  singlescan_obj <- singlescan(cape_obj, cape_geno, 
+    kin_obj = NULL, n_perm = cape_obj$singlescan_perm, 
+    alpha = cape_obj$alpha, verbose = TRUE, run_parallel = FALSE, 
+    n_cores = 4, model_family = "gaussian", overwrite_alert = FALSE)
+    saveRDS(singlescan_obj, singlescan_obj_file)
 }else{
-singlescan_obj <- readRDS(singlescan_obj_file)
+  singlescan_obj <- readRDS(singlescan_obj_file)
 }
 ```
 
