@@ -25,8 +25,8 @@ for(i in 1:length(all.fun)){source(all.fun[i])}
 ```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
 needed.libraries <- c("pheatmap")
-load_libraries(needed.libraries)
-load_latest_cape(here("Code", "cape"))
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
 
 
