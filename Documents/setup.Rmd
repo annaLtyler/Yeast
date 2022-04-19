@@ -145,3 +145,17 @@ final_obj <- run_cape(pheno_obj, geno_obj,
   yaml_params = NULL, results_path = results.dir)
 ```
 
+### Motifs
+
+First we look at motifs in this network. There is no enrichment of any 
+type of motif.
+
+```{r motif_enrichment}
+motif.file <- here("Documents", "Motif.Distributions.pdf")
+
+if(!file.exists(motif.file)){
+  motif.obj <- find.motifs(final_obj)
+  motif.count <- count.motifs(motif.obj)
+  motif.enrich <- motif.enrichment(final_obj)
+}
+```
