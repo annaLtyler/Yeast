@@ -48,6 +48,7 @@ pheno_obj$pheno <- apply(pheno_obj$pheno, 2, function(x) x - mean(x, na.rm = TRU
 #str(pheno_obj)
 geno_obj <- cross_obj[[2]]$geno
 #str(geno_obj)
+
 ```
 
 ## Allele Frequency
@@ -92,11 +93,26 @@ minor groups along the second.
 
 ```{r trait_decomp}
 trait.cor.decomp <- plot.decomp(trait.cor, label.points = TRUE)
-pick.traits <- colnames(trait.cor)[which(trait.cor.decomp$u[,1] < 0)]
+```
+
+The following plots show single scans for each trait. This will help us
+identify pleiotropy for selection of trait combinations.
+
+```{r single_scan}
+#initialize a cape object and then run singlescan
+results.dir <- here("Results", "general")
+cape_obj <- run_cape(pheno_obj, geno_obj, 
+  results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
+  initialize_only = TRUE, verbose = TRUE, run_parallel = FALSE, 
+  param_file = file.path(results.dir, "cape.parameters.yml"), 
+  yaml_params = NULL, results_path = results.dir)
+
+test <- singlescan(pheno_obj, geno_obj)
+
 ```
 
 ```{r run_cape}
-results.dir <- here("Results", "general")
+
 final_obj <- run_cape(pheno_obj, geno_obj, 
   results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
   initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 

@@ -5,7 +5,7 @@
 .Ruserdata
 Results*
 results*
-.DS_Store
+*.DS_Store
 *.html
 *.pdf
 
