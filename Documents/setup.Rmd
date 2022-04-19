@@ -100,19 +100,44 @@ identify pleiotropy for selection of trait combinations.
 
 ```{r single_scan}
 #initialize a cape object and then run singlescan
-results.dir <- here("Results", "general")
-cape_obj <- run_cape(pheno_obj, geno_obj, 
-  results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
-  initialize_only = TRUE, verbose = TRUE, run_parallel = FALSE, 
-  param_file = file.path(results.dir, "cape.parameters.yml"), 
-  yaml_params = NULL, results_path = results.dir)
+singlescan.dir <- here("Results", "all_singlescan")
+cape_obj_file <- file.path(singlescan.dir, "cross.RDS")
+singlescan_obj_file <- file.path(singlescan.dir, "cross_geno.RDS")
 
-test <- singlescan(pheno_obj, geno_obj)
+if(!file.exists(cape_obj_file)){
+  cape_obj <- run_cape(pheno_obj, geno_obj, 
+    results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
+    initialize_only = TRUE, verbose = TRUE, run_parallel = FALSE, 
+    param_file = file.path(singlescan.dir, "cape.parameters.yml"), 
+    yaml_params = NULL, results_path = singlescan.dir)
+}else{
+  cape_obj <- readRDS(cape_obj_file)
+}
 
+cape_geno <- readRDS(file.path(singlescan.dir, "cross_geno.RDS"))
+
+if(!file.exists(singlescan_obj_file)){
+singlescan_obj <- singlescan(cape_obj, cape_geno, 
+  kin_obj = NULL, n_perm = cape_obj$singlescan_perm, 
+  alpha = cape_obj$alpha, verbose = TRUE, run_parallel = FALSE, 
+  n_cores = 4, model_family = "gaussian", overwrite_alert = FALSE)
+saveRDS(singlescan_obj, singlescan_obj_file)
+}else{
+singlescan_obj <- readRDS(singlescan_obj_file)
+}
+```
+
+```{r plot_singlescan}
+for(i in 1:ncol(singlescan_obj)){
+  plot_singlescan(cape_obj, singlescan_obj, chr = NULL, 
+    traits = colnames(cape_obj$pheno)[i], standardized = TRUE, color_scheme = "other", 
+    allele_labels = NULL, include_covars = TRUE, show_selected = FALSE, 
+    line_type = "l", lwd = 1, pch = 16, cex = 1, covar_label_size = 0.7)
+}
 ```
 
 ```{r run_cape}
-
+results.dir <- here("Results", "general")
 final_obj <- run_cape(pheno_obj, geno_obj, 
   results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
   initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
