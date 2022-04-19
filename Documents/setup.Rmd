@@ -98,11 +98,10 @@ trait.cor.decomp <- plot.decomp(trait.cor, label.points = TRUE)
 The following plots show single scans for each trait. This will help us
 identify pleiotropy for selection of trait combinations.
 
-```{r single_scan}
+```{r create_cape_obj}
 #initialize a cape object and then run singlescan
 singlescan.dir <- here("Results", "all_singlescan")
 cape_obj_file <- file.path(singlescan.dir, "cross.RDS")
-singlescan_obj_file <- file.path(singlescan.dir, "cross_geno.RDS")
 
 if(!file.exists(cape_obj_file)){
   cape_obj <- run_cape(pheno_obj, geno_obj, 
@@ -115,7 +114,10 @@ if(!file.exists(cape_obj_file)){
 }
 
 cape_geno <- readRDS(file.path(singlescan.dir, "cross_geno.RDS"))
+```
 
+```{r singlescan}
+singlescan_obj_file <- file.path(singlescan.dir, "cross_geno.RDS")
 if(!file.exists(singlescan_obj_file)){
 singlescan_obj <- singlescan(cape_obj, cape_geno, 
   kin_obj = NULL, n_perm = cape_obj$singlescan_perm, 
