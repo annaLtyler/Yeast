@@ -47,25 +47,18 @@ exp.name <- "pathway_ordering"
 results_dir <- here("Results", exp.name)
 ```
 
-```{r load_cape, message = FALSE, error = FALSE, warning = FALSE}
-#load local version of cape code
-source("~/Documents/git_repositories/useful_r_code/load_libraries.R")
-needed.libraries <- c("qtl2", "abind", "Matrix", "MASS", "regress", "igraph",
-"RColorBrewer", "rmarkdown", "pheatmap", "knitr")
-load_libraries(needed.libraries)
-
-library(R6);library(yaml);library(abind);library(tools);library(caTools)
-library(RColorBrewer);library(Matrix);library(propagate);library(igraph)
-library(qtl);library(qtl2);library(regress);library(evd);library(qtl2convert)
-cape.fun <- list.files("~/Documents/git_repositories/cape/R", pattern = ".R", full.names = TRUE)
-for(i in 1:length(cape.fun)){source(cape.fun[i])}
-```
-
-
 ```{r load_code}
-all.fun <- list.files(here("Code"), full.names = TRUE)
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
 for(i in 1:length(all.fun)){source(all.fun[i])}
 ```
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+#load local version of cape code
+needed.libraries <- c("pheatmap")
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
+```
+
 
 ## Load data
 
