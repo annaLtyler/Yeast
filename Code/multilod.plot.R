@@ -1,8 +1,8 @@
 multilod.plot <- function(scan1.results, map, lod.thresh = 0, 
 color.scheme = c("blue", "green", "purple", "red", "orange", "brown", "yellow", "gray"),
-border.col = "darkgray", border.lwd = 3, row.names = NULL, row.name.shift = 0,
-color.bar.cex = 1, color.bar.axis.lin = -2, color.fun = c("linear", "exponential"),
-steepness = 1){
+border.col = "darkgray", border.lwd = 3, row.names = colnames(scan1.results), 
+row.name.shift = 0, chr.name.y = 0.2, color.bar.cex = 1, color.bar.axis.lin = -2, 
+color.fun = c("linear", "exponential"), steepness = 1){
 
     val.mat <- as.matrix(scan1.results)
     low.lod <- which(val.mat < lod.thresh)
@@ -30,7 +30,7 @@ steepness = 1){
         chr.mid <- mean(c(chr.min, chr.max))
         draw.rectangle(chr.min, chr.max, 0.5, ncol(val.mat)+0.5, 
         border.col = border.col, lwd = border.lwd)
-        text(x = chr.mid, y = -0.5, names(all.markers)[i])
+        text(x = chr.mid, y = chr.name.y, names(all.markers)[i])
     }
 
     par(mar = c(2,2,2,2))

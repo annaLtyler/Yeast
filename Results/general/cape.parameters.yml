@@ -2,9 +2,9 @@
 # General Parameters 
 #================================================
 traits:
- - CaCl2
+ - HU
  - SORB
- - YPD
+ - RAPA
 scan_what:
  - eigentraits 
 traits_scaled:

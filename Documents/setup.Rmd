@@ -53,7 +53,7 @@ geno_obj <- cross_obj[[2]]$geno
 
 ## Allele Frequency
 
-```{r allele_freq}
+```{r allele_freq, fig.width = 10, fig.height = 5}
 allele_freq <- apply(geno_obj, 3, colMeans)
 max.freq <- max(allele_freq)
 
@@ -133,7 +133,7 @@ The following plots show the effect sizes from the single scans for
 each trait. This will help us identify pleiotropy for selection of 
 trait combinations.
 
-```{r plot_singlescan, fig.width = 10, fig.height = 10, results = "asis"}
+```{r plot_singlescan, fig.width = 10, fig.height = 5, results = "asis"}
 par(mfrow = c(2,1))
 for(i in 1:ncol(singlescan_obj$singlescan_t_stats)){
   cat("###", colnames(cape_obj$pheno)[i], "\n")
@@ -148,9 +148,24 @@ for(i in 1:ncol(singlescan_obj$singlescan_t_stats)){
 }
 ```
 
+## Singlescans Compared
 
-```{r multi_lod}
-scan1.result <- t(apply(singlescan_obj$singlescan_t_stats, 1, function(x) apply(x, 1, max)))
+The following plot shows the log of the the locus-based 
+effect sizes aligned across the different traits. There 
+appear to be several pleiotropic bands particularly on 
+chromosomes 7 and 15. The traits are ordered by the 
+maximum effect on chromosome 15.
+
+Hu, Rapa, and Sorb have similar allele effects at a similar
+location on Chr 15 (see detailed figures above). That could 
+be an interesting combination of traits to look at.
+
+CaCl2, YPD, and FLZ might have some pleiotropy on Chr 7.
+SORB also has a touch of a peak in this region.
+
+```{r multi_lod, fig.width = 11, fig.height = 5, warning = FALSE, message = FALSE}
+#scan1.result <- t(apply(singlescan_obj$singlescan_t_stats, 1, function(x) apply(x, 1, max)))
+scan1.result <- singlescan_obj$locus_score_scores
 u_chr <- unique(cape_obj$chromosome)
 map.char <- lapply(u_chr, 
   function(x) cape_obj$geno_names[[3]][which(cape_obj$chromosome == x)])
@@ -164,10 +179,12 @@ rownames(scan1.result) <- unlist(sapply(map, names))
 #order by pleiotropic locus on Chr 15
 chr15.locale <- grep("chr15", (rownames(scan1.result)))
 trait.order <- order(apply(scan1.result[chr15.locale,], 2, max))
-boxplot(scan1.result[chr15.locale,trait.order])
 multilod.plot(log10(scan1.result[,trait.order]), map, chr.name.y = 0.2, 
-  lod.thresh = log10(5))
+  lod.thresh = log10(7))
+
+#pairs(scan1.result)
 ```
+
 
 ```{r run_cape, eval = FALSE}
 results.dir <- here("Results", "general")
@@ -178,7 +195,7 @@ final_obj <- run_cape(pheno_obj, geno_obj,
   yaml_params = NULL, results_path = results.dir)
 ```
 
-### Motifs
+## Motifs
 
 First we look at motifs in this network. There is no enrichment of any 
 type of motif.
