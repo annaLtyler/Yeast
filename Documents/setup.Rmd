@@ -127,12 +127,16 @@ if(!file.exists(singlescan_obj_file)){
 }
 ```
 
+## Singlescan Effects {.tabset .tabset-fade .tabset-pills}
+
 The following plots show the effect sizes from the single scans for 
 each trait. This will help us identify pleiotropy for selection of 
 trait combinations.
 
-```{r plot_singlescan, fig.width = 10, fig.heigh = 5}
+```{r plot_singlescan, fig.width = 10, fig.height = 10, results = "asis"}
+par(mfrow = c(2,1))
 for(i in 1:ncol(singlescan_obj$singlescan_t_stats)){
+  cat("###", colnames(cape_obj$pheno)[i], "\n")
   #quartz(width = 11, height = 5)
   sub.result <- singlescan_obj
   sub.result$singlescan_effects <- sub.result$singlescan_effects[,i,,drop=FALSE]
@@ -140,6 +144,7 @@ for(i in 1:ncol(singlescan_obj$singlescan_t_stats)){
   sub.result$locus_score_scores <- sub.result$locus_score_scores[,i,drop=FALSE]
   plot_singlescan(cape_obj, sub.result, color_scheme = "other")
   plot_singlescan(cape_obj, sub.result, color_scheme = "other", standardized = FALSE)
+  cat("\n\n")
 }
 ```
 
@@ -155,7 +160,13 @@ for(i in 1:length(map)){
   names(map[[i]]) <- paste0("chr", i, "_", map[[i]])
 }
 rownames(scan1.result) <- unlist(sapply(map, names))
-multilod.plot(log10(scan1.result), map, chr.name.y = 0.2, lod.thresh = log10(5))
+#quartz(width = 11, height = 5)
+#order by pleiotropic locus on Chr 15
+chr15.locale <- grep("chr15", (rownames(scan1.result)))
+trait.order <- order(apply(scan1.result[chr15.locale,], 2, max))
+boxplot(scan1.result[chr15.locale,trait.order])
+multilod.plot(log10(scan1.result[,trait.order]), map, chr.name.y = 0.2, 
+  lod.thresh = log10(5))
 ```
 
 ```{r run_cape, eval = FALSE}
