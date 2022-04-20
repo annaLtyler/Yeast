@@ -95,9 +95,6 @@ minor groups along the second.
 trait.cor.decomp <- plot.decomp(trait.cor, label.points = TRUE)
 ```
 
-The following plots show single scans for each trait. This will help us
-identify pleiotropy for selection of trait combinations.
-
 ```{r create_cape_obj}
 #initialize a cape object and then run singlescan
 singlescan.dir <- here("Results", "all_singlescan")
@@ -130,11 +127,38 @@ if(!file.exists(singlescan_obj_file)){
 }
 ```
 
-```{r plot_singlescan}
-plot_singlescan(cape_obj, singlescan_obj)
+The following plots show the effect sizes from the single scans for 
+each trait. This will help us identify pleiotropy for selection of 
+trait combinations.
+
+```{r plot_singlescan, fig.width = 10, fig.heigh = 5}
+for(i in 1:ncol(singlescan_obj$singlescan_t_stats)){
+  #quartz(width = 11, height = 5)
+  sub.result <- singlescan_obj
+  sub.result$singlescan_effects <- sub.result$singlescan_effects[,i,,drop=FALSE]
+  sub.result$singlescan_t_stats <- sub.result$singlescan_t_stats[,i,,drop=FALSE]
+  sub.result$locus_score_scores <- sub.result$locus_score_scores[,i,drop=FALSE]
+  plot_singlescan(cape_obj, sub.result, color_scheme = "other")
+  plot_singlescan(cape_obj, sub.result, color_scheme = "other", standardized = FALSE)
+}
 ```
 
-```{r run_cape}
+
+```{r multi_lod}
+scan1.result <- t(apply(singlescan_obj$singlescan_t_stats, 1, function(x) apply(x, 1, max)))
+u_chr <- unique(cape_obj$chromosome)
+map.char <- lapply(u_chr, 
+  function(x) cape_obj$geno_names[[3]][which(cape_obj$chromosome == x)])
+map <- lapply(map.char, function(x) as.numeric(substr(x, 4, nchar(x))))
+names(map) <- u_chr
+for(i in 1:length(map)){
+  names(map[[i]]) <- paste0("chr", i, "_", map[[i]])
+}
+rownames(scan1.result) <- unlist(sapply(map, names))
+multilod.plot(log10(scan1.result), map, chr.name.y = 0.2, lod.thresh = log10(5))
+```
+
+```{r run_cape, eval = FALSE}
 results.dir <- here("Results", "general")
 final_obj <- run_cape(pheno_obj, geno_obj, 
   results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
@@ -148,7 +172,7 @@ final_obj <- run_cape(pheno_obj, geno_obj,
 First we look at motifs in this network. There is no enrichment of any 
 type of motif.
 
-```{r motif_enrichment}
+```{r motif_enrichment, eval = FALSE}
 motif.file <- here("Documents", "Motif.Distributions.pdf")
 
 if(!file.exists(motif.file)){
