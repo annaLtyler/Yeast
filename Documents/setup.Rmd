@@ -182,8 +182,11 @@ rownames(scan1.result) <- unlist(sapply(map, names))
 #order by pleiotropic locus on Chr 15
 chr15.locale <- grep("chr15", (rownames(scan1.result)))
 trait.order <- order(apply(scan1.result[chr15.locale,], 2, max))
+
+#jpeg("~/Desktop/multilod.jpg", width = 9, height = 4, units = "in", res = 300)
 multilod.plot(log10(scan1.result[,trait.order]), map, chr.name.y = 0.2, 
   lod.thresh = log10(7))
+#dev.off()
 
 #pairs(scan1.result)
 ```

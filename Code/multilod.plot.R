@@ -1,7 +1,7 @@
 multilod.plot <- function(scan1.results, map, lod.thresh = 0, 
 color.scheme = c("blue", "green", "purple", "red", "orange", "brown", "yellow", "gray"),
 border.col = "darkgray", border.lwd = 3, row.names = colnames(scan1.results), 
-row.name.shift = 0, chr.name.y = 0.2, color.bar.cex = 1, color.bar.axis.lin = -2, 
+row.name.shift = 0, chr.name.y = 0.2, color.bar.cex = 1, color.bar.axis.lin = 0, 
 color.fun = c("linear", "exponential"), steepness = 1){
 
     val.mat <- as.matrix(scan1.results)
@@ -13,7 +13,7 @@ color.fun = c("linear", "exponential"), steepness = 1){
     }
     col.scale <- color.scheme[1]
 
-    layout(matrix(c(1,2), ncol = 2), widths = c(1, 0.1))
+    layout(matrix(c(1,1,2,0), ncol = 2), widths = c(1, 0.1), heights = c(0.4, 1))
     par(mar = c(2, 6, 2, 0))
     imageWithText(t(val.mat), show.text = FALSE, col.names = NULL,
     col.scale = col.scale, color.fun = "exponential", exp.steepness = steepness,

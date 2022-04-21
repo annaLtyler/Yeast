@@ -14,4 +14,4 @@ cd $SLURM_SUBMIT_DIR
 
 module load singularity
 
-singularity exec /projects/carter-lab/atyler/Containers/som.sif R -e 'rmarkdown::render(here::here("Documents", "run_cape.Rmd"))'
+singularity exec /projects/carter-lab/atyler/Containers/som.sif R -e 'rmarkdown::render(here::here("Documents", "run_cape.Rmd"))' --args "$exp_name" "$delete_previous"
