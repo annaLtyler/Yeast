@@ -457,7 +457,7 @@ for(source.gene in 1:nrow(effect.mat)){
   for(target.gene in 1:ncol(effect.mat)){
     dir1 <- effect.mat[source.gene, target.gene]
     dir2 <- effect.mat[target.gene, source.gene]
-    if(abs(dir1) > abs(dir2)){
+    if(abs(dir1) >= abs(dir2)){
       overall.strength <- dir1 - dir2
       edge <- c(rownames(effect.mat)[source.gene], colnames(effect.mat)[target.gene])
     }
