@@ -63,7 +63,7 @@ geno_obj <- cross_obj[[2]]$geno
 ```
 
 
-```{r run_cape, eval = FALSE}
+```{r run_cape}
 final_obj <- run_cape(pheno_obj, geno_obj, 
   results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
   initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
@@ -76,7 +76,7 @@ final_obj <- run_cape(pheno_obj, geno_obj,
 First we look at motifs in this network. There is no enrichment of any 
 type of motif.
 
-```{r motif_enrichment, eval = FALSE}
+```{r motif_enrichment}
 motif.file <- here("Documents", "Motif.Distributions.pdf")
 
 if(!file.exists(motif.file)){
