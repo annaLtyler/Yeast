@@ -32,7 +32,7 @@ use_saved_results:
 # Single Scan Parameters 
 #================================================
 ref_allele:
- - 5
+ - 1
 singlescan_perm:
  - 0
 
