@@ -22,6 +22,8 @@ if(is.na(exp.name)){
     exp.name <- "general"
     delete_previous <- FALSE
 }
+
+results.dir <- here("Results", exp.name)
 ```
 
 ```{r load_code}
@@ -61,7 +63,6 @@ geno_obj <- cross_obj[[2]]$geno
 
 
 ```{r run_cape, eval = FALSE}
-results.dir <- here("Results", "general")
 final_obj <- run_cape(pheno_obj, geno_obj, 
   results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
   initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
