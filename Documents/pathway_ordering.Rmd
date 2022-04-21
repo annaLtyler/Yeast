@@ -40,6 +40,9 @@ In addition, there are two strong peaks relating to colony morphology on GAL:
 #FLO11=chr09_393064
 #MSS11=chr13_588112
 
+Because there are only a few loci here, we will flatten 
+the genotype array and test all allele pairs exhaustively.
+
 ```{r set_exp}
 library("here")
 exp.name <- "pathway_ordering"
