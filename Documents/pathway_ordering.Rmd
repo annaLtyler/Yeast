@@ -50,6 +50,12 @@ exp.name <- "pathway_ordering"
 results_dir <- here("Results", exp.name)
 ```
 
+
+```{r load_code}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
 ```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
 needed.libraries <- c("pheatmap")
