@@ -63,7 +63,7 @@ load_libraries(needed.libraries, personal.library = TRUE)
 load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
 
-```{r load_code}
+```{r load_code_redo}
 all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
 for(i in 1:length(all.fun)){source(all.fun[i])}
 ```
