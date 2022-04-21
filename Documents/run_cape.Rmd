@@ -28,6 +28,14 @@ if(is.na(exp.name)){
 results.dir <- here("Results", exp.name)
 ```
 
+```{r delete_old_data}
+if(delete_previous){
+    patterns <- c(".txt", ".csv", ".RDS", ".jpg", ".pdf")
+    to.delete <- unlist(lapply(patterns, function(x) list.files(results.dir, pattern = x, full.names = TRUE)))
+    unlink(to.delete)
+}
+```
+
 ```{r load_code}
 all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
 for(i in 1:length(all.fun)){source(all.fun[i])}
