@@ -1,0 +1,85 @@
+---
+title: "Yeast Run CAPE"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: yes
+    toc_float: yes
+---
+
+The purpose of this workflow is to run cape on the yeast data.
+The experiment name specifies which parameter file to use.
+
+```{r get_exp_name}
+args <- commandArgs(trailingOnly=T)
+exp.name = args[1]
+delete_previous <- as.logical(args[2])
+
+if(is.na(exp.name)){
+    exp.name <- "general"
+    delete_previous <- FALSE
+}
+```
+
+```{r load_code}
+library(here)
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+#load local version of cape code
+needed.libraries <- c("pheatmap")
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
+```
+
+
+Load file and run cape.
+
+```{r read_data}
+pop <- read_population(filename = here("Data", "scaffold_72h_data_rqtl1_form_new_11_16_21.csv"),
+  id_col = 1, na_strings = NA)
+#str(pop)
+
+cross_obj <- cape2mpp(pop)
+pheno_obj <- cross_obj[[1]]
+
+#log transform the phenotypes
+pheno_obj$pheno <- apply(pheno_obj$pheno, 2, log10)
+#mean center
+pheno_obj$pheno <- apply(pheno_obj$pheno, 2, function(x) x - mean(x, na.rm = TRUE))
+
+#str(pheno_obj)
+geno_obj <- cross_obj[[2]]$geno
+#str(geno_obj)
+
+```
+
+
+```{r run_cape, eval = FALSE}
+results.dir <- here("Results", "general")
+final_obj <- run_cape(pheno_obj, geno_obj, 
+  results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
+  initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
+  param_file = file.path(results.dir, "cape.parameters.yml"), 
+  yaml_params = NULL, results_path = results.dir)
+```
+
+## Motifs
+
+First we look at motifs in this network. There is no enrichment of any 
+type of motif.
+
+```{r motif_enrichment, eval = FALSE}
+motif.file <- here("Documents", "Motif.Distributions.pdf")
+
+if(!file.exists(motif.file)){
+  motif.obj <- find.motifs(final_obj)
+  motif.count <- count.motifs(motif.obj)
+  motif.enrich <- motif.enrichment(final_obj)
+}
+```
