@@ -50,11 +50,6 @@ exp.name <- "pathway_ordering"
 results_dir <- here("Results", exp.name)
 ```
 
-```{r load_code}
-all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
-for(i in 1:length(all.fun)){source(all.fun[i])}
-```
-
 ```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
 needed.libraries <- c("pheatmap")
@@ -62,6 +57,10 @@ load_libraries(needed.libraries, personal.library = TRUE)
 load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
 
+```{r load_code}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
 
 ## Load data
 
@@ -235,7 +234,7 @@ if(!file.exists(effect.file)){
   pdf(effect.file, width = 8, height = 4)
   for(i in 1:nrow(var_inf)){
     plot_effects(final_obj, geno_obj, var_inf[i,"Source"], var_inf[i,"Target"], 
-    plot_type = "b", error_bars = "se")
+    plot_type = "b", error_bars = "se", cex.axis = 1, cex.names = 0.7)
   }
   dev.off()
 }
