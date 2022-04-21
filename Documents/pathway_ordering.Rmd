@@ -235,7 +235,7 @@ if(!file.exists(effect.file)){
   pdf(effect.file, width = 8, height = 4)
   for(i in 1:nrow(var_inf)){
     plot_effects(final_obj, geno_obj, var_inf[i,"Source"], var_inf[i,"Target"], 
-    plot_type = "b", error_bars = "se", cex.axis = 1, cex.names = 0.7)
+    plot_type = "b", error_bars = "se")
   }
   dev.off()
 }
