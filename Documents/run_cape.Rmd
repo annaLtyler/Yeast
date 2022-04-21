@@ -14,6 +14,8 @@ The purpose of this workflow is to run cape on the yeast data.
 The experiment name specifies which parameter file to use.
 
 ```{r get_exp_name}
+library(here)
+
 args <- commandArgs(trailingOnly=T)
 exp.name = args[1]
 delete_previous <- as.logical(args[2])
@@ -27,7 +29,6 @@ results.dir <- here("Results", exp.name)
 ```
 
 ```{r load_code}
-library(here)
 all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
 for(i in 1:length(all.fun)){source(all.fun[i])}
 ```
