@@ -71,15 +71,20 @@ geno_obj <- cross_obj[[2]]$geno
 
 
 ```{r run_cape}
-final_obj <- run_cape(pheno_obj, geno_obj, 
-  results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
-  initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
-  param_file = file.path(results.dir, "cape.parameters.yml"), 
-  yaml_params = NULL, results_path = results.dir)
-#data_obj <- readRDS(file.path(results.dir, "cross.RDS"))
-#geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
-#pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
-#final_obj <- calc_p(data_obj)
+final.file <- file.path(results_dir, "cross.RDS")
+
+if(!file.exists(final.file)){
+
+  final_obj <- run_cape(pheno_obj, geno_obj, 
+    results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
+    initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
+    param_file = file.path(results.dir, "cape.parameters.yml"), 
+    yaml_params = NULL, results_path = results.dir)
+}else{
+  data_obj <- readRDS(final.file)
+  geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
+  pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
+}
 ```
 
 ## Motifs

@@ -211,6 +211,8 @@ plot_bars <- function(phenoV, marker1_vals, marker2_vals, pheno_name, marker1_la
 		}		
 	}
 
-	result <- list("ref_pheno" = ref_pheno, "pheno_error" = pheno_error, "pheno_name" = pheno_name, "marker1_vals" = marker1_vals, "marker2_vals" = marker2_vals, "geno" = geno_n)
+	result <- list("ref_pheno" = ref_pheno, "pheno_error" = pheno_error, 
+		"pheno_name" = pheno_name, "marker1_vals" = marker1_vals, 
+		"marker2_vals" = marker2_vals, "geno" = geno_n)
 	invisible(result)
 } #end case for two markers

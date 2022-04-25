@@ -183,7 +183,8 @@ plot_effects <- function(data_obj, geno_obj, marker1, marker2 = NULL,
 	layout(layout_mat)
 	#============================================================
 	
-
+	all.results <- vector(mode = "list", length = ncol(pheno_to_plot))
+	names(all.results) <- colnames(pheno_to_plot)
 	for(ph in 1:ncol(pheno_to_plot)){
 		phenoV = pheno_to_plot[,ph]
 		pheno_name = colnames(pheno)[ph]
@@ -211,9 +212,10 @@ plot_effects <- function(data_obj, geno_obj, marker1, marker2 = NULL,
 		  bar.result <- plot_bars(phenoV, marker1_vals, marker2_vals, pheno_name, marker1_label,
 			marker2_label, ymin, ymax, error_bars, ref_centered, cex.axis = cex.axis, 
 			cex.names = cex.names)
+			all.results[[ph]] <- bar.result
 		}
 		
 	} #end looping through phenotypes
 
-	invisible(bar.result)
+	invisible(all.results)
 } #end function

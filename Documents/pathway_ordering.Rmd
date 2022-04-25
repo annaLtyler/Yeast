@@ -58,7 +58,7 @@ for(i in 1:length(all.fun)){source(all.fun[i])}
 
 ```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
-needed.libraries <- c("pheatmap")
+needed.libraries <- c("pheatmap", "knitr")
 load_libraries(needed.libraries, personal.library = TRUE)
 load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
@@ -215,35 +215,61 @@ pop$pheno <- log_pheno
 
 ```{r run_cape, error = FALSE, warning = FALSE, message = FALSE}
 
-final_obj <- run_cape(pheno_obj, geno_obj, 
-  results_file = "cross.RDS", p_or_q = 1e-6, n_cores = 4, 
-  initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
-  param_file = file.path(results_dir, "cape.parameters.yml"), 
-  yaml_params = NULL, results_path = results_dir)
+final.file <- file.path(results_dir, "cross.RDS")
 
-#render(here("Documents", "cape_results.Rmd"))
-#final_obj <- readRDS(file.path(results_dir, "cross.RDS"))
-#geno_obj <- readRDS(file.path(results_dir, "cross_geno.RDS"))
-#alleles <- 1:8
+if(!file.exists(final.file)){
+  final_obj <- run_cape(pheno_obj, geno_obj, 
+    results_file = "cross.RDS", p_or_q = 1e-6, n_cores = 4, 
+    initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
+    param_file = file.path(results_dir, "cape.parameters.yml"), 
+    yaml_params = NULL, results_path = results_dir)
+}else{
+  final_obj <- readRDS(final.file)
+  geno_obj <- readRDS(file.path(results_dir, "cross_geno.RDS"))
+  alleles <- 1:8
+}
 ```
 
 ## plot effects
 
 ```{r plot_effects}
-final_obj <- get_network(final_obj, geno_obj, 1e-6, standardize = FALSE, collapse_linked_markers = FALSE)
+final_obj <- get_network(final_obj, geno_obj, 1e-6, standardize = FALSE, 
+  collapse_linked_markers = FALSE)
 
 var_inf <- write_variant_influences(final_obj, p_or_q = 1e-6, write_file = FALSE, 
   include_main_effects = FALSE)
 
 effect.file <- file.path(results_dir, "All_Effects.pdf")
-if(!file.exists(effect.file)){
-  pdf(effect.file, width = 8, height = 4)
-  for(i in 1:nrow(var_inf)){
-    plot_effects(final_obj, geno_obj, var_inf[i,"Source"], var_inf[i,"Target"], 
-    plot_type = "b", error_bars = "se", cex.axis = 1, cex.names = 0.7)
-  }
-  dev.off()
+all.classes <- vector(mode = "list", length = nrow(var_inf))
+
+pdf(effect.file, width = 8, height = 4)
+for(i in 1:nrow(var_inf)){
+  test <- plot_effects(final_obj, geno_obj, var_inf[i,"Source"], var_inf[i,"Target"], 
+  plot_type = "b", error_bars = "se", cex.axis = 1, cex.names = 0.7)
+  all.classes[[i]] <- t(sapply(test, classify_barplot))
 }
+dev.off()
+
+trait1.classes <- t(sapply(all.classes, function(x) x[1,]))
+trait1.class.count <- count_classes(trait1.classes);mtext("GAL interactions", side = 3)
+more.neg1 <- which(trait1.classes[,"interaction"] == "more negative")
+#trait1.classes[more.neg1,]
+#cbind(var_inf[more.neg1,], trait1.classes[more.neg1,])
+more.pos1 <- which(trait1.classes[,"interaction"] == "more positive")
+#trait1.classes[more.pos1,]
+#cbind(var_inf[more.pos1,], trait1.classes[more.pos1,])
+
+trait2.classes <- t(sapply(all.classes, function(x) x[2,]))
+trait2.class.count <- count_classes(trait2.classes);mtext("YPD interactions", side = 3)
+more.neg2 <- which(trait2.classes[,"interaction"] == "more negative")
+#trait2.classes[more.neg2,]
+#cbind(var_inf[more.neg2,], trait2.classes[more.neg2,])
+more.pos2 <- which(trait2.classes[,"interaction"] == "more positive")
+#trait2.classes[more.pos2,]
+#cbind(var_inf[more.pos2,], trait1.classes[more.pos2,])
+
+
+
 ```
 
 
@@ -420,10 +446,11 @@ for(i in 1:nrow(gene.pairs)){
   paired_alleles[[i]] <- inf_alleles[pair.idx,,drop=FALSE]
 }
 
-#quartz(width = 7, height = 10)
+#pdf("~/Desktop/aggregate.pdf", width = 7, height = 10)
 par(mar = c(4,10,4,4))
-mean_effect <- sapply(paired_effects, function(x) sum(as.numeric(x[,"Effect"]), na.rm = TRUE))
+mean_effect <- sapply(paired_effects, function(x) mean(as.numeric(x[,"Effect"]), na.rm = TRUE))
 barplot(sort(mean_effect), las = 2, horiz = TRUE, cex.names = 0.5)
+#dev.off()
 ```
 
 The following heat map shows the same information as above, but as an 
@@ -435,7 +462,7 @@ the genes in columns are target genes.
 effect.mat <- matrix(NA, nrow = length(roi), ncol = length(roi))
 rownames(effect.mat) <- colnames(effect.mat) <- names(roi)
 for(i in 1:nrow(gene.pairs)){
-  effect.mat[gene.pairs[i,1], gene.pairs[i,2]] <- sum(as.numeric(paired_effects[[i]][,"Effect"]))
+  effect.mat[gene.pairs[i,1], gene.pairs[i,2]] <- mean(as.numeric(paired_effects[[i]][,"Effect"]))
 }
 effect.mat[which(!is.finite(effect.mat))] <- 0
 row.order <- hclust(dist(effect.mat))$order
@@ -526,9 +553,11 @@ E(allele_edges)$weight <- Reduce("c", all_effects)
 #dev.off()
 
 effect_net <- graph_from_adjacency_matrix(effect.mat, mode = "directed", weighted = TRUE)
+#pdf("~/Desktop/net.pdf", width = 8, height = 8)
 plot(effect_net, edge.color = colors.from.values(E(effect_net)$weight, use.pheatmap.colors = TRUE),
 edge.width = abs(E(effect_net)$weight), edge.arrow.size = 2, layout = layout_in_circle,
 vertex.size = 35)
+#dev.off()
 
 #allele.mat <- matrix(0, nrow = length(alleles), ncol = length(alleles))
 #rownames(allele.mat) <- colnames(allele.mat) <- alleles
@@ -568,6 +597,9 @@ for(i in 1:length(pheno.effect.mats)){
     cat("\n\n")
   }
 }
+
+#library(DT)
+#datatable(df)
 ```
 
 ```{r test_effect, eval = FALSE}
