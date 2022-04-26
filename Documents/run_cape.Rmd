@@ -107,6 +107,8 @@ if(!file.exists(motif.file)){
   motif.count <- count.motifs(motif.obj)
   motif.enrich <- motif.enrichment(final_obj)
   saveRDS(motif.enrich, motif.file)
+}else{
+  motif.enrich <- readRDS(motif.file)
 }
 
 #jpeg("~/Desktop/motifs.jpg", width = 7, height = 5, units = "in", res = 300)
@@ -116,7 +118,7 @@ main.shift = 0.3; col.text.shift = 0.27; row.text.shift = 0.3; col.text.rotation
 imageWithText(motif.enrich$overlayed[,fig.cols], 
     col.names = colnames(motif.enrich$motif.counts)[fig.cols], 
 			row.names = rownames(motif.enrich$motif.counts), 
-      main = "Overlay of Enriched (blue) and Depleted (brown) Motifs", 
+      main = "Overlay of Enriched (brown) and Depleted (blue) Motifs", 
 			class.mat = motif.enrich$overlayed.class.mat[,fig.cols], 
       grad.dir = "low", color.fun = "exponential", exp.steepness = 10, 
 			global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1.2, 
