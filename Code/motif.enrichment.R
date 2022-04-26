@@ -11,14 +11,16 @@ depleted.col = "blue", pdf.filename = "Motif.Distributions.pdf"){
 
 	show.text = TRUE
 	
-	num.pheno <- ncol(get_pheno(data.obj, scan_what = data.obj$scan_what))
+	orig.motifs <- find.motifs(data.obj, collapsed.net = collapsed.net, 
+		include.covar = include.covar)
+	pheno.names <- names(orig.motifs[[1]])
 	
-	orig.motifs <- find.motifs(data.obj, collapsed.net = collapsed.net, include.covar = include.covar)
+	num.pheno <- length(pheno.names)
 	
 	if(!directed){
-		orig.motifs <- count.motifs(orig.motifs)
-		orig.motif.counts <- orig.motifs[[1]][[1]]
-		orig.motif.table <- orig.motifs[[1]][[2]]
+		motif.counts <- count.motifs(orig.motifs)
+		orig.motif.counts <- motif.counts[[1]][[1]]
+		orig.motif.table <- motif.counts[[1]][[2]]
 		# orig.motif.table <- count.motifs(orig.motifs, write.table = TRUE)
 		}else{
 		orig.motif.table <- count.motifs.directed(orig.motifs)[[2]]	
@@ -27,7 +29,8 @@ depleted.col = "blue", pdf.filename = "Motif.Distributions.pdf"){
 	num.motif.classes <- dim(orig.motif.table)[2]
 	perm.table <- array(NA, dim = c(num.pheno, num.motif.classes, permutations))
 
-	motif.nets <- build.adj.mats(data.obj, collapsed.net = collapsed.net, include.covar = include.covar)
+	motif.nets <- build.adj.mats(data.obj, collapsed.net = collapsed.net, 
+		include.covar = include.covar)
 	
 	#shuffle the edge weights in the network
 	#keeping the topology the same
@@ -150,16 +153,69 @@ depleted.col = "blue", pdf.filename = "Motif.Distributions.pdf"){
 	fig.cols <- c(1:3, 6:8)
 	
 		layout(matrix(1))
-		par(mar = c(7,7,7,4))
-		imageWithText(orig.motif.counts, show.text = show.text, col.names = colnames(orig.motif.table), row.names = rownames(orig.motif.table), cex = 1, main = "Motif Counts", col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, col.scale = count.col, light.dark = "l")
-		imageWithText(orig.motif.table, col.names = colnames(orig.motif.table), row.names = rownames(orig.motif.table), cex = 1, main = "Motif Frequency", col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, show.text = show.text, col.scale = count.col, light.dark = "l")
-		imageWithText(orig.motif.counts, show.text = FALSE, col.names = colnames(orig.motif.table), row.names = rownames(orig.motif.table), cex = 1, main = "Motif Counts", col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, col.scale = count.col, light.dark = "l")		
+		par(mar = c(10,7,4,4))
+		#quartz(width = 12, height = 8)
+		main.shift = 0.3; col.text.shift = 0.25; row.text.shift = 0.08
+		col.text.rotation = 45
+		imageWithText(orig.motif.counts, show.text = show.text, 
+			col.names = colnames(orig.motif.table), row.names = rownames(orig.motif.table), 
+			cex = 1, main = "Motif Counts", col.text.adj = 1, main.shift = main.shift, 
+			col.text.shift = col.text.shift, col.scale = count.col, light.dark = "l", 
+			row.text.shift = row.text.shift, col.text.rotation = col.text.rotation)
+		imageWithText(orig.motif.table, col.names = colnames(orig.motif.table), 
+			row.names = rownames(orig.motif.table), cex = 1, main = "Motif Frequency", 
+			col.text.adj = 1, main.shift = main.shift, col.text.shift = col.text.shift, 
+			row.text.shift = row.text.shift, show.text = show.text, 
+			col.text.rotation = col.text.rotation, col.scale = count.col, 
+			light.dark = "l")
+		imageWithText(orig.motif.counts, show.text = FALSE, 
+			col.names = colnames(orig.motif.table), row.names = rownames(orig.motif.table), 
+			cex = 1, main = "Motif Counts", col.text.adj = 1, main.shift = main.shift, 
+			col.text.shift = col.text.shift, row.text.shift = row.text.shift, 
+			col.text.rotation = col.text.rotation, col.scale = count.col, light.dark = "l")		
 		if(permutations > 0){
-		imageWithText(enriched, col.names = colnames(enriched), row.names = rownames(enriched), cex = 1, main = "Significantly Enriched Motifs", grad.dir = "low", exp.steepness = 10, col.scale = enriched.col, col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, show.text = show.text, light.dark = "l")
-		imageWithText(depleted, col.names = colnames(depleted), row.names = rownames(depleted), cex = 1, main = "Significantly Depleted Motifs", grad.dir = "low", exp.steepness = 10, col.scale = depleted.col, col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, show.text = show.text, light.dark = "l")
-	 	imageWithText(overlayed, col.names = colnames(depleted), row.names = rownames(depleted), main = paste("Overlay of Enriched (", enriched.col, ") and Depleted (", depleted.col, ")", sep = ""), class.mat = class.mat, grad.dir = "low", color.fun = "exponential", exp.steepness = 10, global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1, col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, show.text = show.text, col.scale = c(enriched.col, depleted.col), light.dark = "l")
-	 	imageWithText(overlayed[,fig.cols], col.names = colnames(depleted)[fig.cols], row.names = rownames(depleted), main = paste("Overlay of Enriched (", enriched.col, ") and Depleted (", depleted.col, ")", sep = ""), class.mat = class.mat[,fig.cols], grad.dir = "low", color.fun = "exponential", exp.steepness = 10, global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1, col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, show.text = show.text, col.scale = c(enriched.col, depleted.col), light.dark = "l")
-	 	imageWithText(overlayed[,fig.cols], col.names = colnames(depleted)[fig.cols], row.names = rownames(depleted), main = paste("Overlay of Enriched (", enriched.col, ") and Depleted (", depleted.col, ")", sep = ""), class.mat = class.mat[,fig.cols], grad.dir = "low", color.fun = "exponential", exp.steepness = 10, global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1, col.text.adj = 1, main.shift = 0.2, col.text.shift = 0.17, show.text = FALSE, col.scale = c(enriched.col, depleted.col), light.dark = "l")	 	
+		imageWithText(enriched, col.names = colnames(enriched), 
+			row.names = rownames(enriched), cex = 1, 
+			main = "Significantly Enriched Motifs", grad.dir = "low", 
+			exp.steepness = 10, col.scale = enriched.col, col.text.adj = 1, 
+			main.shift = main.shift, col.text.shift = col.text.shift, 
+			row.text.shift = row.text.shift, show.text = show.text, light.dark = "l",
+			col.text.rotation = col.text.rotation)
+		imageWithText(depleted, col.names = colnames(depleted), 
+			row.names = rownames(depleted), cex = 1, 
+			main = "Significantly Depleted Motifs", grad.dir = "low", 
+			exp.steepness = 10, col.scale = depleted.col, col.text.adj = 1, 
+			main.shift = main.shift, col.text.shift = col.text.shift, 
+			row.text.shift = row.text.shift, show.text = show.text, light.dark = "l",
+			col.text.rotation = col.text.rotation)
+	 	imageWithText(overlayed, col.names = colnames(depleted), 
+			row.names = rownames(depleted), 
+			main = paste("Overlay of Enriched (", enriched.col, ") and Depleted (", 
+			depleted.col, ")", sep = ""), class.mat = class.mat, grad.dir = "low", 
+			color.fun = "exponential", exp.steepness = 10, global.color.scale = FALSE, 
+			global.min = 0, global.max = 1, cex = 1, col.text.adj = 1, 
+			main.shift = main.shift, col.text.shift = col.text.shift, 
+			row.text.shift = row.text.shift, show.text = show.text, 
+			col.scale = c(enriched.col, depleted.col), light.dark = "l",
+			col.text.rotation = col.text.rotation)
+	 	imageWithText(overlayed[,fig.cols], col.names = colnames(depleted)[fig.cols], 
+			row.names = rownames(depleted), main = paste("Overlay of Enriched (", 
+			enriched.col, ") and Depleted (", depleted.col, ")", sep = ""), 
+			class.mat = class.mat[,fig.cols], grad.dir = "low", color.fun = "exponential", 
+			exp.steepness = 10, global.color.scale = FALSE, global.min = 0, 
+			global.max = 1, cex = 1, col.text.adj = 1, main.shift = main.shift, 
+			col.text.shift = col.text.shift, row.text.shift = row.text.shift*1.5, 
+			show.text = show.text, col.scale = c(enriched.col, depleted.col), 
+			light.dark = "l", col.text.rotation = col.text.rotation)
+	 	imageWithText(overlayed[,fig.cols], col.names = colnames(depleted)[fig.cols], 
+			row.names = rownames(depleted), main = paste("Overlay of Enriched (", 
+			enriched.col, ") and Depleted (", depleted.col, ")", sep = ""), 
+			class.mat = class.mat[,fig.cols], grad.dir = "low", 
+			color.fun = "exponential", exp.steepness = 10, 
+			global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1, 
+			col.text.adj = 1, main.shift = main.shift, col.text.shift = col.text.shift, 
+			row.text.shift = row.text.shift*1.5, col.text.rotation = col.text.rotation,
+			show.text = FALSE, col.scale = c(enriched.col, depleted.col), light.dark = "l")	 	
 		}
 		dev.off()
 	

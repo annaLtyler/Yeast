@@ -23,7 +23,7 @@ build.adj.mats <- function(data.obj, collapsed.net = TRUE, include.covar = FALSE
 			}
 		}
 		
-	pheno.names <- colnames(get_pheno(data.obj, data.obj$scan_what))
+	pheno.names <- colnames(total.net)[(nrow(total.net)+1):ncol(total.net)]
 	pheno.ind <- match(pheno.names, colnames(total.net)) 
 		
 

@@ -29,9 +29,11 @@ find.motifs <- function(data.obj, collapsed.net = TRUE, include.covar = FALSE){
 			}
 		}
 		
+	
 	pheno <- get_pheno(data.obj, scan_what = data.obj$scan_what, covar = data.obj$p_covar)
-	pheno.names <- colnames(pheno)
+	pheno.names <- c(colnames(data.obj$ET), colnames(data.obj$pheno))
 	pheno.ind <- match(pheno.names, colnames(total.net)) 
+	pheno.ind <- pheno.ind[which(!is.na(pheno.ind))]
 
 	#pull out the gene network
 	gene.net <- total.net[gene.ind, gene.ind]

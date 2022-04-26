@@ -71,7 +71,7 @@ geno_obj <- cross_obj[[2]]$geno
 
 
 ```{r run_cape}
-final.file <- file.path(results_dir, "cross.RDS")
+final.file <- file.path(results.dir, "cross.RDS")
 
 if(!file.exists(final.file)){
 
@@ -81,7 +81,7 @@ if(!file.exists(final.file)){
     param_file = file.path(results.dir, "cape.parameters.yml"), 
     yaml_params = NULL, results_path = results.dir)
 }else{
-  data_obj <- readRDS(final.file)
+  final_obj <- readRDS(final.file)
   geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
   pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 }
@@ -92,12 +92,29 @@ if(!file.exists(final.file)){
 First we look at motifs in this network. There is no enrichment of any 
 type of motif.
 
-```{r motif_enrichment}
-motif.file <- here("Documents", "Motif.Distributions.pdf")
+```{r motif_enrichment, fig.width = 7, fig.height = 5}
+motif.file <- here(results.dir, "Motif.Results.RDS")
 
 if(!file.exists(motif.file)){
   motif.obj <- find.motifs(final_obj)
   motif.count <- count.motifs(motif.obj)
   motif.enrich <- motif.enrichment(final_obj)
+  saveRDS(motif.enrich, motif.file)
 }
+
+#jpeg("~/Desktop/motifs.jpg", width = 7, height = 5, units = "in", res = 300)
+fig.cols <- c(1:3, 6:8)
+par(mar = c(8, 4, 4, 2))
+main.shift = 0.3; col.text.shift = 0.27; row.text.shift = 0.3; col.text.rotation = 45
+imageWithText(motif.enrich$overlayed[,fig.cols], 
+    col.names = colnames(motif.enrich$motif.counts)[fig.cols], 
+			row.names = rownames(motif.enrich$motif.counts), 
+      main = "Overlay of Enriched (blue) and Depleted (brown) Motifs", 
+			class.mat = motif.enrich$overlayed.class.mat[,fig.cols], 
+      grad.dir = "low", color.fun = "exponential", exp.steepness = 10, 
+			global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1.2, 
+			col.text.adj = 1, main.shift = main.shift, col.text.shift = col.text.shift, 
+			row.text.shift = row.text.shift, col.text.rotation = col.text.rotation,
+      col.scale = c(enriched.col, depleted.col), light.dark = "l")	 	
+#dev.off()
 ```
