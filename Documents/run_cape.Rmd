@@ -65,7 +65,7 @@ pheno_obj$pheno <- apply(pheno_obj$pheno, 2, log10)
 pheno_obj$pheno <- apply(pheno_obj$pheno, 2, function(x) x - mean(x, na.rm = TRUE))
 
 if(remove_chr9){
-  geno <- cross_obj[[2]]$geno[,,which(cross_obj[[1]]$chromosome == 9)]
+  geno <- cross_obj[[2]]$geno[,,which(cross_obj[[1]]$chromosome != 9)]
 }else{
   geno <- cross_obj[[2]]$geno
 }
