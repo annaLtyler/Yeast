@@ -122,6 +122,6 @@ imageWithText(motif.enrich$overlayed[,fig.cols],
 			global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1.2, 
 			col.text.adj = 1, main.shift = main.shift, col.text.shift = col.text.shift, 
 			row.text.shift = row.text.shift, col.text.rotation = col.text.rotation,
-      col.scale = c(enriched.col, depleted.col), light.dark = "l")	 	
+      col.scale = c("brown", "blue"), light.dark = "l")	 	
 #dev.off()
 ```
