@@ -26,6 +26,7 @@ if(is.na(exp.name)){
 }
 
 results.dir <- here("Results", exp.name)
+remove_chr9 = TRUE
 ```
 
 ```{r delete_old_data}
@@ -63,8 +64,14 @@ pheno_obj$pheno <- apply(pheno_obj$pheno, 2, log10)
 #mean center
 pheno_obj$pheno <- apply(pheno_obj$pheno, 2, function(x) x - mean(x, na.rm = TRUE))
 
+if(remove_chr9){
+  geno <- cross_obj[[2]]$geno[,,which(cross_obj[[1]]$chromosome == 9)]
+}else{
+  geno <- cross_obj[[2]]$geno
+}
+
 #str(pheno_obj)
-geno_obj <- cross_obj[[2]]$geno
+geno_obj <- geno
 #str(geno_obj)
 
 ```

@@ -226,7 +226,6 @@ if(!file.exists(final.file)){
 }else{
   final_obj <- readRDS(final.file)
   geno_obj <- readRDS(file.path(results_dir, "cross_geno.RDS"))
-  alleles <- 1:8
 }
 ```
 

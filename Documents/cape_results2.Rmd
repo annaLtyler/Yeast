@@ -7,41 +7,42 @@ output:
     collapsed: no
     toc: yes
     toc_float: yes
+params:
+    results_dir: here("tests", "testthat", "results")
 ---
 
 Set the working directory below and run this workflow to see figures of results
 with explanations.
 
-```{r set_path}
-#args <- commandArgs(trailingOnly=T)
-#results_dir <- args[1]
-results_dir <- "/Users/atyler/Documents/Projects/Yeast/Results/pathway_ordering"
+```{r set_exp}
+library("here")
+exp.name <- "chr15"
+#exp.name <- "pathway_two_genes"
+results_dir <- here("Results", exp.name)
 ```
 
-```{r results_dir, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
-library(here);library(knitr);library(DT)
 
+```{r load_code}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
-source("~/Documents/git_repositories/useful_r_code/load_libraries.R")
-needed.libraries <- c("here", "qtl2", "abind", "Matrix", "MASS", "regress", "igraph",
-"RColorBrewer", "rmarkdown", "pheatmap")
-load_libraries(needed.libraries)
-
-library(R6);library(yaml);library(abind);library(tools);library(caTools)
-library(RColorBrewer);library(Matrix);library(propagate);library(igraph)
-library(qtl);library(qtl2);library(regress);library(evd);library(qtl2convert)
-cape.fun <- list.files("~/Documents/git_repositories/cape/R", pattern = ".R", full.names = TRUE)
-for(i in 1:length(cape.fun)){source(cape.fun[i])}
+needed.libraries <- c("pheatmap", "knitr", "DT")
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
+
+```{r load_code_redo}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
 
 ## Introduction
 
-Here are the results of your CAPE analysis. This package implements a method, 
-originally described in [Carter et al. (2012)](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003010) and [Tyler et al. (2013)](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003270), that infers directed interaction networks 
-between genetic variants for predicting the influence of genetic perturbations 
-on quantitative traits. This method takes advantage of complementary information 
-in partially pleiotropic genetic variants to resolve directional influences 
-between variants that interact epistatically.
+This workflow summarizes results from a specified cape run. 
 
 ## Trait Description
 
@@ -80,10 +81,8 @@ The gray bars along the top of the heat map indicate how much overall trait
 variance is explained by each eigentrait. They are always listed in order of 
 the amount of variance explained. 
 
-```{r svd, results = "asis", echo = FALSE, eval = FALSE}
-fig.file <- file.path(results_dir, "svd.jpg")
-fig.line <- paste0("![Eigentraits](", fig.file, "){width=70%}\n")
-cat(fig.line)
+```{r svd}
+plot_svd(data_obj)
 ```
 
 ## Single Locus Effects {.tabset .tabset-fade .tabset-pills}
@@ -108,6 +107,20 @@ the allele effects will show how each parental haplotype affects the trait.
 In CAPE we use one parental haplotype as the reference. Thus all haplotype 
 effects shown are relative to that reference. The reference in a DO/CC population
 is typically the B6 (B) allele. 
+
+The effects in the plots below are shown as lines, but this, and many other 
+plotting parameters can be changed in *plot_singlescan()*.
+
+
+```{r singlescan_effects, results = "asis", echo = FALSE}
+fig.files <- list.files(path = results_dir, pattern = "Effects.jpg")
+fig.names <- gsub(".jpg", "", fig.files)
+for(i in 1:length(fig.files)){
+    cat("###", fig.names[i], "\n")
+    fig.line <- paste0("![", fig.names[i], "](", file.path(results_dir, fig.files[i]), ")\n\n")
+    cat(fig.line)
+}
+```
 
 
 ## Standardized Single Locus Effects {.tabset .tabset-fade .tabset-pills}
@@ -155,10 +168,8 @@ matrix type of plot is good for seeing overall patterns of interactions
 for dense matrices, or small numbers of markers. It is not very good for
 visualizing sparse matrices derived from large numbers of markers.
 
-```{r variant_influences, results = "asis", echo = FALSE}
-fig.file <- file.path(results_dir, "variant_influences.jpg")
-fig.line <- paste0("![variant influences](", fig.file, "){width=110%}\n")
-cat(fig.line)
+```{r variant_influences, fig.width = 7, fig.height = 7}
+plot_variant_influences(data_obj)
 ```
 
 
@@ -257,109 +268,32 @@ var.int.table[,4] <- gsub("X", "Chr", var.int.table[,4])
 datatable(var.int.table)
 ```
 
+## Motif Effects {.tabset .tabset-fade .tabset-pills}
 
-## Plotting individual interactions {.tabset .tabset-fade .tabset-pills}
+The following plots show the phenotypic effects of individual
+motifs compared to the additive expectation.
 
-The following plots show the trait effects of the top interaction in 
-your cape analysis. Different plots show the same data using bars,
-lines, and points. 
-
-If you are using continuously valued "genotypes," for example if you 
-are using transcript levels as exlanatory variables instead of genotypes,
-you can use plot_type = "h" to show heatmaps of predicted trait values
-as the explanatory variables vary continuously.
-
-### Line Plots
-
-Line plots are a standard way to show genetic interactions. They show the 
-median and error for individuals in each genotype group. One marker is plotted
-along the $x$-axis, and the other is plotted with different line styles.
-
-```{r line_plot}
-plot_effects(data_obj, geno_obj, var.inf[1,"Source"], var.inf[1,"Target"], 
-plot_type = "l", error_bars = "se", pheno_type = "Normalized", 
-gen_model1 = "Dominant", gen_model2 = "Dominant")
+```{r parse_inf, fig.width = 8, fig.height = 8}
+pheno.effect.mats <- pheno.effects.DO(data.obj = data_obj, 
+  geno.obj = geno_obj, color.scheme = "other", geno.coding = "Dominant")
 ```
 
-### Bar Plots
+The following tables show detailed information about the interactions above.
 
-Bar plots also show summary statistics for each group defined by 
-pairwise genotype. Each bar shows the median trait value for the 
-group. Error bars, if specified with the error_bars argument, can 
-show the standard deviation ("sd") or the standard error ("se"). 
-Numbers over the bars indicate how many individuals are in each group.
+```{r motif_tables, results = "asis"}
+for(i in 1:length(pheno.effect.mats)){
+  if(length(pheno.effect.mats[[i]]) > 0){
+    cat("###", names(pheno.effect.mats)[i], "\n")
+    df <- cbind(pheno.effect.mats[[i]][,c(1:3,8),drop=FALSE], 
+      matrix(apply(pheno.effect.mats[[i]][,4:7,drop=FALSE], 2, 
+      function(x) round(as.numeric(x), 2)), ncol = 4))
+    colnames(df) <- c(colnames(pheno.effect.mats[[i]])[c(1:3,8)], colnames(pheno.effect.mats[[i]])[c(4:7)])
+    rownames(df) <- NULL
+    print(kable(df))
+    cat("\n\n")
+  }
+}
 
-```{r bar_plot}
-plot_effects(data_obj, geno_obj, var.inf[1,"Source"], var.inf[1,"Target"],
-plot_type = "b", error_bars = "se", pheno_type = "Normalized", 
-gen_model1 = "Dominant", gen_model2 = "Dominant")
+#library(DT)
+#datatable(df)
 ```
-
-### Point Plots
-Point plots show all data points divided up into groups based on the 
-pairwise genotypes. Horizontal line segments show the median value for 
-each group.
-
-```{r point_plot}
-plot_effects(data_obj, geno_obj, var.inf[1,"Source"], var.inf[1,"Target"],
-plot_type = "p", error_bars = "se", pheno_type = "Normalized", 
-gen_model1 = "Dominant", gen_model2 = "Dominant")
-```
-
-
-## Modifying effect plots {.tabset .tabset-fade .tabset-pills}
-
-For each of these plots, you can specify which markers you want to 
-see the effects of. You can also specify whether you would like to 
-see their effects on eigentraits, normalized phenotypes, or raw 
-traits, by changing the argument *pheno_type*. Normalized traits 
-are plotted by default.
-
-The genotype coding ("gen_coding" can also be specified to show 
-additive effects ("Additive"), dominant effects ("Dominant"),
-or recessive effects ("Recessive"). 
-
-### Additive Model
-
-In the **additive model**, genotypes are coded as shown in the following table.
-In this model, the effect of the alternate allele is related to dosage. Having two
-copies has a greater effect than one copy.
-
-The plots below might not look very good depending on how many traits you 
-are plotting. We encourage you to modify the plotting code to plot other 
-interactions, other trait types, and to change the plot dimensions.
-
-```{r, add_table, echo = FALSE}
-add_table <- data.frame(cbind(c(0, 0.5, 1), 
-c("Homozygous Reference", "Heterozygous", "Homozogous Alternate"), c(0, 1, 2)))
-colnames(add_table)  <- c("Genotype Value","Genotype", "# Copies of Alternate Allele")
-kable(add_table)
-```
-
-### Dominant Model
-
-In the **dominant model**, genotypes are coded as shown in the following
-table. To have an effect the alternate allele can be present in either one
-or two copies.
-
-```{r, dom_table, echo = FALSE}
-dom_table <- data.frame(cbind(c(0, 1), c("Homozygous Reference", "Heterozygous and Homozygous Alternate"), c(0, "1 or 2")))
-colnames(dom_table)  <- c("Genotype_Value", "Genotype", "# Copies of Alternate Allele")
-kable(dom_table)
-```
-
-### Recessive Model
-
-In the **recessive model**, genotypes are coded as follows. To have an effect, the 
-alternate allele must be present in two copies. 
-
-```{r, rec_table, echo = FALSE}
-rec_table <- data.frame(cbind(c(0, 1), c("Homozygous Reference and Heterozygous", "Homozygous Alternate"), c("0 or 1", 2)))
-colnames(rec_table)  <- c("Genotype_Value", "Genotype", "# Copies of Alternate Allele")
-kable(rec_table)
-```
-
-## Getting help
-
-Here we describe each output generically. For help interpreting specific 
-results, or generating specific plots, please email <anna.tyler@jax.org>.

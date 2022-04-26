@@ -45,8 +45,6 @@ pheno.effects.DO <- function(data.obj, geno.obj, covar = NULL,
 		block.locale <- which(names(data.obj$linkage_blocks_full) == block.name)
 		return(data.obj$linkage_blocks_full[[block.locale]])	
 		}
-		
-	
 	
 		get.motif.effects <- function(motif.names, motif.locale, collapsed.net){
 			motif.effects <- vector(mode = "list", length = length(motif.locale))
