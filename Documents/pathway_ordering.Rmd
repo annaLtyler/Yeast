@@ -560,7 +560,8 @@ allele_edges <- graph_from_edgelist(Reduce("rbind", paired_alleles), directed = 
 E(allele_edges)$weight <- Reduce("c", all_effects)
 
 #pdf("~/Desktop/allele_net.pdf")
-plot(allele_edges, edge.color = colors.from.values(E(allele_edges)$weight, use.pheatmap.colors = TRUE))
+plot(allele_edges, edge.color = colors.from.values(E(allele_edges)$weight, 
+  use.pheatmap.colors = TRUE), layout = layout_in_circle)
 #dev.off()
 
 #effect_net <- graph_from_adjacency_matrix(effect.mat, mode = "directed", weighted = TRUE)
