@@ -12,7 +12,16 @@ get.pheno.effects <- function(data.obj, geno.obj, marker1.name,
 	collapsed.net = FALSE, geno.coding = c("Additive", "Dominant", "Recessive"), 
 	geno.bins = NULL, present.thresh = 0.3){
 
-	pheno <- get_pheno(data.obj, scan_what = scan.what, covar = covar)
+	net <- data.obj$full_net
+	pheno.names <- colnames(net)[(nrow(net)+1):ncol(net)]
+	et.used <- pheno.names[1] == "ET1"
+
+	if(et.used){
+		pheno <- get_pheno(data.obj, scan_what = "eig", covar = covar)
+	}else{
+		pheno <- get_pheno(data.obj, scan_what = "normalized", covar = covar)
+	}
+
 	geno <- get_geno(data.obj, geno.obj)
 
 	covar.info <- get_covar(data.obj)

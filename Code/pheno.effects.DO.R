@@ -6,10 +6,19 @@ pheno.effects.DO <- function(data.obj, geno.obj, covar = NULL,
 	geno.coding = c("Additive", "Dominant", "Recessive"), 
 	collapsed.net = FALSE, color.scheme = c("other", "DO/CC")){
 	
-	scan.what = data.obj$scan_what
 	color.scheme = color.scheme[1]
 	geno.coding = geno.coding[1]
 	
+	net <- data.obj$full_net
+	pheno.names <- colnames(net)[(nrow(net)+1):ncol(net)]
+	et.used <- pheno.names[1] == "ET1"
+
+	if(et.used){
+		pheno <- get_pheno(data.obj, scan_what = "eig", covar = covar)
+	}else{
+		pheno <- get_pheno(data.obj, scan_what = "normalized", covar = covar)
+	}
+
 	
 	if(is.null(data.obj$full_net)){
 		stop("The full network must be present to run this script.")
@@ -295,7 +304,6 @@ pheno.effects.DO <- function(data.obj, geno.obj, covar = NULL,
 			}
 		#================================================================
 		allele.colors <- get_allele_colors(color_scheme = color.scheme)
-		pheno <- get_pheno(data.obj, scan_what = scan.what, covar = covar)
 	
 		covar.info <- get_covar(data.obj)
 		if(!is.null(covar.info$covar.table)){

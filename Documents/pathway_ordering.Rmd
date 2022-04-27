@@ -455,16 +455,16 @@ barplot(sort(mean_effect), las = 2, horiz = TRUE, cex.names = 0.5)
 #dev.off()
 ```
 
-The following heat map shows the same information as above, but as an 
-adjacency matrix. Each cell is the sum of the interactions between all 
-alleles for each gene pair. The genes in rows are the source genes, and
-the genes in columns are target genes. 
+The following heat map shows the maximum allele effect for each pair.
 
 ```{r, fig.width = 6, fig.height = 6}
-effect.mat <- matrix(NA, nrow = length(roi), ncol = length(roi))
+effect.mat <- matrix(0, nrow = length(roi), ncol = length(roi))
 rownames(effect.mat) <- colnames(effect.mat) <- names(roi)
 for(i in 1:nrow(gene.pairs)){
-  effect.mat[gene.pairs[i,1], gene.pairs[i,2]] <- mean(as.numeric(paired_effects[[i]][,"Effect"]))
+  all.effect <- as.numeric(paired_effects[[i]][,"Effect"])
+  if(length(all.effect) > 0){
+    effect.mat[gene.pairs[i,1], gene.pairs[i,2]] <- all.effect[which.max(abs(all.effect))]
+  }
 }
 effect.mat[which(!is.finite(effect.mat))] <- 0
 row.order <- hclust(dist(effect.mat))$order
@@ -474,13 +474,28 @@ imageWithText(effect.mat[row.order, col.order], use.pheatmap.colors = TRUE,
   global.max = max(abs(effect.mat)), cex = 0.8,
   col.text.shift = 0.07, row.text.shift = 0.07)
 
-#try another view of this
 ```
 
-The following network shows the prevailing interactions among 
-genes. The two directions are 
+The following boxes show the distributions of the effects summarized
+by sums above.
 
-```{r gene_net}
+
+```{r, fig.width = 6, fig.height = 10}
+all_effects <- lapply(paired_effects, function(x) as.numeric(x[,"Effect"]))
+mean.order <- order(sapply(all_effects, function(x) mean(x, na.rm = TRUE)))
+#pdf(file.path(results_dir, "Ordered.Effects.pdf"), width = 6, height = 10)
+par(mar = c(4,10,4,4))
+boxplot(all_effects[mean.order], horizontal = TRUE, las = 2, cex.axis = 0.5)
+stripchart(all_effects[mean.order], pch = 16, method = "jitter", col = "#2b8cbe", 
+  add = TRUE, cex = 0.7)
+abline(v = 0)
+#dev.off()
+```
+
+The following network shows the maxmum interaction in each direction.
+
+```{r gene_net, eval = FALSE}
+#old code that picks a dominant direction 
 overall.edges <- NULL
 for(source.gene in 1:nrow(effect.mat)){
   for(target.gene in 1:ncol(effect.mat)){
@@ -513,27 +528,21 @@ plot(overall.net, layout = layout_in_circle,
 
 ```
 
-The following boxes show the distributions of the effects summarized
-by sums above.
 
 
-```{r, fig.width = 6, fig.height = 10}
-all_effects <- lapply(paired_effects, function(x) as.numeric(x[,"Effect"]))
-mean.order <- order(sapply(all_effects, function(x) mean(x, na.rm = TRUE)))
-#pdf(file.path(results_dir, "Ordered.Effects.pdf"), width = 6, height = 10)
-par(mar = c(4,10,4,4))
-boxplot(all_effects[mean.order], horizontal = TRUE, las = 2, cex.axis = 0.5)
-stripchart(all_effects[mean.order], pch = 16, method = "jitter", col = "#2b8cbe", 
-  add = TRUE, cex = 0.7)
-abline(v = 0)
-#dev.off()
+```{r gene_net2}
+overall.net <- graph_from_adjacency_matrix(effect.mat, weighted = TRUE)
 
-#try another view of this
-
+edge.weight <- E(overall.net)$weight
+ecol <- colors.from.values(edge.weight, use.pheatmap.colors = TRUE,
+  global.color.scale = TRUE, global.min = max(abs(edge.weight))*-1, 
+  global.max = max(abs(edge.weight)))
+edge_attr(overall.net, "curved") <-  0.2
+plot(overall.net, layout = layout_in_circle, 
+  edge.width = abs(edge.weight), edge.color = ecol, vertex.size = 30)
 
 ```
 
-The following plot shows the same information as above, but in network form.
 
 ```{r as_network}
 #plot.new()
@@ -556,9 +565,10 @@ E(allele_edges)$weight <- Reduce("c", all_effects)
 
 effect_net <- graph_from_adjacency_matrix(effect.mat, mode = "directed", weighted = TRUE)
 #pdf("~/Desktop/net.pdf", width = 8, height = 8)
-plot(effect_net, edge.color = colors.from.values(E(effect_net)$weight, use.pheatmap.colors = TRUE),
-edge.width = abs(E(effect_net)$weight), edge.arrow.size = 2, layout = layout_in_circle,
-vertex.size = 35)
+edge_attr(effect_net, "curved") <- 0.2
+plot(effect_net, edge.color = colors.from.values(E(effect_net)$weight, 
+  use.pheatmap.colors = TRUE), edge.width = abs(E(effect_net)$weight), 
+  edge.arrow.size = 2, layout = layout_in_circle, vertex.size = 35)
 #dev.off()
 
 #allele.mat <- matrix(0, nrow = length(alleles), ncol = length(alleles))
