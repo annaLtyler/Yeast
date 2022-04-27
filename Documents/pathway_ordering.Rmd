@@ -543,7 +543,7 @@ plot(overall.net, layout = layout_in_circle,
 
 ```
 
-
+The following network shows the interactions by strain of origin.
 ```{r as_network}
 #plot.new()
 #plot.window(xlim = c(1, length(all_effects)), 
@@ -560,15 +560,15 @@ allele_edges <- graph_from_edgelist(Reduce("rbind", paired_alleles), directed = 
 E(allele_edges)$weight <- Reduce("c", all_effects)
 
 #pdf("~/Desktop/allele_net.pdf")
-#plot(allele_edges, edge.color = colors.from.values(E(allele_edges)$weight, use.pheatmap.colors = TRUE))
+plot(allele_edges, edge.color = colors.from.values(E(allele_edges)$weight, use.pheatmap.colors = TRUE))
 #dev.off()
 
-effect_net <- graph_from_adjacency_matrix(effect.mat, mode = "directed", weighted = TRUE)
+#effect_net <- graph_from_adjacency_matrix(effect.mat, mode = "directed", weighted = TRUE)
 #pdf("~/Desktop/net.pdf", width = 8, height = 8)
-edge_attr(effect_net, "curved") <- 0.2
-plot(effect_net, edge.color = colors.from.values(E(effect_net)$weight, 
-  use.pheatmap.colors = TRUE), edge.width = abs(E(effect_net)$weight), 
-  edge.arrow.size = 2, layout = layout_in_circle, vertex.size = 35)
+#edge_attr(effect_net, "curved") <- 0.2
+#plot(effect_net, edge.color = colors.from.values(E(effect_net)$weight, 
+#  use.pheatmap.colors = TRUE), edge.width = abs(E(effect_net)$weight), 
+#  edge.arrow.size = 2, layout = layout_in_circle, vertex.size = 35)
 #dev.off()
 
 #allele.mat <- matrix(0, nrow = length(alleles), ncol = length(alleles))
