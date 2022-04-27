@@ -21,7 +21,7 @@ exp.name = args[1]
 delete_previous <- as.logical(args[2])
 
 if(is.na(exp.name)){
-    exp.name <- "chr15"
+    exp.name <- "chr15_gal_covar"
     delete_previous <- FALSE
 }
 
@@ -127,3 +127,118 @@ imageWithText(motif.enrich$overlayed[,fig.cols],
       col.scale = c("brown", "blue"), light.dark = "l")	 	
 #dev.off()
 ```
+
+## Allele Interaction Patterns
+
+The following code focuses on strain effects both 
+for main effects and interactions.
+
+```{r strain_main_effects}
+all.inf <- write_variant_influences(final_obj, p_or_q = 0.05, write_file = FALSE)
+main.locale <- which(all.inf[,"Target"] %in% colnames(final_obj$pheno))
+just.main <- all.inf[main.locale,]
+main.marker <- just.main[,"Source"]
+split.marker <- strsplit(main.marker, "_")
+just.marker <- sapply(split.marker, function(x) x[1])
+just.allele <- sapply(split.marker, function(x) x[2])
+```
+
+The following bar plot shows the number of main effects derived
+from each strain.
+
+```{r plot_num}
+barplot(table(just.allele), ylab = "Number of Main Effects")
+```
+
+The following boxplot shows the sign and magnitude of these
+main effects for each trait.
+
+```{r box_main, fig.width = 8, fig.height = 5}
+u_alleles = sort(unique(just.allele))
+u_pheno <- colnames(final_obj$pheno)
+pheno_effects <- vector(mode = "list", length = length(u_pheno))
+names(pheno_effects) <- u_pheno
+for(i in 1:length(u_pheno)){
+  allele_effects <- vector(mode = "list", length = length(u_alleles))
+  names(allele_effects) <- u_alleles
+  pheno.locale <- which(just.main[,"Target"] == u_pheno[i])
+  for(j in 1:length(u_alleles)){
+    allele.locale <- which(just.allele == u_alleles[j])
+    overlap.locale <- intersect(allele.locale, pheno.locale)
+    allele_effects[[j]] <- as.numeric(just.main[overlap.locale,"Effect"])
+  }
+  pheno_effects[[i]] <- allele_effects
+}
+plot.grouped.boxes(pheno_effects, legend.x = 17, legend.y = -0.1)
+abline(h = 0)
+```
+
+The following heat map shows how many interactions were 
+identified between each of the allele pairs.
+
+```{r allele_int}
+just.int <- all.inf[which(is.na(all.inf[,"conditioning_marker"])),]
+source.marker <- just.int[,"Source"]
+target.marker <- just.int[,"Target"]
+split.source <- strsplit(source.marker, "_")
+source.allele <- sapply(split.source, function(x) x[2])
+split.target <- strsplit(target.marker, "_")
+target.allele <- sapply(split.target, function(x) x[2])
+
+allele.int <- cbind(source.allele, target.allele)
+int.count <- as.matrix(table(data.frame(allele.int)))
+imageWithText(int.count, col.scale = "blue", row.text.shift = 0.1,
+col.text.shift = 0.12, col.text.rotation = 0, cex = 1.5)
+
+#int.net <- graph_from_edgelist(allele.int)
+#plot(int.net)
+```
+
+```{r combo_effects}
+source.effect <- vector(mode = "list", length = length(u_alleles))
+names(source.effect) <- u_alleles
+mean.effect <- matrix(NA, nrow = 8, ncol = 8)
+rownames(mean.effect) <- colnames(mean.effect) <- 1:8
+for(sallele in u_alleles){
+  target.effect <- vector(mode = "list", length = length(u_alleles))
+  names(target.effect) <- u_alleles
+  source.locale <- which(source.allele == sallele)
+  for(tallele in u_alleles){
+    target.locale <- which(target.allele == tallele)
+    overlap.locale <- intersect(source.locale, target.locale)
+    target.effect[[tallele]] <- abs(as.numeric(just.int[overlap.locale,"Effect"]))
+    mean.effect[sallele,tallele] <- median(as.numeric(just.int[overlap.locale,"Effect"]))
+  }
+  source.effect[[sallele]] <- target.effect
+}
+```
+
+The following boxplot shows the distribution of effects 
+of interactions between each pair of alleles. The effects
+are grouped first by source allele then by target allele.
+
+```{r plot_boxes}
+plot.grouped.boxes(source.effect)
+abline(h = 0)
+```
+
+The following heat map shows the median effect across 
+all interacting pairs of alleles. Interactions within
+strain are along the diagonal.
+
+```{r plot_mat}
+imageWithText(round(mean.effect, 2), col.scale = c("blue", "brown"), 
+split.at.vals = TRUE, row.text.shift = 0.1, grad.dir = "ends",
+col.text.shift = 0.12, col.text.rotation = 0, cex = 1.5)
+```
+
+The following boxes show the magnitude of effects of interactions
+within strain and between strain.
+
+```{r agg_plot}
+boxplot(list(abs(diag(mean.effect)), c(abs(mean.effect[upper.tri(mean.effect)]), 
+  abs(mean.effect[lower.tri(mean.effect)]))), names = c("Within", "Between"))
+```
+
+The only pattern I can see is that alleles with more main effects
+also have more interactions.

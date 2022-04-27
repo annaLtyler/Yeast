@@ -45,7 +45,7 @@ the genotype array and test all allele pairs exhaustively.
 
 ```{r set_exp}
 library("here")
-exp.name <- "pathway_ordering"
+exp.name <- "pathway_ordering_gal_only"
 #exp.name <- "pathway_two_genes"
 results_dir <- here("Results", exp.name)
 ```
@@ -83,13 +83,16 @@ strain.cols <- categorical_pal(8)
 We will isolate the regions of interest before running cape.
 
 ```{r roi}
-roi <- c("GAL1/7/10" = "chr02_271559", "GAL2" = "chr12_292952",
-"GAL3" = "chr04_463411", "GAL4" = "chr16_80216", "GAL80" = "chr13_171614",
-"PGM1" = "chr11_203623", "PGM2" = "chr13_475981", "FLO11" = "chr09_393064",
-"MSS11" = "chr13_588112")
+#roi <- c("GAL1/7/10" = "chr02_271559", "GAL2" = "chr12_292952",
+#"GAL3" = "chr04_463411", "GAL4" = "chr16_80216", "GAL80" = "chr13_171614",
+#"PGM1" = "chr11_203623", "PGM2" = "chr13_475981", "FLO11" = "chr09_393064",
+#"MSS11" = "chr13_588112")
+
 
 #roi <- c("GAL4" = "chr16_80216", "GAL80" = "chr13_171614") #for two genes
 #roi <- c("GAL3" = "chr04_463411", "GAL80" = "chr13_171614") #for two genes
+roi <- c("GAL3" = "chr04_463411", "GAL80" = "chr13_171614", "GAL4" = "chr16_80216") #for three genes
+
 
 marker.pos <- sapply(strsplit(dimnames(pop$geno)[[3]], "_"), function(x) as.numeric(x[2]))
 marker.idx <- rep(NA, length(roi))
