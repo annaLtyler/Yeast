@@ -1,0 +1,65 @@
+---
+title: "Large DO Network"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: yes
+    toc_float: yes
+---
+
+
+## Introduction
+
+The purpose of this network is to set up a CAPE object from the
+DO data. We will use this cross as a comparison for a CAPE
+network in the yeast data.
+
+```{r setup}
+library(here)
+all.fun <- list.files(here("code"), pattern = "R", full.names = TRUE)
+for(i in 1:length(all.fun)){source(all.fun[i])}
+load_latest_cape(here("code", "cape"))
+
+needed.libraries = c("pheatmap", "qtl2")
+load_libraries(needed.libraries)
+```
+
+```{r load_data}
+vars <- load(here("data", "Svenson_DO850_for_eQTL_viewer_v9.RData"))
+```
+
+```{r trait_cor}
+pheno <- dataset.phenotype$data
+trait.counts <- apply(pheno, 2, function(x) length(which(!is.na(x))))
+sub.traits <- pheno[,which(trait.counts > 800)]
+#pdf("~/Desktop/trait.cor.pdf", height = 15, width = 15)
+pheatmap(cor(sub.traits, use = "pairwise.complete.obs"))
+#dev.off()
+```
+
+```{r test_traits}
+traits <- c("weight2", "insulin")
+plot.with.model(sub.traits[,traits[1]], sub.traits[,traits[2]], report = "cor.test",
+  xlab = traits[1], ylab = traits[2])
+
+scan1.results <- scan1(genoprobs, sub.traits[,traits], kinship = K)
+
+par(mfrow = c(2,1))
+plot(scan1.results, map = map, lodcol = 1);abline(h = 6)
+plot(scan1.results, map = map, lodcol = 2);abline(h = 6)
+#find_peaks(scan1.results, map = map, threshold = 7, prob = 95)
+```
+
+```{r convert_to_cape}
+qtl2.cross <- list("pheno" = pheno, "crosstype" = "DO")
+cross.obj <- qtl2_to_cape(qtl2.cross, genoprobs, map, dataset.phenotype$covar.matrix)
+
+data_obj <- cross.obj[[1]]
+geno_obj <- cross.obj[[2]]
+
+saveRDS(data_obj, here("data", "cross_pheno.RDS"))
+saveRDS(geno_obj, here("data", "cross_geno.RDS"))
+```

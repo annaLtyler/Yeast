@@ -1,0 +1,627 @@
+---
+title: "Yeast Pathway Ordering"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: yes
+    toc_float: yes
+---
+
+
+## Introduction
+
+The purpose of this workflow is to see if cape can order known members of 
+a yeast signaling pathway from a genetically diverse group of yeast.
+
+Will will try to order members of the Gal3 pathway.
+Aimee Dudley, Gareth Cromie, et al. measured yeast growth on rich medium
+and medium with galactose either added or missing? Strains with a broken
+copy of Gal3 do not grow well on this medium. Variation in other genes
+in the pathway also affects growth in this medium. 
+
+The Gal3 pathway is well known, and we want to see if we can use
+cell growth among a genetically diverse set of yeast to order
+the pathway members. 
+
+Gareth has provided me with locations of the known pathway members:
+
+#GAl1/7/10=chr02_271559
+#GAL2=chr12_292952
+#GAL3=chr04_463411
+#GAL4=chr16_80216
+#GAL80=chr13_171614  
+#PGM1=chr11_203623
+#PGM2=chr13_475981
+
+In addition, there are two strong peaks relating to colony morphology on GAL:
+#FLO11=chr09_393064
+#MSS11=chr13_588112
+
+Because there are only a few loci here, we will flatten 
+the genotype array and test all allele pairs exhaustively.
+
+```{r set_exp}
+library("here")
+exp.name <- "pathway_ordering_gal_only"
+#exp.name <- "pathway_two_genes"
+results_dir <- here("Results", exp.name)
+```
+
+
+```{r load_code}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+#load local version of cape code
+needed.libraries <- c("pheatmap", "knitr")
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
+```
+
+```{r load_code_redo}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+## Load data
+
+```{r load_data}
+pop <- read_population(filename = here("Data", "scaffold_72h_data_rqtl1_form.csv"),
+  id_col = 1, na_strings = NA)
+#str(pop)
+strain.cols <- categorical_pal(8)
+```
+
+
+## Select regions of interest
+
+We will isolate the regions of interest before running cape.
+
+```{r roi}
+#roi <- c("GAL1/7/10" = "chr02_271559", "GAL2" = "chr12_292952",
+#"GAL3" = "chr04_463411", "GAL4" = "chr16_80216", "GAL80" = "chr13_171614",
+#"PGM1" = "chr11_203623", "PGM2" = "chr13_475981", "FLO11" = "chr09_393064",
+#"MSS11" = "chr13_588112")
+
+
+#roi <- c("GAL4" = "chr16_80216", "GAL80" = "chr13_171614") #for two genes
+#roi <- c("GAL3" = "chr04_463411", "GAL80" = "chr13_171614") #for two genes
+roi <- c("GAL3" = "chr04_463411", "GAL80" = "chr13_171614", "GAL4" = "chr16_80216") #for three genes
+
+
+marker.pos <- sapply(strsplit(dimnames(pop$geno)[[3]], "_"), function(x) as.numeric(x[2]))
+marker.idx <- rep(NA, length(roi))
+names(marker.idx) <- names(roi)
+
+for(i in 1:length(roi)){
+    nearest.marker <- roi[i] 
+    split.marker <- strsplit(nearest.marker, "_")
+    chr <- as.numeric(gsub("chr", "", split.marker[[1]][1]))
+    pos <- as.numeric(split.marker[[1]][2])
+    chr.locale <- which(pop$chromosome == chr)
+    pos.locale <- which(marker.pos == pos)
+    marker.idx[i] <- intersect(chr.locale, pos.locale)
+}
+
+sub.geno <- pop$geno[,,marker.idx]
+sub.chr <- pop$chromosome[marker.idx]
+sub.names <- pop$marker_names[marker.idx]
+sub.num <- 1:length(marker.idx)
+sub.loc <- marker.pos[marker.idx]
+```
+
+## Allele Effects {.tabset .tabset-fade .tabset-pills}
+
+The following boxplots show marginal effects on growth rate across
+all alleles in the two conditions. The boxes are colored by allele
+using arbitrary colors for the alleles. The marginal effects show
+how complex the allele effects are. Some alleles that have a negative
+effect on growth in one condition, have a positive effect in another.
+This makes it a rather complicated proposition to try to group alleles
+based on effects since their effects can vary relative to each other
+across conditions. 
+
+```{r allele_effects, fig.width = 8, fig.height = 3.5, results = "asis"}
+all.pheno.effect <- vector(mode = "list", dim(sub.geno)[3])
+names(all.pheno.effect) <- names(roi)
+for(m in 1:dim(sub.geno)[3]){ #for each marker
+  cat("###", names(roi)[m], "\n")
+  test.marker <- sub.geno[,,m]
+  ind.by.allele <- apply(test.marker, 2, function(x) which(x == 1))
+  pheno.by.allele <- lapply(ind.by.allele, function(x) log10(pop$pheno[x,c("GAL", "YPD")]))
+
+  med.by.allele <- matrix(NA, ncol = dim(sub.geno)[2], nrow = ncol(pheno.by.allele[[1]]))
+  #quartz(width = 8, height = 4)
+  par(mfrow = c(1,2), mar = c(3,3,2,2))
+  for(i in 1:ncol(pheno.by.allele[[1]])){
+    grouped.pheno <- lapply(pheno.by.allele, function(x) x[,i])
+    pheno.med <- sapply(grouped.pheno, function(x) median(x, na.rm = TRUE))
+    med.by.allele[i,] <- pheno.med
+    effect.order <- order(pheno.med)
+    boxplot(grouped.pheno[effect.order], main = colnames(pheno.by.allele[[1]])[i], 
+      col = strain.cols[effect.order])
+    overall.med <- median(unlist(grouped.pheno), na.rm = TRUE)
+    abline(h = overall.med, col = "red")
+    #test.pheno <- log10(pop$pheno[,colnames(pheno.by.allele[[1]])[i]])
+    #model <- lm(test.pheno~test.marker[,-7])
+    #barplot(coef(model)[2:length(coef(model))], las = 2)
+  }
+  mtext(names(roi)[m], side = 3, outer = TRUE, line = -1.5, font = 2)
+  all.pheno.effect[[m]] <- med.by.allele
+  cat("\n\n")
+}
+```
+
+```{r parse_effects, eval = FALSE}
+gal.effect <- sapply(all.pheno.effect, function(x) x[1,])
+ypd.effect <- sapply(all.pheno.effect, function(x) x[2,])
+rownames(gal.effect) <- rownames(ypd.effect) <- 1:nrow(gal.effect)
+pheatmap(t(gal.effect), scale = "row")
+pheatmap(t(ypd.effect), scale = "row")
+
+boxplot(t(apply(ypd.effect, 1, scale)))
+boxplot(t(apply(gal.effect, 1, scale)))
+
+cent.gal <- apply(gal.effect, 2, function(x) x - mean(x))
+table(apply(cent.gal, 2, function(x) which.min(abs(x))))
+
+cent.ypd <- apply(ypd.effect, 2, function(x) x - mean(x))
+table(apply(cent.ypd, 2, function(x) which.min(abs(x))))
+
+```
+
+
+## Flatten array
+We want to look at all alleles in this region, so we will flatten
+the genotype array to test all alleles.
+
+```{r flatten_array}
+alleles <- 1:ncol(sub.geno)
+allele_geno <- Reduce("cbind", lapply(1:dim(sub.geno)[[3]], function(x) sub.geno[,,x]))
+
+allele_names <- unlist(lapply(1:dim(sub.geno)[3], function(x) paste(names(roi)[x], alleles, sep = "-")))
+colnames(allele_geno) <- allele_names
+allele_chr <- unlist(lapply(1:dim(sub.geno)[3], function(x) rep(sub.chr[x], length(alleles))))
+allele_num <- 1:length(allele_names)
+allele_loc <- unlist(lapply(1:dim(sub.geno)[3], function(x) rep(sub.loc[x], length(alleles))))
+
+pop$geno <- allele_geno
+pop$chromosome <- allele_chr
+pop$marker_names <- allele_names
+pop$marker_num <- allele_num
+pop$marker_location <- allele_loc
+```
+
+```{r to_cape}
+cross_obj <- cape2mpp(pop)
+pheno_obj <- cross_obj[[1]]
+#str(pheno_obj)
+geno_obj <- cross_obj[[2]]$geno
+#str(geno_obj)
+```
+
+Growth traits need to be log normalized. Here we log normalize them.
+We also turned off scaling and normalizing in cape.
+
+```{r log_transform}
+log_pheno <- apply(pop$pheno, 2, log10)
+pop$pheno <- log_pheno
+```
+
+
+## Run CAPE
+
+```{r run_cape, error = FALSE, warning = FALSE, message = FALSE}
+
+final.file <- file.path(results_dir, "cross.RDS")
+
+if(!file.exists(final.file)){
+  final_obj <- run_cape(pheno_obj, geno_obj, 
+    results_file = "cross.RDS", p_or_q = 1e-6, n_cores = 4, 
+    initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
+    param_file = file.path(results_dir, "cape.parameters.yml"), 
+    yaml_params = NULL, results_path = results_dir)
+}else{
+  final_obj <- readRDS(final.file)
+  geno_obj <- readRDS(file.path(results_dir, "cross_geno.RDS"))
+}
+```
+
+## plot effects
+
+```{r plot_effects}
+final_obj <- get_network(final_obj, geno_obj, 1e-6, standardize = FALSE, 
+  collapse_linked_markers = FALSE)
+
+var_inf <- write_variant_influences(final_obj, p_or_q = 1e-6, write_file = FALSE, 
+  include_main_effects = FALSE)
+
+effect.file <- file.path(results_dir, "All_Effects.pdf")
+all.classes <- vector(mode = "list", length = nrow(var_inf))
+
+pdf(effect.file, width = 8, height = 4)
+for(i in 1:nrow(var_inf)){
+  test <- plot_effects(final_obj, geno_obj, var_inf[i,"Source"], var_inf[i,"Target"], 
+  plot_type = "b", error_bars = "se", cex.axis = 1, cex.names = 0.7)
+  all.classes[[i]] <- t(sapply(test, classify_barplot))
+}
+dev.off()
+
+trait1.classes <- t(sapply(all.classes, function(x) x[1,]))
+trait1.class.count <- count_classes(trait1.classes);mtext("GAL interactions", side = 3)
+more.neg1 <- which(trait1.classes[,"interaction"] == "more negative")
+#trait1.classes[more.neg1,]
+#cbind(var_inf[more.neg1,], trait1.classes[more.neg1,])
+more.pos1 <- which(trait1.classes[,"interaction"] == "more positive")
+#trait1.classes[more.pos1,]
+#cbind(var_inf[more.pos1,], trait1.classes[more.pos1,])
+
+trait2.classes <- t(sapply(all.classes, function(x) x[2,]))
+trait2.class.count <- count_classes(trait2.classes);mtext("YPD interactions", side = 3)
+more.neg2 <- which(trait2.classes[,"interaction"] == "more negative")
+#trait2.classes[more.neg2,]
+#cbind(var_inf[more.neg2,], trait2.classes[more.neg2,])
+more.pos2 <- which(trait2.classes[,"interaction"] == "more positive")
+#trait2.classes[more.pos2,]
+#cbind(var_inf[more.pos2,], trait1.classes[more.pos2,])
+
+
+
+```
+
+
+
+## Parse results
+
+The following code looks at the results from this run.
+
+### Motifs
+
+First we look at motifs in this network. There is no enrichment of any 
+type of motif.
+
+```{r motif_enrichment}
+motif.file <- here("Documents", "Motif.Distributions.pdf")
+
+if(!file.exists(motif.file)){
+  motif.obj <- find.motifs(final_obj)
+  motif.count <- count.motifs(motif.obj)
+  motif.enrich <- motif.enrichment(final_obj)
+}
+```
+
+The figure below shows the variant influences and main effects
+of the cape network. Gray dots indicate where pairs were not 
+tested against each other due to high correlation.
+
+```{r simplify, fig.width = 9, fig.height = 7}
+#stop()
+var_inf <- write_variant_influences(final_obj, p_or_q = 1e-6, write_file = FALSE, 
+include_main_effects = TRUE)
+
+inf.mat <- plot_variant_influences(final_obj, scale_effects = "log10", show_marker_labels = TRUE)
+
+```
+
+```{r main_effects}
+#look at main effects of alleles
+main_effects_idx <- union(which(var_inf[,"Target"] == "GAL"), which(var_inf[,"Target"] == "YPD"))
+main_effects <- var_inf[main_effects_idx,]
+#head(main_effects)
+int_idx <- setdiff(1:nrow(var_inf), main_effects_idx)
+just_int <- var_inf[int_idx,]
+#head(just_int)
+```
+
+
+```{r net}
+net <- graph_from_edgelist(just_int[,c("Source", "Target")], directed = TRUE)
+E(net)$weight <- as.numeric(just_int[,"Effect"])
+ecol <- colors.from.values((E(net)$weight)^2*sign(E(net)$weight), use.pheatmap.colors = TRUE)
+edge.width <- abs(E(net)$weight)
+
+vertex.names <- V(net)$name
+vertex.cl <- rep(NA, length(vertex.names))
+names(vertex.cl) <- vertex.names
+for(i in 1:length(roi)){
+  gene.idx <- grep(names(roi)[i], vertex.names)
+  vertex.cl[gene.idx] <- rep(i, length(gene.idx))
+}
+
+cl.net <- plot.modular.net(net, modules = vertex.cl, module.names = names(roi), 
+  macro.layout = layout_in_circle, micro.layout = layout_in_circle, 
+  vertex.size = 5, edge.color = ecol, edge.width = edge.width,
+  edge.arrow.size = 1.5)
+
+```
+
+```{r net_degree}
+indeg <- degree(net, mode = "in")
+outdeg <- degree(net, mode = "out")
+deg <- degree(net)
+
+pdf(file.path(results_dir, "Degree_by_Gene.pdf"), width = 5, height = 12)
+par(mar = c(4,8, 4,4))
+barplot(sort(deg), las = 2, horiz = TRUE, cex.names = 0.7, main = "Degree")
+barplot(sort(indeg), las = 2, horiz = TRUE, cex.names = 0.7, main = "In Degree")
+barplot(sort(outdeg), las = 2, horiz = TRUE, cex.names = 0.7, main = "Out Degree")
+plot.with.model(indeg, outdeg, xlab = "in degree", ylab = "out degree")
+text(indeg, outdeg, labels = V(net)$name, cex = 0.5, pos = 3, offset = 0.2)
+dev.off()
+
+#adj.mat <- as.matrix(as_adjacency_matrix(net, attr = "weight"))
+#pheatmap(adj.mat)
+```
+
+
+The following bar plots show the distributions of main effects
+in the GAL and YPD media. Bars are sorted by effect size and 
+colored by gene name. The particular alleles are shown underneath
+each bar.
+
+These bars correspond to the boxes shown above. Soemthing to keep
+in mind is that the alleles of GAL3 that are not 1 or 3 all have
+positive main effects relative to the full population because the
+1 and 3 alleles have such strong negative effects. We know the
+mechanism, so I'm inclined to say that these aren't "real" positive
+effects, but in most cases we don't know the mechanism, or which
+is the true reference allele, so how are we to say what is real 
+or not?
+
+The reference strain of yeast is not present in this population,
+but we could select one of the strains to serve as a reference.
+
+```{r effects, fig.width = 9, fig.height = 7}
+get_val_and_col <- function(main_effects, target.name = "YPD", color.vector = NULL){
+  main.idx <- which(main_effects[,"Target"] == target.name)
+  effect.size <- main_effects[main.idx,"Effect"]
+  allele.names <- sapply(strsplit(main_effects[main.idx,"Source"], "_"), function(x) x[1])
+  gene.names <- sapply(strsplit(main_effects[main.idx,"Source"], "-"), function(x) x[1])
+ 
+ if(is.null(color.vector)){
+    u_genes <- unique(gene.names)
+  }else{
+    u_genes <- names(color.vector)
+  }
+    col.vector <- rep(NA, length(gene.names))
+
+  for(i in 1:length(u_genes)){
+    col.vector[which(gene.names == u_genes[i])] <- gene.colors[i]
+  }
+  result <- cbind(allele.names, effect.size, col.vector)
+  return(result)
+}
+
+gene.colors <- c(categorical_pal(8), brewer.pal(8, "Dark2"))
+#barplot(rep(1, length(gene.colors)), col = gene.colors)
+main.genes <- unique(sapply(strsplit(main_effects[,"Source"], "-"), function(x) x[1]))
+gene.color.vector <- gene.colors[1:length(main.genes)]
+names(gene.color.vector) <- main.genes
+
+target.names <- colnames(final_obj$pheno)
+main.pts <- lapply(target.names, function(x) get_val_and_col(main_effects, x, gene.color.vector))
+all.effects <- unlist(lapply(main.pts, function(x) as.numeric(x[,2])))
+
+#quartz(width = 9, height = 7)
+par(mfrow = c(2,1))
+for(i in 1:length(main.pts)){
+  effect.vals <- as.numeric(main.pts[[i]][,2])
+  bar.order <- order(effect.vals)
+  barplot(effect.vals[bar.order], names = main.pts[[i]][bar.order,1], las = 2, 
+    col = main.pts[[i]][bar.order,3], main = target.names[i])
+}
+```
+
+The following figure shows cumulative effects of directed effects between gene pairs.
+This is the sum of the effects of the interacting alleles.
+
+```{r, fig.width = 7, fig.height = 8}
+gene.pairs <- pair.matrix(names(roi), ordered = TRUE, self.pairs = TRUE)
+allele.pairs <- pair.matrix(alleles, ordered = TRUE, self.pairs = TRUE)
+#dim(gene.pairs)
+
+inf_pairs <- as.matrix(var_inf[,c("Source", "Target")])
+
+split.source <- strsplit(sapply(strsplit(inf_pairs[,1], "_"), function(x) x[1]), "-")
+source.gene <- sapply(split.source, function(x) x[1])
+source.allele <- sapply(split.source, function(x) x[2])
+
+split.target <- strsplit(sapply(strsplit(inf_pairs[,2], "_"), function(x) x[1]), "-")
+target.gene <- sapply(split.target, function(x) x[1])
+target.allele <- sapply(split.target, function(x) x[2])
+
+inf_genes <- cbind(source.gene, target.gene)
+inf_alleles <- cbind(source.allele, target.allele)
+#dim(unique(inf_genes))
+#dim(unique(inf_alleles))
+
+paired_effects <- paired_alleles <- vector(mode = "list", length = nrow(gene.pairs))
+names(paired_effects) <- names(paired_alleles) <- apply(gene.pairs, 1, function(x) paste(x, collapse = " -> "))
+for(i in 1:nrow(gene.pairs)){
+  pair.idx <- intersect(which(inf_genes[,1] == gene.pairs[i,1]), which(inf_genes[,2] == gene.pairs[i,2]))
+  paired_effects[[i]] <- var_inf[pair.idx,,drop=FALSE]
+  paired_alleles[[i]] <- inf_alleles[pair.idx,,drop=FALSE]
+}
+
+#pdf("~/Desktop/aggregate.pdf", width = 7, height = 10)
+par(mar = c(4,10,4,4))
+mean_effect <- sapply(paired_effects, function(x) mean(as.numeric(x[,"Effect"]), na.rm = TRUE))
+barplot(sort(mean_effect), las = 2, horiz = TRUE, cex.names = 0.5)
+#dev.off()
+```
+
+The following heat map shows the maximum allele effect for each pair.
+
+```{r, fig.width = 6, fig.height = 6}
+effect.mat <- matrix(0, nrow = length(roi), ncol = length(roi))
+rownames(effect.mat) <- colnames(effect.mat) <- names(roi)
+for(i in 1:nrow(gene.pairs)){
+  all.effect <- as.numeric(paired_effects[[i]][,"Effect"])
+  if(length(all.effect) > 0){
+    effect.mat[gene.pairs[i,1], gene.pairs[i,2]] <- all.effect[which.max(abs(all.effect))]
+  }
+}
+effect.mat[which(!is.finite(effect.mat))] <- 0
+row.order <- hclust(dist(effect.mat))$order
+col.order <- hclust(dist(t(effect.mat)))$order
+imageWithText(effect.mat[row.order, col.order], use.pheatmap.colors = TRUE,
+  global.color.scale = TRUE, global.min = max(abs(effect.mat))*-1, 
+  global.max = max(abs(effect.mat)), cex = 0.8,
+  col.text.shift = 0.07, row.text.shift = 0.07)
+
+```
+
+The following boxes show the distributions of the effects summarized
+by sums above.
+
+
+```{r, fig.width = 6, fig.height = 10}
+all_effects <- lapply(paired_effects, function(x) as.numeric(x[,"Effect"]))
+mean.order <- order(sapply(all_effects, function(x) mean(x, na.rm = TRUE)))
+#pdf(file.path(results_dir, "Ordered.Effects.pdf"), width = 6, height = 10)
+par(mar = c(4,10,4,4))
+boxplot(all_effects[mean.order], horizontal = TRUE, las = 2, cex.axis = 0.5)
+stripchart(all_effects[mean.order], pch = 16, method = "jitter", col = "#2b8cbe", 
+  add = TRUE, cex = 0.7)
+abline(v = 0)
+#dev.off()
+```
+
+The following network shows the maxmum interaction in each direction.
+
+```{r gene_net, eval = FALSE}
+#old code that picks a dominant direction 
+overall.edges <- NULL
+for(source.gene in 1:nrow(effect.mat)){
+  for(target.gene in 1:ncol(effect.mat)){
+    dir1 <- effect.mat[source.gene, target.gene]
+    dir2 <- effect.mat[target.gene, source.gene]
+    if(abs(dir1) >= abs(dir2)){
+      overall.strength <- dir1 - dir2
+      edge <- c(rownames(effect.mat)[source.gene], colnames(effect.mat)[target.gene])
+    }
+    if(abs(dir2) > abs(dir1)){
+      overall.strength <- dir2 - dir1
+      edge <- c(rownames(effect.mat)[target.gene], colnames(effect.mat)[source.gene])
+    }
+  overall.edges <- rbind(overall.edges, c(edge, overall.strength))
+  }
+}
+
+overall.edges <- unique(overall.edges)
+edge.thresh <- 1
+thresh.edges <- overall.edges[which(abs(as.numeric(overall.edges[,3])) > edge.thresh),]
+
+overall.net <- graph_from_edgelist(thresh.edges[,1:2])
+edge.weight <- as.numeric(thresh.edges[,3])
+E(overall.net)$weight <- edge.weight
+ecol <- colors.from.values(edge.weight, use.pheatmap.colors = TRUE,
+  global.color.scale = TRUE, global.min = max(abs(edge.weight))*-1, 
+  global.max = max(abs(edge.weight)))
+plot(overall.net, layout = layout_in_circle, 
+  edge.width = abs(edge.weight), edge.color = ecol)
+
+```
+
+
+
+```{r gene_net2}
+overall.net <- graph_from_adjacency_matrix(effect.mat, weighted = TRUE)
+
+edge.weight <- E(overall.net)$weight
+ecol <- colors.from.values(edge.weight, use.pheatmap.colors = TRUE,
+  global.color.scale = TRUE, global.min = max(abs(edge.weight))*-1, 
+  global.max = max(abs(edge.weight)))
+edge_attr(overall.net, "curved") <-  0.2
+plot(overall.net, layout = layout_in_circle, 
+  edge.width = abs(edge.weight), edge.color = ecol, vertex.size = 30)
+
+```
+
+The following network shows the interactions by strain of origin.
+```{r as_network}
+#plot.new()
+#plot.window(xlim = c(1, length(all_effects)), 
+#  ylim = c(min(unlist(all_effects)), max(unlist(all_effects))))
+#for(i in 1:length(all_effects)){
+#  if(length(all_effects[[i]]) > 0){
+#    text(x = jitter(i, length(all_effects[[i]])), y = all_effects[[i]],
+#    labels = apply(paired_alleles[[i]], 1, function(x) paste(x, collapse = "->")), cex = 0.5)
+#  }
+#}
+#axis(2);abline(h = 0)
+
+allele_edges <- graph_from_edgelist(Reduce("rbind", paired_alleles), directed = TRUE)
+E(allele_edges)$weight <- Reduce("c", all_effects)
+
+#pdf("~/Desktop/allele_net.pdf")
+plot(allele_edges, edge.color = colors.from.values(E(allele_edges)$weight, 
+  use.pheatmap.colors = TRUE), layout = layout_in_circle)
+#dev.off()
+
+#effect_net <- graph_from_adjacency_matrix(effect.mat, mode = "directed", weighted = TRUE)
+#pdf("~/Desktop/net.pdf", width = 8, height = 8)
+#edge_attr(effect_net, "curved") <- 0.2
+#plot(effect_net, edge.color = colors.from.values(E(effect_net)$weight, 
+#  use.pheatmap.colors = TRUE), edge.width = abs(E(effect_net)$weight), 
+#  edge.arrow.size = 2, layout = layout_in_circle, vertex.size = 35)
+#dev.off()
+
+#allele.mat <- matrix(0, nrow = length(alleles), ncol = length(alleles))
+#rownames(allele.mat) <- colnames(allele.mat) <- alleles
+#for(i in 1:nrow(inf_alleles)){
+#  allele.mat[inf_alleles[i,1], inf_alleles[i,2]] <- allele.mat[inf_alleles[i,1], inf_alleles[i,2]] + 1
+#  }
+#pheatmap(allele.mat, cluster_rows = FALSE, cluster_cols = FALSE)
+
+```
+
+I think the allele effects are going to matter here.
+Can we visualize both main effects and interactions in a way that separates
+out alleles in an interpretable way?
+
+## Motif Effects {.tabset .tabset-fade .tabset-pills}
+
+The following plots show the phenotypic effects of individual
+motifs compared to the additive expectation.
+
+```{r parse_inf, fig.width = 8, fig.height = 8}
+pheno.effect.mats <- pheno.effects.DO(data.obj = final_obj, 
+  geno.obj = geno_obj, color.scheme = "other", geno.coding = "Dominant")
+```
+
+The following tables show detailed information about the interactions above.
+
+```{r motif_tables, results = "asis"}
+for(i in 1:length(pheno.effect.mats)){
+  if(length(pheno.effect.mats[[i]]) > 0){
+    cat("###", names(pheno.effect.mats)[i], "\n")
+    df <- cbind(pheno.effect.mats[[i]][,c(1:3,8),drop=FALSE], 
+      matrix(apply(pheno.effect.mats[[i]][,4:7,drop=FALSE], 2, 
+      function(x) round(as.numeric(x), 2)), ncol = 4))
+    colnames(df) <- c(colnames(pheno.effect.mats[[i]])[c(1:3,8)], colnames(pheno.effect.mats[[i]])[c(4:7)])
+    rownames(df) <- NULL
+    print(kable(df))
+    cat("\n\n")
+  }
+}
+
+#library(DT)
+#datatable(df)
+```
+
+```{r test_effect, eval = FALSE}
+gene1.name = "FLO11"; allele1 = 3;gene2.name = "GAL80"; allele2 = 4
+gene1.name = "MSS11"; allele1 = 3;gene2.name = "GAL3"; allele2 = 1
+gene1.name = "GAL3"; allele1 = 1;gene2.name = "GAl1/7/10"; allele2 = 6 #in Fig4 from Gareth
+
+gene1.locale <- which(names(roi) == gene1.name)
+gene2.locale <- which(names(roi) == gene2.name)
+boxplot(pop$pheno[,"GAL"]~sub.geno[,allele1,gene1.locale]+sub.geno[,allele2,gene2.locale])
+boxplot(pop$pheno[,"YPD"]~sub.geno[,allele1,gene1.locale]+sub.geno[,allele2,gene2.locale])
+```

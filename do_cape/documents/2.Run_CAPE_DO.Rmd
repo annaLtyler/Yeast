@@ -1,0 +1,51 @@
+
+---
+title: "Large DO Network"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: yes
+    toc_float: yes
+---
+
+
+## Introduction
+The purpose of this workflow is to run CAPE on as large a DO 
+population that we can find. It uses data objects created
+by 1.CAPE_DO_Setup.Rmd. We will compare the CAPE network
+in this population to that found in an 8-way yeast cross
+
+
+```{r setup, warning = FALSE, message = FALSE}
+library(here)
+all.fun <- list.files(here("code"), pattern = "R", full.names = TRUE)
+for(i in 1:length(all.fun)){source(all.fun[i])}
+load_latest_cape(here("code", "cape"))
+
+needed.libraries = c("pheatmap", "qtl2")
+load_libraries(needed.libraries)
+```
+
+```{r set_param}
+traits <- c("weight2", "insulin")
+```
+
+```{r load_data}
+all_vars <- ls()
+data.loaded <- as.logical(length(which(all_vars == "data_obj")))
+
+if(!data.loaded){
+  data_obj <- readRDS(here("data", "cross_pheno.RDS"))
+  geno_obj <- readRDS(here("data", "cross_geno.RDS"))
+}
+```
+
+```{r run_cape}
+results.dir <- here("results", paste(traits, collapse = "_"))
+final_obj <- run_cape(data_obj, geno_obj, 
+  param_file = file.path(results.dir, "cape.parameters.yml"), 
+  results_path = results.dir)
+```

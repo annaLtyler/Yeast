@@ -1,0 +1,66 @@
+#================================================
+# General Parameters 
+#================================================
+traits:
+ - weight2
+ - insulin
+covariates:
+ - sexM
+ - diethf
+ - gen5
+ - gen7
+ - gen8
+ - gen9
+ - gen11
+ - litter2
+scan_what:
+ - eigentraits 
+traits_scaled:
+ - true
+traits_normalized:
+ - true
+eig_which:
+ - 1
+ - 2 
+pval_correction:
+ - fdr 
+use_kinship:
+ - false
+kinship_type:
+ - overall
+pop:
+ - MPP
+locus:
+ - char
+save_results:
+ - true
+use_saved_results:
+ - true
+
+#================================================
+# Single Scan Parameters 
+#================================================
+ref_allele:
+ - B
+singlescan_perm:
+ - 0
+
+#================================================
+# Marker Selection Parameters 
+#================================================
+marker_selection_method:
+ - top_effects
+peak_density:
+ - 0.01
+tolerance:
+ - 5 
+num_alleles_in_pairscan:
+ - 100
+ #================================================
+# Pairscan Parameters 
+#================================================
+max_pair_cor:
+ - 0.5
+pairscan_null_size:
+ - 1000
+
