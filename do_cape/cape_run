@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J yeast_cape
+#SBATCH -J cape_do
 #SBATCH -N 1 # number of nodes
 #SBATCH -n 1 # number of cores
 #SBATCH --mem=8G # memory pool for all cores
