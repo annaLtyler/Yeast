@@ -63,4 +63,6 @@ max_pair_cor:
  - 0.5
 pairscan_null_size:
  - 500000
+transform_to_phenospace:
+ - true
 
