@@ -80,17 +80,16 @@ geno_obj <- geno
 
 
 ```{r run_cape}
-final.file <- file.path(results.dir, "cross.RDS")
+run.finished <- as.logical(file.exists(file.path(results.dir, "Variant_Influences.csv")))
 
-if(!file.exists(final.file)){
-
+if(!run.finished){
   final_obj <- run_cape(pheno_obj, geno_obj, 
     results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
     initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
     param_file = file.path(results.dir, "cape.parameters.yml"), 
     yaml_params = NULL, results_path = results.dir)
 }else{
-  final_obj <- readRDS(final.file)
+  final_obj <- readRDS(file.path(results.dir, "cross.RDS"))
   geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
   pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 }
