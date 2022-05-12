@@ -49,3 +49,36 @@ final_obj <- run_cape(data_obj, geno_obj,
   param_file = file.path(results.dir, "cape.parameters.yml"), 
   results_path = results.dir)
 ```
+
+## Motif Analysis
+
+Look at motifs in this network. 
+
+```{r motif_enrichment, fig.width = 7, fig.height = 5}
+motif.file <- here(results.dir, "Motif.Results.RDS")
+
+if(!file.exists(motif.file)){
+  motif.obj <- find.motifs(final_obj)
+  motif.count <- count.motifs(motif.obj)
+  motif.enrich <- motif.enrichment(final_obj)
+  saveRDS(motif.enrich, motif.file)
+}else{
+  motif.enrich <- readRDS(motif.file)
+}
+
+#jpeg("~/Desktop/motifs.jpg", width = 7, height = 5, units = "in", res = 300)
+fig.cols <- c(1:3, 6:8)
+par(mar = c(8, 4, 4, 2))
+main.shift = 0.3; col.text.shift = 0.27; row.text.shift = 0.3; col.text.rotation = 45
+imageWithText(motif.enrich$overlayed[,fig.cols], 
+    col.names = colnames(motif.enrich$motif.counts)[fig.cols], 
+			row.names = rownames(motif.enrich$motif.counts), 
+      main = "Overlay of Enriched (brown) and Depleted (blue) Motifs", 
+			class.mat = motif.enrich$overlayed.class.mat[,fig.cols], 
+      grad.dir = "low", color.fun = "exponential", exp.steepness = 10, 
+			global.color.scale = FALSE, global.min = 0, global.max = 1, cex = 1.2, 
+			col.text.adj = 1, main.shift = main.shift, col.text.shift = col.text.shift, 
+			row.text.shift = row.text.shift, col.text.rotation = col.text.rotation,
+      col.scale = c("brown", "blue"), light.dark = "l")	 	
+#dev.off()
+```

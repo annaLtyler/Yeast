@@ -53,6 +53,14 @@ plot(scan1.results, map = map, lodcol = 2);abline(h = 6)
 #find_peaks(scan1.results, map = map, threshold = 7, prob = 95)
 ```
 
+```{r allele_effects, eval = FALSE}
+#out of Sash3 curiosity I'd like to look at the allele effects on the X chromosome
+weight.coef <- scan1coef(genoprobs[,"X"], sub.traits[,traits[1]], kinship = K[[20]])
+plot_coefCC(weight.coef, map = map)
+ins.coef <- scan1coef(genoprobs[,"X"], sub.traits[,traits[2]], kinship = K[[20]])
+plot_coefCC(ins.coef, map = map)
+```
+
 ```{r convert_to_cape}
 qtl2.cross <- list("pheno" = pheno, "crosstype" = "DO")
 cross.obj <- qtl2_to_cape(qtl2.cross, genoprobs, map, dataset.phenotype$covar.matrix)
