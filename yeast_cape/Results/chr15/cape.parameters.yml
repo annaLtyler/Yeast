@@ -46,14 +46,14 @@ marker_selection_method:
 peak_density:
  - 0.01
 tolerance:
- - 5 
+ - 10
 num_alleles_in_pairscan:
  - 1500
 #================================================
 # Pairscan Parameters 
 #================================================
 min_per_genotype:
- - 100
+ - 10
 pairscan_null_size:
  - 500000
 transform_to_phenospace:
