@@ -45,7 +45,8 @@ traits <- c("weight2", "insulin")
 plot.with.model(sub.traits[,traits[1]], sub.traits[,traits[2]], report = "cor.test",
   xlab = traits[1], ylab = traits[2])
 
-scan1.results <- scan1(genoprobs, sub.traits[,traits], kinship = K)
+scan1.results <- scan1(genoprobs, sub.traits[,traits], 
+  covar = dataset.phenotyp$covar.matrix, kinship = K)
 
 par(mfrow = c(2,1))
 plot(scan1.results, map = map, lodcol = 1);abline(h = 6)
