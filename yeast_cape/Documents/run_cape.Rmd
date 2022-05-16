@@ -27,6 +27,7 @@ if(is.na(exp.name)){
 
 results.dir <- here("Results", exp.name)
 remove_chr9 = TRUE
+subsample.markers = TRUE
 ```
 
 The results here pertain to the directory `r exp.name`.
@@ -78,6 +79,60 @@ geno_obj <- geno
 
 ```
 
+If specified, subsample the genome to regions 
+identified by fine-mapping. This will help 
+speed up the cape run.
+
+```{r subsample}
+marker.pos <- sapply(strsplit(dimnames(geno_obj)[[3]], "_"), function(x) as.numeric(x[2]))
+
+if(subsample.markers){
+
+  get_region_idx <- function(region.chr, region.start, region.end, all.chr, all.pos){
+    chr.idx <- which(all.chr == region.chr)
+    greater.than.min <- which(all.pos[chr.idx] >= region.start)
+    less.than.max <- which(all.pos[chr.idx] <= region.end)
+    region.idx <- intersect(greater.than.min, less.than.max)
+    if(length(region.idx) == 0){
+      region.idx <- c(chr.idx[tail(less.than.max, 1)], chr.idx[head(greater.than.min, 1)])
+    }
+    return(region.idx)
+  }
+
+  marker.chr <- pheno_obj$chromosome
+
+  param <- read_parameters(here("Results", exp.name, "cape.parameters.yml"))
+  traits <- param$traits
+
+  unique.marker.idx <- vector(mode = "list", length = length(traits))
+  names(unique.marker.idx) <- names(traits)
+
+  for(tr in 1:length(traits)){
+    fine.map <- read.delim(here("Data", "Fine_mapping_for_Anna", paste0("72h_", traits[tr], "_aov_type2_genes_filtered_v9.txt")))
+    region.chrs <- as.numeric(gsub("chr", "", fine.map[,"Chrom"]))
+    left.lod.pos <- fine.map[,"Left"]
+    right.lod.pos <- fine.map[,"Right"]
+
+    all.region.markers <- sapply(1:length(region.chrs), 
+      function(x) get_region_idx(region.chrs[x], left.lod.pos[x], right.lod.pos[x], 
+      marker.chr, marker.pos))
+
+    unique.marker.idx[[tr]] <- sort(unique(unlist(all.region.markers)))
+
+    #length(unique(unlist(unique.marker.idx[[tr]])))
+  }
+
+  unique.markers <- unique(unlist(unique.marker.idx))
+  geno_obj <- geno_obj[,,unique.markers]
+  pheno_obj$geno_names[[3]] <- pheno_obj$geno_names[[3]][unique.markers]
+  pheno_obj$chromosome <- pheno_obj$chromosome[unique.markers]
+  pheno_obj$marker_num <- pheno_obj$marker_num[unique.markers]
+  pheno_obj$marker_location <- marker.pos[unique.markers]
+}else{
+  pheno_obj$marker_location <- marker.pos
+}
+
+```
 
 ```{r run_cape}
 run.finished <- as.logical(file.exists(file.path(results.dir, "Variant_Influences.csv")))
