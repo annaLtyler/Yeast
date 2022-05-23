@@ -96,7 +96,7 @@ if(subsample.markers){
     if(length(region.idx) == 0){
       region.idx <- c(chr.idx[tail(less.than.max, 1)], chr.idx[head(greater.than.min, 1)])
     }
-    return(region.idx)
+    return(chr.idx[region.idx])
   }
 
   marker.chr <- pheno_obj$chromosome
@@ -114,21 +114,24 @@ if(subsample.markers){
     right.lod.pos <- fine.map[,"Right"]
 
     all.region.markers <- sapply(1:length(region.chrs), 
-      function(x) get_region_idx(region.chrs[x], left.lod.pos[x], right.lod.pos[x], 
-      marker.chr, marker.pos))
+      function(x) get_region_idx(region.chr = region.chrs[x], 
+      region.start = left.lod.pos[x], region.end = right.lod.pos[x], 
+      all.chr = marker.chr, all.pos = marker.pos))
 
     unique.marker.idx[[tr]] <- sort(unique(unlist(all.region.markers)))
 
     #length(unique(unlist(unique.marker.idx[[tr]])))
   }
 
-  unique.markers <- unique(unlist(unique.marker.idx))
+  unique.markers <- sort(unique(unlist(unique.marker.idx)))
   geno_obj <- geno_obj[,,unique.markers]
   pheno_obj$geno_names[[3]] <- pheno_obj$geno_names[[3]][unique.markers]
   pheno_obj$chromosome <- pheno_obj$chromosome[unique.markers]
   pheno_obj$marker_num <- pheno_obj$marker_num[unique.markers]
   pheno_obj$marker_location <- marker.pos[unique.markers]
 }else{
+  #for some reason my conversion function is not giving us good 
+  #marker positions. Replace them with the real marker positions.
   pheno_obj$marker_location <- marker.pos
 }
 
@@ -150,9 +153,19 @@ if(!run.finished){
 }
 ```
 
+## Null Distribution
+
+The following code plots null distributions of cape statistics.
+The plots are saved in the Results folder called `r exp.name.
+
+```{r null_dist}
+pairscan.obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
+plot.null.dist(final_obj, pairscan.obj, path = results.dir)
+```
+
 ## Motifs
 
-First we look at motifs in this network. 
+Look at network motifs.
 
 ```{r motif_enrichment, fig.width = 7, fig.height = 5}
 motif.file <- here(results.dir, "Motif.Results.RDS")
