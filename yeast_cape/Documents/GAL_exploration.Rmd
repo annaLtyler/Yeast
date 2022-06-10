@@ -1,0 +1,460 @@
+---
+title: "GAL epistasis"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: yes
+    toc_float: yes
+---
+
+
+## Introduction
+
+The purpose of this workflow is to explore some ideas from 
+[Jolanda van Leeuwun](https://www.youtube.com/watch?v=BzEfP-ylyqM)
+and [Anastasia Baryshnikova](https://www.youtube.com/watch?v=wi99TJGEWyo)
+I'd like to look more specifically at the distribution of epistatic 
+interactions with the GAL introgression.
+
+I want to look for synthetic lethality, suppression, and epistasis, 
+as defined by these researchers, in a genetically diverse population 
+of yeast.
+
+They define synthetic lethality as when the double mutant has much 
+worse fitness than we would expect from the two single mutants. 
+Supression is a "positive interaction" in which growth is better 
+than we expect from the single mutants. i.e. a second mutation is
+suppressing the effect of the first.
+Epistasis is when the growth is not worse in the double mutant
+than in either of the single mutants.
+
+In their networks (the Costanzo network) genes are tested 
+individually, so they can look at clustering of individual 
+genes and test functionality, and all that. We don't have
+individual genes, so we can't do that, but we can still 
+cluster interacting regions and generate hypotheses about
+functionally related mutations. They use topological overlap
+to cluster genes. They take the correlation network of the 
+genes and connect genes that have a correlation of their 
+interactions > 0.2.
+
+We can try something similar here. First I want to identify
+regions of the genome that might be functionally related to 
+GAL3. Instead of testing all pairs, I'd like to test the 
+GAL3 introgression against all other locations. This
+reduces the number of tests we need to perform. It then 
+gives us a sense of which genomic regions are associated
+with GAL3. We can then step through these regions (assuming
+we can identify some) and perform the same test to build 
+the genetic network more piece by piece. I have no idea if
+any of this will actually work, but I'd like to test some
+things. 
+
+Gareth has provided me with locations of the known pathway members:
+
+#GAl1/7/10=chr02_271559
+#GAL2=chr12_292952
+#GAL3=chr04_463411
+#GAL4=chr16_80216
+#GAL80=chr13_171614  
+#PGM1=chr11_203623
+#PGM2=chr13_475981
+
+In addition, there are two strong peaks relating to colony morphology on GAL:
+#FLO11=chr09_393064
+#MSS11=chr13_588112
+
+```{r set_exp}
+library("here")
+exp.name <- "gal3_epistasis"
+trait.name = "GAL"; percentile = 99; #threshold for strong epistasis effect
+#trait.name = "YPD"; percentile = 99.5
+#exp.name <- "pathway_two_genes"
+results.dir <- here("Results", exp.name)
+if(!file.exists(results.dir)){dir.create(results.dir)}
+```
+
+This workflow shows results for the `r trait.name` condition.
+
+```{r load_code}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+#load local version of cape code
+needed.libraries <- c("pheatmap", "knitr")
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
+
+```
+
+```{r load_code_redo}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+## Load data
+
+```{r load_data}
+pop <- read_population(filename = here("Data", "scaffold_72h_data_rqtl1_form.csv"),
+  id_col = 1, na_strings = NA)
+#str(pop)
+strain.cols <- categorical_pal(8)
+gene.info <- read.csv(here("Data", "pgmap.csv"))
+```
+
+
+## Pull out single marker of interest
+
+```{r gal3}
+roi <- c("GAL3" = "chr04_463411")
+query.alleles <- c(1,3)
+
+marker.pos <- sapply(strsplit(dimnames(pop$geno)[[3]], "_"), function(x) as.numeric(x[2]))
+marker.idx <- rep(NA, length(roi))
+names(marker.idx) <- names(roi)
+
+for(i in 1:length(roi)){
+    nearest.marker <- roi[i] 
+    split.marker <- strsplit(nearest.marker, "_")
+    chr <- as.numeric(gsub("chr", "", split.marker[[1]][1]))
+    pos <- as.numeric(split.marker[[1]][2])
+    chr.locale <- which(pop$chromosome == chr)
+    pos.locale <- which(marker.pos == pos)
+    marker.idx[i] <- intersect(chr.locale, pos.locale)
+}
+
+gal.geno <- pop$geno[,,marker.idx]
+
+#use one of the introgressed alleles that we know is non-functional
+selected.alleles <- gal.geno[,query.alleles,drop=FALSE]
+gal.null <- rowSums(selected.alleles)
+#hist(gal.null)
+```
+
+## Epistasis testing
+
+
+```{r test_interactions}
+pheno <- pop$pheno[,trait.name,drop=FALSE]
+
+main_effect <- function(phenotype, genotype){
+    groups <- lapply(c(0,1), function(x) phenotype[which(genotype == x)])
+    mean.growth <- sapply(groups, function(x) mean(x, na.rm = TRUE))
+    prop.growth <- mean.growth[2]/mean.growth[1]
+    return(prop.growth)
+}
+
+int_effect <- function(phenotype, genotype1, genotype2){
+    double.wild <- intersect(which(genotype1 == 0), which(genotype2 == 0))
+    double.alt <-  intersect(which(genotype1 == 1), which(genotype2 == 1))
+    pair.means <- c(mean(phenotype[double.wild], na.rm = TRUE), mean(phenotype[double.alt], na.rm = TRUE))
+    int.growth <- pair.means[2]/pair.means[1]
+    return(int.growth)
+}
+
+gal.effect <- main_effect(pheno, gal.null)
+
+main.effect.file <- file.path(results.dir, paste0("all_main_", trait.name, ".RDS"))
+if(!file.exists(main.effect.file)){
+    all_main <- apply(pop$geno, 3, function(x) apply(x, 2, function(y) main_effect(pheno, y)))
+    saveRDS(all_main, main.effect.file)
+}else{
+    all_main <- readRDS(main.effect.file)
+}
+pred_int <- all_main*gal.effect
+
+int.effect.file <- file.path(results.dir, paste0("all_int_", trait.name, ".RDS"))
+if(!file.exists(int.effect.file)){
+    all_int <- apply(pop$geno, 3, function(x) apply(x, 2, function(y) int_effect(pheno, gal.null, y)))
+    saveRDS(all_int, int.effect.file)
+}else{
+    all_int <- readRDS(int.effect.file)
+}
+
+deviation <- all_int - pred_int
+```
+
+The following plot shows the location of the suppressing and 
+aggravating alleles. GAL3 is located on Chr 4, where the red
+and blue band is. Red is positive, and blue is negative.
+
+The red values for alleles 1 and 3 at this locus show that 
+growth is higher than expected when the introgressed allele
+was combined with the introgressed allele. Because these
+organisms are haploid, a null allele is a null allele, there
+isn't another one around to rescue it. So you can only 
+break it once. Once it's broken, you can't break it again,
+and therefore growth is higher than we expect based on 
+assuming two broken alleles there. The narrow band of 
+blue from the other alleles suggests that there was recombination 
+in this region between the marker we are using and the actual GAL3
+gene. These recombinations put a functioning GAL3 back in place 
+rescuing the phenotype. 
+
+There are two other regions that are potentially interesting. 
+Chromosome 2 has a suppressing/rescuing allele from strain 6.
+I'm not sure if this is the GAL1/7/10 locus.
+There is are also a couple chr 9 regions that could be related
+to weird allele frequencies there, or could be the Flo11 locus.
+
+```{r plot_deviation}
+plot.effects <- function(effect.mat, filename){
+    u_chr <- unique(pop$chromosome)
+    global.min <- min(effect.mat, na.rm = TRUE)
+    global.max <- max(effect.mat, na.rm = TRUE)
+    jpeg(file.path(results.dir, filename), width = 20, height = 5, 
+        units = "in", res = 300)
+    layout(matrix(1:length(u_chr), nrow = 1))
+    for(ch in 1:length(u_chr)){
+        chr.locale <- which(pop$chromosome == u_chr[ch])
+        if(ch == 1){
+            row.names <- rownames(effect.mat)
+            par(mar = c(4,4,2,0))
+        }else{
+            row.names <- NULL
+            par(mar = c(4,0,2,0))
+        }
+        if(chr == max(u_chr)){
+            par(mar = c(4,0,2,4))
+        }
+        imageWithText(effect.mat[,chr.locale], show.text = FALSE, use.pheatmap.colors = TRUE,
+            col.names = NULL, row.names = row.names, global.color.scale = TRUE, 
+            global.min = global.min, global.max = global.max)
+        mtext(ch, side = 1)
+        }
+    dev.off()
+}
+
+plot.effects(deviation, paste0("GAL3_Deviation_", trait.name, ".jpg"))
+plot.effects(all_main, paste0("GAL3_Main_", trait.name, ".jpg"))
+```
+
+## All Main Effects {.tabset .tabset-fade .tabset-pills}
+
+The following histogram shows the distribution of main effects
+for each allele. Vertical lines indicate the `r percentile`th percentile.
+
+Values on the y axis indicate the fitness value for the 
+allele at that locus relative to the yeast without that 
+allele at the locus. Values below 1 indicate a fitness 
+loss and values above 1 indicate a fitness gain.
+
+
+```{r effect_regions, fig.width = 10, fig.heigh = 6}
+get_effect_regions <- function(effect.mat, percentile = 99, type = c("effect", "deviation")){
+    type = type[1]
+    effect.thresh <- get.percentile(effect.mat, percentile)
+    hist(effect.mat, breaks = 100, main = "")
+    if(type == "effect"){
+        abline(v = c(1/effect.thresh, effect.thresh))
+        big.pos <- which(effect.mat > effect.thresh, arr.ind = TRUE)
+        big.neg <- which(effect.mat < 1/effect.thresh, arr.ind = TRUE)
+        has.effect <- rbind(big.pos, big.neg)        
+    }else{
+        abline(v = c(effect.thresh*-1, effect.thresh))
+        has.effect <- which(abs(effect.mat) > effect.thresh, arr.ind = TRUE)
+    }
+
+    u_effect_markers <- sort(unique(has.effect[,2]))
+    effect.markers <- dimnames(pop$geno)[[3]][u_effect_markers]
+    effect.chrom <- as.numeric(substr(effect.markers, 2, 3))
+    effect.loc <- as.numeric(sapply(strsplit(effect.markers, "_"), function(x) x[2]))
+
+    u_effect_chrom <- unique(effect.chrom)
+    effect.regions <- lapply(u_effect_chrom, 
+        function(x) effect.loc[which(effect.chrom == x)])
+    names(effect.regions) <- u_effect_chrom
+    invisible(effect.regions)
+}
+```
+
+
+```{r plot_gene_fun}
+plot.gene.location <- function(effect.mat, chr, gene.info = NULL, gene.name = NULL,
+    gene.id = NULL, plot.label = "", legend.position = "topright"){
+    
+    if(!is.null(gene.name) || !is.null(gene.id)){
+        if(is.null(gene.info)){stop("A gene information matrix must be provided.")}
+    }
+    chr.locale <- which(pop$chromosome == chr)
+    chr.pos <- marker.pos[chr.locale]/1e6
+    plot.new()
+    plot.window(xlim = c(min(chr.pos), max(chr.pos)), 
+        ylim = c(min(effect.mat[,chr.locale], na.rm = TRUE), 
+        max(effect.mat[,chr.locale], na.rm = TRUE)))
+    abline(h = 0, col = "darkgray")
+    for(i in 1:8){
+        points(marker.pos[chr.locale]/1e6, effect.mat[i,chr.locale], type = "l", 
+            xlab = "Position (Mb)",
+            ylab = "Interaction Score", col = strain.cols[i])
+    }
+    axis(1); axis(2)
+    mtext(paste("Chr", chr, "Position (MB)"), side = 1, line = 2.5)
+    mtext("Interaction Score", side = 2, line = 2.5)
+    mtext(plot.label, side = 3, line = 1.5)
+    gene.idx <- NULL
+    if(!is.null(gene.name)){
+        gene.idx <- which(gene.info[,"gene"] %in% gene.name)
+    }
+    if(!is.null(gene.id)){
+        gene.idx <- which(gene.info[,"feature"] %in% gene.id)
+    }
+    if(length(gene.idx) > 0){
+        abline(v = gene.info[gene.idx,"start"]/1e6)
+    }
+    legend(legend.position, col = strain.cols, lty = 1, lwd = 2, legend = 1:8)
+}
+```
+
+```{r main_hist}
+main.regions <- get_effect_regions(all_main, percentile, "effect")
+```
+
+The following plots show all chromosomes for which there were substantial
+main effects.
+
+```{r plot_main, results = "asis", fig.height = 6, fig.width = 10}
+for(ch in names(main.regions)){
+    cat("### Chr", ch, "\n")
+    plot.gene.location(all_main, ch, plot.label = paste("Chr", ch))
+    cat("\n\n")
+}
+
+```
+
+
+## All Interaction Effects {.tabset .tabset-fade .tabset-pills}
+
+The following histogram shows the distribution of interaction effects
+with the introgressed GAL3 locus (strain 1) for each allele. 
+Vertical lines indicate the 99th percentile.
+
+Positive values indicate better growth than predicted for the 
+case in which there is no interaction. These are the "suppressing
+interaction" in which the interacting allele suppresses the 
+phenotype generated by the query allele.
+
+Negative values indicate worse growth than predicted for the 
+case in which there is no interaction. These alleles exacerbate
+the phenotype of the query allele.
+
+```{r get_locations}
+interacting.regions <- get_effect_regions(deviation, percentile = percentile, 
+    type = "deviation")
+```
+
+
+The following plots show all chromosomes for which there were substantial
+interaction effects.
+
+```{r plot_int, results = "asis", fig.height = 6, fig.width = 10}
+for(ch in names(interacting.regions)){
+    cat("### Chr", ch, "\n")
+    plot.gene.location(deviation, ch, plot.label = paste("Chr", ch))
+    cat("\n\n")
+}
+```
+
+
+## Specific interactions with Genes 
+
+The following plot shows the position of GAL1/7/10 in the interaction
+score plot on chromosome 2 with GAL3 .
+
+```{r gal_chr2, fig.width = 10, fig.height = 6}
+plot.gene.location(deviation, chr = 2, gene.name = c("GAL1", "GAL7", "GAL10"), 
+    plot.label = "Interactions on Chr 2\nGAL1, 7, and 10 are marked", 
+    gene.info = gene.info)
+```
+
+The following plot shows the position of GAL3 in the interaction
+score plot for chromosome 4 with GAL3. The missing points here
+are regions of high LD with the null allele of GAL3.
+
+```{r gal_chr4, fig.width = 10, fig.height = 6}
+plot.gene.location(deviation, chr = 4, gene.name = "GAL3", 
+    legend.position = "bottomright", 
+    plot.label = "Interactions on Chr 4\nGAL3 is marked",
+    gene.info = gene.info)
+```
+
+The following plot shows the interaction score plots for chromosome 9.
+It looks as if the interactions here are due to funny allele frequencies.
+FLO11 is not in the regiont that was defined by high interaction scores.
+
+```{r gal_chr9, fig.width = 10, fig.height = 6}
+plot.gene.location(deviation, chr = 9, gene.id = "YIR019C", 
+    legend.position = "bottomleft", gene.info = gene.info,
+    plot.label = "Interactions on Chr 9\nFLO11 is marked")
+```
+
+The following figure shows the additional location of interaction 
+at this threshold. None of the known genes in the GAL pathway
+are on Chr 14.
+
+
+```{r chr14, fig.width = 10, fig.height = 6}
+plot.gene.location(deviation, chr = 14, legend.position = "bottomright",
+    plot.label = "Interactions on Chr 14")
+```
+
+## Main Effects
+
+The GAL1/7/10 rescue effect we see for strain 6 might just be a
+redundancy. It depends on the main effect. If both the strain 6 allele
+of GAL1/7/10 and the 1/3 alleles of GAL3 reduce growth in the GAL
+medium, the apparent suppression is just a redundancy. 
+
+If the strain 6 allele of GAL1/7/10 does not have a main effect,
+it is actually rescuing the GAL3 null.
+
+The figure below shows that the strain 6 allele of GAL1/7/10
+does not have a main effect in the GAL environment, suggesting
+that 
+
+```{r GAL1710_main}
+plot.gene.location(all_main, chr = 2, gene.name = c("GAL1", "GAL7", "GAL10"), 
+    legend.position = "bottomright", gene.info = gene.info,
+    plot.label = "Main effects on Chr 2\nGAL1, 7, and 10 are marked")
+abline(h = 1)
+```
+
+The following plot shows that the fitness of yeast with the GAL3 null
+and the strain 6 allele of GAL1/7/10 are close to 1, in comparison with
+all other strains, which are down near the GAL3 null allele fitness of 
+0.6.
+
+Gareth et al. have observed this effect as well. I have sent an email
+to ask about how these genes are connected.
+
+```{r rescue_interaction}
+plot.gene.location(all_int, chr = 2, gene.name = c("GAL1", "GAL7", "GAL10"), 
+    legend.position = "bottomright", gene.info = gene.info,
+    plot.label = "Fitness of GAL3 null\nGAL1, 7, and 10 are marked")
+abline(h = 1)
+```
+
+Other genes that did not show up in the interaction analysis, do 
+have main effects. The plots below show the main effects for 
+FLO11 and PGM1.
+
+```{r other_main}
+plot.gene.location(all_main, chr = 9, gene.id = "YIR019C", 
+    legend.position = "topright", gene.info = gene.info,
+    plot.label = "Main effects on Chr 9 \nFLO11 is marked")
+
+plot.gene.location(all_main, chr = 11, gene.name = "PGM1", 
+    legend.position = "topright", gene.info = gene.info,
+    plot.label = "Main effects on Chr 11\nPGM1 is marked")
+
+plot.gene.location(all_main, chr = 16, gene.name = "GAL4", 
+    legend.position = "bottomright", gene.info = gene.info,
+    plot.label = "Main effects on Chr 16\nGAL4 is marked")
+
+```
+

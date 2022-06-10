@@ -32,7 +32,7 @@ use_saved_results:
 # Single Scan Parameters 
 #================================================
 ref_allele:
- - "A"
+ - 5
 singlescan_perm:
  - 0
 
@@ -46,7 +46,7 @@ peak_density:
 tolerance:
  - 5 
 num_alleles_in_pairscan:
- - 100
+ - 5000
 #================================================
 # Pairscan Parameters 
 #================================================
