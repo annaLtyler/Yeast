@@ -76,6 +76,7 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
   num_pairs_limit = 1e6, num_perm_limit = 1e7, overwrite_alert = TRUE, 
   run_parallel = FALSE, n_cores = 4, verbose = FALSE) {
   
+  marker_selection_method = "from_list"
   
   if(!run_parallel){n_cores = 1}
   
@@ -121,7 +122,7 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
 
   #add the query allele and covariates.
   gene <- cbind(gene, c(query_genotype, covar_table))
-
+  colnames(gene)[which(colnames(gene) == "")] <- "query"
 
   #create a pair matrix that pairs the query genotype with all other
   #markers
@@ -186,10 +187,11 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
         marker_selection_method = marker_selection_method, 
         run_parallel = run_parallel, n_cores = n_cores)
     }else{
-      pairscan_perm <- pairscan_null(data_obj, geno_obj, scan_what = scan_what, 
+      pairscan_perm <- pairscan_null_query(data_obj, geno_obj, scan_what = scan_what, 
         pairscan_null_size = pairscan_null_size, max_pair_cor = max_pair_cor, 
         min_per_genotype, verbose = verbose, marker_selection_method = marker_selection_method, 
-        run_parallel = run_parallel, n_cores = n_cores)
+        run_parallel = run_parallel, n_cores = n_cores, 
+        specific_markers = setdiff(colnames(gene), "query"))
     }
     #add the results to the data object
     pairscan_obj$pairscan_perm <- pairscan_perm$pairscan_perm 

@@ -31,12 +31,12 @@ if(is.na(exp.name)){
   exp.name <- "query_cape"
   roi <- c("GAL3" = "chr04_463411")
   query.alleles <- c(1,3)
-  delete_previous <- FALSE
+  delete_previous <- TRUE
 }
 
 results.dir <- here("Results", exp.name)
 remove_chr9 = TRUE #removes the proximal half of Chr 9 because of allele frequency weirdness.
-subsample.markers = TRUE
+subsample.markers = FALSE
 #testing <- FALSE
 testing <- TRUE
 ```
@@ -66,9 +66,15 @@ load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ## Load data
 
 ```{r read_data}
-pop <- read_population(filename = here("Data", "scaffold_72h_data_rqtl1_form_new_11_16_21.csv"),
-  id_col = 1, na_strings = NA)
-#str(pop)
+pop.rds <- here("Data", "pop.RDS")
+if(!file.exists(pop.rds)){
+  pop <- read_population(filename = here("Data", "scaffold_72h_data_rqtl1_form_new_11_16_21.csv"),
+    id_col = 1, na_strings = NA)
+  #str(pop)
+  saveRDS(pop, pop.rds)
+}else{
+  pop <- readRDS(pop.rds)
+}
 
 cross_obj <- cape2mpp(pop)
 pheno_obj <- cross_obj[[1]]
@@ -91,7 +97,7 @@ if(remove_chr9){
 }
 
 if(testing){
-    subsample.locale <- sort(sample(1:length(pheno_obj$chromosome), 1000))
+    subsample.locale <- sort(sample(1:length(pheno_obj$chromosome), 100))
     geno <- geno[,,subsample.locale]
     pheno_obj$chromosome <- pheno_obj$chromosome[subsample.locale]
     pheno_obj$marker_num <- pheno_obj$marker_num[subsample.locale]
