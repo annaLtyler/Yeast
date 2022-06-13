@@ -105,7 +105,6 @@ if(testing){
     pheno_obj$geno_names[[3]] <- pheno_obj$geno_names[[3]][subsample.locale]
 }
 
-
 #str(pheno_obj)
 geno_obj <- geno
 #str(geno_obj)
@@ -151,7 +150,7 @@ run.finished <- as.logical(file.exists(file.path(results.dir, "Variant_Influence
 if(!run.finished){
   final_obj <- run_query_cape(pheno_obj, geno_obj,  
     query_genotype = gal.null,
-    results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
+    results_file = "cross.RDS", p_or_q = 1e-6, n_cores = 4, 
     initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
     param_file = file.path(results.dir, "cape.parameters.yml"), 
     yaml_params = NULL, results_path = results.dir, plot_pdf = TRUE)

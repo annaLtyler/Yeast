@@ -90,7 +90,6 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
     if(choice == "n"){stop()}
   }
   
-  
   pairscan_obj <- list()
   pairscan_obj$ref_allele <- data_obj$ref_allele
   pairscan_obj$max_pair_cor <- data_obj$max_pair_cor
@@ -108,27 +107,31 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
   
   #create a large 2D matrix with all
   #alleles
-  gene <- matrix(NA, nrow = nrow(geno_obj), ncol = dim(geno_obj)[2]*dim(geno_obj)[3])
+  gene <- matrix(NA, nrow = nrow(geno_obj), ncol = dim(geno_obj)[2]*(dim(geno_obj)[3]-1)) #take off the query allele, which is the last marker
   start_idx <- 1
   n_alleles <- dim(geno_obj)[2]
-  n_markers <- dim(geno_obj)[3]
+  n_markers <- dim(geno_obj)[3] - 1
   for(i in 1:n_markers){
     gene[,start_idx:(start_idx+n_alleles-1)] <- geno_obj[,,i]
     start_idx = start_idx + n_alleles
   }
-  fill_markers <- rep(dimnames(geno_obj)[[3]], each = n_alleles)
-  fill_alleles <- rep(dimnames(geno_obj)[[2]], each = n_markers)
+  fill_markers <- rep(dimnames(geno_obj)[[3]][-c(dim(geno_obj)[3])], each = n_alleles)
+  fill_alleles <- rep(dimnames(geno_obj)[[2]], n_markers)
   colnames(gene) <- paste(fill_markers, fill_alleles, sep = "_")
 
-  #add the query allele and covariates.
-  gene <- cbind(gene, c(query_genotype, covar_table))
-  colnames(gene)[which(colnames(gene) == "")] <- "query"
+  #add covariates and query genotype. Put the query genotype
+  #in the last position
+  gene <- cbind(gene, covar_table, query_genotype)
+  colnames(gene)[ncol(gene)] <- "query"
 
   #create a pair matrix that pairs the query genotype with all other
   #markers
   if(verbose){cat("Getting marker pairs for pairscan...\n")}
-  query_idx <- dim(geno_obj)[2]*dim(geno_obj)[3] + 1
-  marker_pairs <- cbind(rep(query_idx, ncol(gene)), 1:ncol(gene))
+  marker_idx <- 1:(ncol(gene)-1) #the query marker is the last marker in geno_obj
+  query_idx <- ncol(gene)
+  
+  #test the query genotype against all markers and covariates
+  marker_pairs <- cbind(rep(query_idx, length(marker_idx)), marker_idx)
 
   #take out any pairs that don't pass the max_pair_cor or min_per_genotype
   #thresholds
@@ -171,7 +174,7 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
       run_parallel = run_parallel)
   }else{
     pairscan_results <- pairscan_kin(data_obj, geno_obj = geno_obj, 
-      scan_what = scan_what, marker_pairs = pared_marker_mat, kin_obj = kin_obj, 
+      scan_what = scan_what, marker_pairs = marker_pairs, kin_obj = kin_obj, 
       verbose = verbose, run_parallel = run_parallel, n_cores = n_cores)
   }	
   
@@ -187,9 +190,11 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
         marker_selection_method = marker_selection_method, 
         run_parallel = run_parallel, n_cores = n_cores)
     }else{
-      pairscan_perm <- pairscan_null_query(data_obj, geno_obj, scan_what = scan_what, 
+      pairscan_perm <- pairscan_null_query(data_obj, geno_obj, 
+        marker_pairs = marker_pairs, scan_what = scan_what, 
         pairscan_null_size = pairscan_null_size, max_pair_cor = max_pair_cor, 
-        min_per_genotype, verbose = verbose, marker_selection_method = marker_selection_method, 
+        min_per_geno = min_per_genotype, verbose = verbose, 
+        marker_selection_method = marker_selection_method, 
         run_parallel = run_parallel, n_cores = n_cores, 
         specific_markers = setdiff(colnames(gene), "query"))
     }

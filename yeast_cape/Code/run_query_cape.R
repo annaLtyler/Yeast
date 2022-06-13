@@ -44,6 +44,20 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
   initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
   param_file = NULL, yaml_params = NULL, results_path = NULL, plot_pdf = TRUE){
   
+  #add the query_genotype to the geno_obj, so we can find it later with get_marker_num
+  expand_query <- matrix(NA, nrow = nrow(query_genotype), ncol = ncol(geno_obj))
+  rownames(expand_query) <- rownames(geno_obj)
+  colnames(expand_query) <- colnames(geno_obj)
+  for(i in 1:ncol(expand_query)){
+    expand_query[,i] <- query_genotype
+  }
+  geno_obj <- abind(geno_obj, expand_query, along = 3)
+  dimnames(geno_obj)[[3]][length(dimnames(geno_obj)[[3]])]  <- "query"
+  pheno_obj$geno_names$locus <- dimnames(geno_obj)[[3]]
+  pheno_obj$chromosome <- c(pheno_obj$chromosome, 0)
+  pheno_obj$marker_num <- c(pheno_obj$marker_num, (max(pheno_obj$marker_num)+1))
+  pheno_obj$marker_location <- c(pheno_obj$marker_location, 1)
+
   # Instantiate the Cape R6 object
   data_obj <- Cape$new(
   		parameter_file = param_file,
@@ -260,7 +274,7 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
         if (data_obj$plot_pdf) {
           if(verbose){cat("Plotting pairscan_regression.pdf...\n")}
           data_obj$plotPairscan("Pairscan_Regression.pdf", pairscan_obj, 
-                                phenotype = NULL, show_marker_labels = TRUE, show_alleles = FALSE)
+            phenotype = NULL, show_marker_labels = TRUE, show_alleles = FALSE)
         }
         if(verbose){cat("Plotting pairscan_regression.jpg...\n")}
         data_obj$plotPairscan("Pairscan_Regression.jpg", pairscan_obj, 

@@ -45,12 +45,11 @@ pairscan_null_query <- function(data_obj, geno_obj = NULL, marker_pairs,
   run_parallel = FALSE, n_cores = 4, verbose = FALSE){
   
   ref_allele <- data_obj$ref_allele
-  
-  
+  covar_names <- get_covar(data_obj)$covar_names 
+
   if(is.null(pairscan_null_size)){
     stop("The total number of permutations must be specified.")
   }
-  
   
   #If the user does not specify a scan_what, 
   #default to eigentraits, basically, if eigen,
@@ -69,7 +68,6 @@ pairscan_null_query <- function(data_obj, geno_obj = NULL, marker_pairs,
   #pairscan
   
   geno <- get_geno(data_obj, geno_obj)
-  
   
   #make a list to hold the results. 
   #Tables from each of the phenotypes will be
@@ -91,58 +89,41 @@ pairscan_null_query <- function(data_obj, geno_obj = NULL, marker_pairs,
   n_top_markers <- ncol(data_obj$geno_for_pairscan)
   final_perm <- 1
   while(final_perm < pairscan_null_size){
-    perm_order <- sample(1:dim(pheno)[1])
-    
-    
-    if(marker_selection_method != "by_gene" && marker_selection_method != "from_list"){
-      single_scan_result <- array(NA, dim = c(length(data_obj$geno_names[[3]]), num_pheno, (dim(geno)[[2]]-1)))
-      dimnames(single_scan_result) <- list(data_obj$geno_names[[3]], colnames(pheno), dimnames(geno)[[2]][-which(
-        dimnames(geno)[[2]] == ref_allele)])
-      
-      if(verbose){cat("Performing single marker scans of permuted traits.\n")}
-      
-      covar_info <- get_covar(data_obj)
+    perm_order <- sample(1:dim(pheno)[1]) #randomize phenotype
 
-      for(p in 1:num_pheno){ 
-        if(verbose){cat("\t", colnames(pheno)[p], "...\n")}
-        one_singlescan_tstats <- one_singlescanDO(phenotype_vector = pheno[perm_order,p], 
-        		genotype_mat = geno, covar_table = covar_info$covar_table, 
-            ref_allele = ref_allele, model_family = model_family, run_parallel = run_parallel, 
-            n_cores = n_cores)
-        single_scan_result[,p,] <- one_singlescan_tstats
-      }
-      
-      if(verbose){cat("Selecting markers for permuted pairscan...\n")}				
-      #use this singlescan to select markers for a permuted pairscan
-      
-      if(marker_selection_method == "top_effects"){
-        perm_data_obj <- select_markers_for_pairscan(data_obj, 
-          singlescan_obj = single_scan_result, geno_obj, num_alleles = n_top_markers, 
-          peak_density = data_obj$peak_density, window_size = data_obj$window_size, 
-          tolerance = data_obj$tolerance, plot_peaks = FALSE, verbose = verbose)
-      }
-    }else{ 
-      
-      # if(marker_selection_method == "by_gene"){
-        # #if we are using a gene-based method
-        # #use a permuted gene list to select
-        # #SNPs near genes
-        # perm_data_obj <- select_markers_for_pairscan.by_gene(data_obj, ref_allele = ref_allele, 
-          # geno_obj = geno_obj, gene.list = sample(gene.list), 
-          # num.snps = ncol(data_obj$geno_for_pairscan), organism = data_obj$organism)
-      # }
-      if(marker_selection_method == "from_list"){
-        single_scan_result <- list("ref_allele" = ref_allele)
-        perm_data_obj <- select_markers_for_pairscan(data_obj, 
-          singlescan_obj = single_scan_result, geno_obj, specific_markers = specific_markers)
-      }
-    }
-    
-    
+    single_scan_result <- list("ref_allele" = ref_allele)
+    perm_data_obj <- select_markers_for_pairscan(data_obj, 
+      singlescan_obj = single_scan_result, geno_obj, 
+      specific_markers = specific_markers)
+        
     if(verbose){cat("\tGetting markers for permuted pairscan...\n")}
-    top_marker_pairs <- get_pairs_for_pairscan(gene = perm_data_obj$geno_for_pairscan, 
-      max_pair_cor = max_pair_cor, min_per_genotype = min_per_geno, 
-      run_parallel = run_parallel, n_cores = n_cores, verbose = verbose)
+
+      #add the query to the permuted geno_for_pairscan
+      #and use this in perm_data_obj
+      perm_geno <- perm_data_obj$geno_for_pairscan
+      #str(perm_geno)
+      rownames(perm_geno) <- rownames(geno)
+      query_idx <- dim(geno_obj)[[3]]
+      perm_geno <- cbind(perm_geno, geno_obj[,1,query_idx])
+      colnames(perm_geno)[ncol(perm_geno)] <- "query"
+      perm_data_obj$geno_for_pairscan <- perm_geno      
+
+      #take out any pairs that don't pass the max_pair_cor or min_per_genotype
+      #thresholds
+      top_marker_pairs <- test_query_pairs(
+        gene = perm_geno,
+        marker_pairs = marker_pairs,
+        covar_names = covar_names,
+        max_pair_cor = max_pair_cor,
+        min_per_genotype = min_per_geno,
+        run_parallel = run_parallel,
+        n_cores = n_cores,
+        verbose = verbose
+      )
+
+    #top_marker_pairs <- get_pairs_for_pairscan(gene = perm_data_obj$geno_for_pairscan, 
+    #  max_pair_cor = max_pair_cor, min_per_genotype = min_per_geno, 
+    #  run_parallel = run_parallel, n_cores = n_cores, verbose = verbose)
     total_pairs <- nrow(top_marker_pairs)
     num_to_add <- 10
     #we don't need to do extra permutations

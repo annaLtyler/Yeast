@@ -52,7 +52,7 @@ test_query_pairs <- function(gene, marker_pairs, covar_names = NULL, max_pair_co
   if(!run_parallel){n_cores = 1}
   
   p = NULL #for appeasing R CMD check
-  
+
   if(is.null(max_pair_cor) && is.null(min_per_genotype)){
     stop("One of max_pair_cor or min_per_genotype should be set.")
   }
