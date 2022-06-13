@@ -64,11 +64,11 @@ interaction_count <- function(u_chr, marker_names, window.size = 1e4, gap.size =
   marker_pos <- sapply(split_marker, function(x) as.numeric(substr(x[[1]], 4, nchar(x))))
   chr_idx <- lapply(u_chr, function(x) which(marker_chr == x))
   chr_pos <- lapply(chr_idx, function(x) sort(marker_pos[x]))
-  windows <- lapply(chr_pos, function(x) sliding.window.el(elV = 1:ceiling(max(x)), 
-    window.size = window.size, gap.size = gap.size))
+  windows <- lapply(chr_pos, function(x) if(length(x) > 0){sliding.window.el(elV = 1:ceiling(max(x)), 
+    window.size = window.size, gap.size = gap.size)}else{NA})
   counts <- lapply(1:length(windows), function(x) sapply(1:length(windows[[x]]), 
-    function(y) length(intersect(which(chr_pos[[x]] >= min(windows[[x]][[y]])), 
-    which(chr_pos[[x]] <= max(windows[[x]][[y]]))))))
+    function(y) if(length(windows[[x]][[y]]) > 0){length(intersect(which(chr_pos[[x]] >= min(windows[[x]][[y]])), 
+    which(chr_pos[[x]] <= max(windows[[x]][[y]]))))}else{NA}))
   count_pos <- lapply(windows, function(x) sapply(x, mean))
   result <- list("positions" = count_pos, "counts" = counts)
   return(result)
@@ -79,7 +79,7 @@ plot_counts <- function(count_result, plot.label = ""){
   int_pos <- count_result$positions
   chr <- 1:length(int_counts)
   
-  global.max <- max(unlist(int_counts))
+  global.max <- max(unlist(int_counts), na.rm = TRUE)
   layout.mat <- matrix(chr, nrow = 1)
   layout(layout.mat)
 
@@ -91,8 +91,14 @@ plot_counts <- function(count_result, plot.label = ""){
     if(ch == max(u_chr)){
       par(mar = c(4,0,4,2))
     }
-    plot(int_pos[[ch]], int_counts[[ch]], axes = FALSE, 
-      type = "h", xlab = "", ylab = "", ylim = c(0, global.max))
+    if(!all(is.na(int_pos[[ch]]))){
+      plot(int_pos[[ch]], int_counts[[ch]], axes = FALSE, 
+        type = "h", xlab = "", ylab = "", ylim = c(0, global.max))
+    }else{
+      plot.new()
+      plot.window(xlim = c(0,1), ylim = c(0, global.max))
+      abline(h = 0)
+    }
     mtext(paste0("Chr", ch), side = 1, line = 0)
     if(ch == 1){axis(2)}
   }
@@ -108,7 +114,7 @@ plot_two_counts <- function(count_results1, count_results2, plot.label = ""){
   int_pos2 <- count_results2$positions
   chr <- 1:max(c(length(int_counts1), length(int_counts2)))
   
-  global.max <- max(c(unlist(int_counts1), unlist(int_counts2)))
+  global.max <- max(c(unlist(int_counts1), unlist(int_counts2)), na.rm = TRUE)
   layout.mat <- matrix(chr, nrow = 1)
   layout(layout.mat)
 
@@ -121,10 +127,20 @@ plot_two_counts <- function(count_results1, count_results2, plot.label = ""){
       par(mar = c(4,0,4,2))
     }
     plot.new()
-    plot.window(xlim = c(0, max(c(int_pos1[[ch]], int_pos2[[ch]]))), 
-      ylim = c(global.max*-1, global.max))
-    points(int_pos1[[ch]], int_counts1[[ch]], type = "h", col = "#bf5b17")
-    points(int_pos2[[ch]], int_counts2[[ch]]*-1, type = "h", col = "#386cb0")    
+
+    if(!all(is.na(int_pos1[[ch]])) && !all(is.na(int_pos2[[ch]]))){
+      plot.window(xlim = c(0, max(c(int_pos1[[ch]], int_pos2[[ch]]))), 
+        ylim = c(global.max*-1, global.max))
+      if(!all(is.na(int_pos1[[ch]]))){
+        points(int_pos1[[ch]], int_counts1[[ch]], type = "h", col = "#bf5b17")
+      }
+      if(!all(is.na(int_pos2[[ch]]))){
+      points(int_pos2[[ch]], int_counts2[[ch]]*-1, type = "h", col = "#386cb0")    
+      }
+    }else{
+        plot.window(xlim = c(0,1), ylim = c(-global.max, global.max))
+        abline(h = 0)
+    }
     mtext(paste0("Chr", ch), side = 1, line = 0)
     if(ch == 1){axis(2)}
   }
@@ -132,18 +148,36 @@ plot_two_counts <- function(count_results1, count_results2, plot.label = ""){
   mtext(plot.label, side = 3, line = -2, outer = TRUE)
 
 }
+```
 
+The following plots show how the source markers are distributed
+across the genome. These are the markers that target the GAL
+introgression.
+
+```{r source_dist, fig.width = 10, fig.height = 5}
 source_markers <- var_inf[,"Source"]
 source_markers <- source_markers[which(source_markers != "query")]
 source_counts <- interaction_count(u_chr, source_markers, 1e4, 5e3)
 if(is.interactive){quartz(width = 10, height = 5)}
 plot_counts(source_counts, plot.label = "Source Marker Positions")
+```
 
+The following plots show how the target markers are distributed
+across the genome. These are the markers that are targeted by 
+the GAL introgression.
+
+
+```{r target_dist, fig.width = 10, fig.height = 5}
 target_markers <- var_inf[,"Target"]
 target_markers <- target_markers[which(target_markers != "query")]
 target_counts <- interaction_count(u_chr, target_markers, 1e4, 5e3)
 if(is.interactive){quartz(width = 10, height = 5)}
 plot_counts(target_counts, plot.label = "Target Marker Positions")
+```
 
-plot_two_counts(source_counts, target_counts)
+The following plot shows a direct comparison of the distributions of the
+source markers (top, brown) and the target markers (bottom blue).
+
+```{r comp, fig.width = 10, fig.height = 5}
+plot_two_counts(count_results1 = source_counts, count_results2 = target_counts)
 ```
