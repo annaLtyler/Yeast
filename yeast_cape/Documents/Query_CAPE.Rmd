@@ -27,7 +27,7 @@ exp.name = args[1]
 delete_previous <- as.logical(args[3])
 
 if(is.na(exp.name)){
-  exp.name <- "query_cape"
+  exp.name <- "GAL_query"
   delete_previous <- TRUE
 }
 
