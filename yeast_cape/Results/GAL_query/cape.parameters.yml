@@ -5,7 +5,7 @@ traits:
  - GAL
  - YPD
 scan_what:
- - raw_traits 
+ - eigentraits 
 traits_scaled:
  - false
 traits_normalized:
@@ -47,6 +47,6 @@ marker_selection_method:
 min_per_genotype:
  - 100
 pairscan_null_size:
- - 1000
+ - 10000
 transform_to_phenospace:
  - false
