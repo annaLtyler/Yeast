@@ -105,14 +105,14 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
   covar_names <- covar_info$covar_names
   covar_table <- covar_info$covar_table
   
-  #create a large 2D matrix with all
-  #alleles
-  gene <- matrix(NA, nrow = nrow(geno_obj), ncol = dim(geno_obj)[2]*(dim(geno_obj)[3]-1)) #take off the query allele, which is the last marker
+  #create a large 2D matrix with all alleles
+  geno <- get_geno(data_obj, geno_obj)
+  gene <- matrix(NA, nrow = nrow(geno), ncol = dim(geno_obj)[2]*(dim(geno)[3]-1)) #take off the query allele, which is the last marker
   start_idx <- 1
-  n_alleles <- dim(geno_obj)[2]
-  n_markers <- dim(geno_obj)[3] - 1
+  n_alleles <- dim(geno)[2]
+  n_markers <- dim(geno)[3] - 1
   for(i in 1:n_markers){
-    gene[,start_idx:(start_idx+n_alleles-1)] <- geno_obj[,,i]
+    gene[,start_idx:(start_idx+n_alleles-1)] <- geno[,,i]
     start_idx = start_idx + n_alleles
   }
   fill_markers <- rep(dimnames(geno_obj)[[3]][-c(dim(geno_obj)[3])], each = n_alleles)
@@ -121,7 +121,10 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
 
   #add covariates and query genotype. Put the query genotype
   #in the last position
-  gene <- cbind(gene, covar_table, query_genotype)
+  #make sure the query genotype has the same individuals as geno
+  common.ind <- intersect(rownames(geno), rownames(query_genotype))
+  query_geno_idx <- match(common.ind, rownames(query_genotype))
+  gene <- cbind(gene, covar_table, query_genotype[query_geno_idx,])
   colnames(gene)[ncol(gene)] <- "query"
 
   #create a pair matrix that pairs the query genotype with all other
