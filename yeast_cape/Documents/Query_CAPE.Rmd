@@ -32,8 +32,8 @@ if(is.na(exp.name)){
   exp.name <- "GAL_query"
   delete_previous <- TRUE
   remove_chr9 = TRUE #removes the proximal half of Chr 9 because of allele frequency weirdness.
-  testing <- FALSE
-  #testing <- TRUE
+  #testing <- FALSE
+  testing <- TRUE
 }
 
 roi <- c("GAL3" = "chr04_463411")

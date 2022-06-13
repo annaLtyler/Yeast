@@ -1,0 +1,149 @@
+---
+title: "Query CAPE Analysis"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: yes
+    toc_float: yes
+---
+
+The purpose of this workflow is to analyze results from Query_CAPE.Rmd
+```{r get_exp_name}
+library(here)
+exp.name <- "GAL_query"
+results.dir <- here("Results", exp.name)
+is.interactive = FALSE
+#is.interactive = TRUE
+```
+
+The results here pertain to the directory `r exp.name`.
+
+```{r load_code}
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+#load local version of cape code
+needed.libraries <- c("pheatmap")
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
+```
+
+## Load data
+
+```{r read_data}
+final_obj <- readRDS(file.path(results.dir, "cross.RDS"))
+geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
+```
+
+The following barplot shows the total number of interactions per
+chromosome.
+
+```{r var_inf}
+var_inf <- write_variant_influences(final_obj, p_or_q = 1e-6, 
+  include_main_effects = FALSE, write_file = FALSE)
+all_chr <- c(var_inf[,2], var_inf[,5])
+
+barplot(table(all_chr[which(all_chr != 0)]), 
+  main = "Number of Interactions per Chromosome")
+```
+
+The following plot shows the interaction counts along the 
+genome in a sliding window.
+
+```{r interactions_along_genome}
+u_chr <- 1:16
+
+interaction_count <- function(u_chr, marker_names, window.size = 1e4, gap.size = 5e3){
+  split_marker <- strsplit(marker_names, "_")
+  marker_chr <- sapply(split_marker, function(x) as.numeric(substr(x[[1]], 2,3)))
+  marker_pos <- sapply(split_marker, function(x) as.numeric(substr(x[[1]], 4, nchar(x))))
+  chr_idx <- lapply(u_chr, function(x) which(marker_chr == x))
+  chr_pos <- lapply(chr_idx, function(x) sort(marker_pos[x]))
+  windows <- lapply(chr_pos, function(x) sliding.window.el(elV = 1:ceiling(max(x)), 
+    window.size = window.size, gap.size = gap.size))
+  counts <- lapply(1:length(windows), function(x) sapply(1:length(windows[[x]]), 
+    function(y) length(intersect(which(chr_pos[[x]] >= min(windows[[x]][[y]])), 
+    which(chr_pos[[x]] <= max(windows[[x]][[y]]))))))
+  count_pos <- lapply(windows, function(x) sapply(x, mean))
+  result <- list("positions" = count_pos, "counts" = counts)
+  return(result)
+}
+
+plot_counts <- function(count_result, plot.label = ""){
+  int_counts <- count_result$counts
+  int_pos <- count_result$positions
+  chr <- 1:length(int_counts)
+  
+  global.max <- max(unlist(int_counts))
+  layout.mat <- matrix(chr, nrow = 1)
+  layout(layout.mat)
+
+  for(ch in 1:length(chr)){
+    par(mar = c(4,0,4,0))
+    if(ch == 1){
+      par(mar = c(4,4,4,0))
+    }
+    if(ch == max(u_chr)){
+      par(mar = c(4,0,4,2))
+    }
+    plot(int_pos[[ch]], int_counts[[ch]], axes = FALSE, 
+      type = "h", xlab = "", ylab = "", ylim = c(0, global.max))
+    mtext(paste0("Chr", ch), side = 1, line = 0)
+    if(ch == 1){axis(2)}
+  }
+  mtext("Interaction Counts", side = 2, line = -2, outer = TRUE)
+  mtext(plot.label, side = 3, line = -2, outer = TRUE)
+}
+
+plot_two_counts <- function(count_results1, count_results2, plot.label = ""){
+
+  int_counts1 <- count_results1$counts
+  int_pos1 <- count_results1$positions
+  int_counts2 <- count_results2$counts
+  int_pos2 <- count_results2$positions
+  chr <- 1:max(c(length(int_counts1), length(int_counts2)))
+  
+  global.max <- max(c(unlist(int_counts1), unlist(int_counts2)))
+  layout.mat <- matrix(chr, nrow = 1)
+  layout(layout.mat)
+
+  for(ch in 1:length(chr)){
+    par(mar = c(4,0,4,0))
+    if(ch == 1){
+      par(mar = c(4,4,4,0))
+    }
+    if(ch == max(u_chr)){
+      par(mar = c(4,0,4,2))
+    }
+    plot.new()
+    plot.window(xlim = c(0, max(c(int_pos1[[ch]], int_pos2[[ch]]))), 
+      ylim = c(global.max*-1, global.max))
+    points(int_pos1[[ch]], int_counts1[[ch]], type = "h", col = "#bf5b17")
+    points(int_pos2[[ch]], int_counts2[[ch]]*-1, type = "h", col = "#386cb0")    
+    mtext(paste0("Chr", ch), side = 1, line = 0)
+    if(ch == 1){axis(2)}
+  }
+  mtext("Interaction Counts", side = 2, line = -2, outer = TRUE)
+  mtext(plot.label, side = 3, line = -2, outer = TRUE)
+
+}
+
+source_markers <- var_inf[,"Source"]
+source_markers <- source_markers[which(source_markers != "query")]
+source_counts <- interaction_count(u_chr, source_markers, 1e4, 5e3)
+if(is.interactive){quartz(width = 10, height = 5)}
+plot_counts(source_counts, plot.label = "Source Marker Positions")
+
+target_markers <- var_inf[,"Target"]
+target_markers <- target_markers[which(target_markers != "query")]
+target_counts <- interaction_count(u_chr, target_markers, 1e4, 5e3)
+if(is.interactive){quartz(width = 10, height = 5)}
+plot_counts(target_counts, plot.label = "Target Marker Positions")
+
+plot_two_counts(source_counts, target_counts)
+```
