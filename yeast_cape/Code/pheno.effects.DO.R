@@ -18,7 +18,6 @@ pheno.effects.DO <- function(data.obj, geno.obj, covar = NULL,
 	}else{
 		pheno <- get_pheno(data.obj, scan_what = "normalized", covar = covar)
 	}
-
 	
 	if(is.null(data.obj$full_net)){
 		stop("The full network must be present to run this script.")

@@ -97,7 +97,7 @@ if(remove_chr9){
 }
 
 if(testing){
-    subsample.locale <- sort(sample(1:length(pheno_obj$chromosome), 100))
+    subsample.locale <- sort(sample(1:length(pheno_obj$chromosome), 2000))
     geno <- geno[,,subsample.locale]
     pheno_obj$chromosome <- pheno_obj$chromosome[subsample.locale]
     pheno_obj$marker_num <- pheno_obj$marker_num[subsample.locale]

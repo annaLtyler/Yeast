@@ -181,3 +181,24 @@ source markers (top, brown) and the target markers (bottom blue).
 ```{r comp, fig.width = 10, fig.height = 5}
 plot_two_counts(count_results1 = source_counts, count_results2 = target_counts)
 ```
+
+## Effect Sizes
+
+```{r effect_sizes}
+#head(var_inf)
+query.as.source <- which(var_inf[,"Source"] == "query")
+query.as.target <- which(var_inf[,"Target"] == "query")
+source.effects <- as.numeric(var_inf[query.as.source,"Effect"])
+target.effects <- as.numeric(var_inf[query.as.target,"Effect"])
+
+boxplot(list(source.effects,target.effects), 
+  names = c("Query as Source", "Query as Target"))
+abline(h = 0)
+```
+
+```{r pheno_effects, fig.width = 8, fig.height = 8}
+pheno.effects <- pheno.effects.DO(final_obj, geno_obj, covar = NULL, 
+	geno.coding = c("Additive", "Dominant", "Recessive"), 
+	collapsed.net = FALSE, color.scheme = c("other", "DO/CC"))
+
+```

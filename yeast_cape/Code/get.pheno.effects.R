@@ -40,7 +40,8 @@ get.pheno.effects <- function(data.obj, geno, marker1.name,
 			marker.label <- data.obj$linkage_blocks_full[[marker.locale]]
 			return(marker.label)
 			}else{
-			if(is.null(allele)){
+			allele <- strsplit(marker.name, "_")[[1]][2]
+			if(is.na(allele)){
 				full.name <- marker.name
 				}else{
 				full.name <- paste0(marker.name, "_", allele)
@@ -97,11 +98,13 @@ get.pheno.effects <- function(data.obj, geno, marker1.name,
 		split.m1 <- strsplit(m1.marker, "_")
 		m1.name <- sapply(split.m1, function(x) x[1])
 		m1.allele <- sapply(split.m1, function(x) x[2])
+		if(is.na(m1.allele)){m1.allele = 1}
 
 		m2.marker <- get.marker.name(marker2.name)
 		split.m2 <- strsplit(m2.marker, "_")
 		m2.name <- sapply(split.m2, function(x) x[1])
 		m2.allele <- sapply(split.m2, function(x) x[2])
+		if(is.na(m2.allele)){m2.allele = 1}
 
 		m1.geno <- geno[not.na.locale,which(dimnames(geno)[[2]] == m1.allele), which(dimnames(geno)[[3]] == m1.name)]
 		m2.geno <- geno[not.na.locale,which(dimnames(geno)[[2]] == m2.allele), which(dimnames(geno)[[3]] == m2.name)]
@@ -136,6 +139,9 @@ get.pheno.effects <- function(data.obj, geno, marker1.name,
 			binned.m1  <- bin.vector(m1.geno, c(0, 0.5, 1))
 			binned.m2 <- bin.vector(m2.geno, c(0, 0.1, 1))
 		}
+	}else{
+		binned.m1  <- bin.vector(m1.geno, geno.bins)
+		binned.m2 <- bin.vector(m2.geno, geno.bins)
 	}
 
 	pheno.locale <- which(colnames(pheno) == pheno.name)
