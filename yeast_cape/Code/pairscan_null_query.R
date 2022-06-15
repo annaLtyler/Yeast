@@ -92,9 +92,6 @@ pairscan_null_query <- function(data_obj, pairscan_geno, marker_pairs,
     single_scan_result <- list("ref_allele" = ref_allele)
         
     if(verbose){cat("\tGetting markers for permuted pairscan...\n")}
-
-      #add the query to the permuted geno_for_pairscan
-      #and use this in perm_data_obj
       
     top_marker_pairs <- marker_pairs
     total_pairs <- nrow(top_marker_pairs)
@@ -120,10 +117,11 @@ pairscan_null_query <- function(data_obj, pairscan_geno, marker_pairs,
     for(p in 1:num_pheno){
       if(verbose){cat("\t", colnames(pheno)[p], "...\n")}
       #run a pairscan on these markers and each permuted phenotype
-      pairscan_results <- one_pairscan_parallel(perm_data_obj, 
+      pairscan_results <- one_pairscan_parallel(data_obj, 
         phenotype_vector = pheno[perm_order,p], 
-        genotype_matrix = perm_data_obj$geno_for_pairscan, 
-        paired_markers = top_marker_pairs, n_perm = 0, run_parallel = run_parallel, 
+        genotype_matrix = pairscan_geno, 
+        paired_markers = top_marker_pairs, n_perm = 0, 
+        run_parallel = run_parallel, 
         n_cores = n_cores, verbose = verbose)
       
       #integrate the results into the permutation object
