@@ -38,7 +38,7 @@
 #' @param verbose Whether to write progress to the screen
 #' @keywords internal
 #' 
-pairscan_null_query <- function(data_obj, geno_obj = NULL, marker_pairs,
+pairscan_null_query <- function(data_obj, pairscan_geno, marker_pairs,
   specific_markers, scan_what = c("eigentraits", "raw_traits"), 
   pairscan_null_size = NULL, max_pair_cor = NULL, min_per_geno = NULL, 
   model_family = "gaussian", marker_selection_method = c("top_effects", "uniform", "effects_dist", "by_gene"),
@@ -66,9 +66,7 @@ pairscan_null_query <- function(data_obj, geno_obj = NULL, marker_pairs,
   #use the full genotype matrix to select 
   #markers for generating the null in the 
   #pairscan
-  
-  geno <- get_geno(data_obj, geno_obj)
-  
+    
   #make a list to hold the results. 
   #Tables from each of the phenotypes will be
   #put into this list
@@ -92,38 +90,13 @@ pairscan_null_query <- function(data_obj, geno_obj = NULL, marker_pairs,
     perm_order <- sample(1:dim(pheno)[1]) #randomize phenotype
 
     single_scan_result <- list("ref_allele" = ref_allele)
-    perm_data_obj <- select_markers_for_pairscan(data_obj, 
-      singlescan_obj = single_scan_result, geno_obj, 
-      specific_markers = specific_markers)
         
     if(verbose){cat("\tGetting markers for permuted pairscan...\n")}
 
       #add the query to the permuted geno_for_pairscan
       #and use this in perm_data_obj
-      perm_geno <- perm_data_obj$geno_for_pairscan
-      #str(perm_geno)
-      rownames(perm_geno) <- rownames(geno)
-      query_idx <- dim(geno_obj)[[3]]
-      perm_geno <- cbind(perm_geno, geno_obj[,1,query_idx])
-      colnames(perm_geno)[ncol(perm_geno)] <- "query"
-      perm_data_obj$geno_for_pairscan <- perm_geno      
-
-      #take out any pairs that don't pass the max_pair_cor or min_per_genotype
-      #thresholds
-      top_marker_pairs <- test_query_pairs(
-        gene = perm_geno,
-        marker_pairs = marker_pairs,
-        covar_names = covar_names,
-        max_pair_cor = max_pair_cor,
-        min_per_genotype = min_per_geno,
-        run_parallel = run_parallel,
-        n_cores = n_cores,
-        verbose = verbose
-      )
-
-    #top_marker_pairs <- get_pairs_for_pairscan(gene = perm_data_obj$geno_for_pairscan, 
-    #  max_pair_cor = max_pair_cor, min_per_genotype = min_per_geno, 
-    #  run_parallel = run_parallel, n_cores = n_cores, verbose = verbose)
+      
+    top_marker_pairs <- marker_pairs
     total_pairs <- nrow(top_marker_pairs)
     num_to_add <- 10
     #we don't need to do extra permutations

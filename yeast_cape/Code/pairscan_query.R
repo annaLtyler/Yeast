@@ -138,6 +138,8 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
 
   #take out any pairs that don't pass the max_pair_cor or min_per_genotype
   #thresholds
+  #we only need to do this once in the query_cape because it will
+  #be the same every time. Pass this pair matrix onto pairscan_null_query
 
   pared_marker_mat <- test_query_pairs(
     gene,
@@ -177,7 +179,7 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
       run_parallel = run_parallel)
   }else{
     pairscan_results <- pairscan_kin(data_obj, geno_obj = geno_obj, 
-      scan_what = scan_what, marker_pairs = marker_pairs, kin_obj = kin_obj, 
+      scan_what = scan_what, marker_pairs = pared_marker_mat, kin_obj = kin_obj, 
       verbose = verbose, run_parallel = run_parallel, n_cores = n_cores)
   }	
   
@@ -193,8 +195,8 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
         marker_selection_method = marker_selection_method, 
         run_parallel = run_parallel, n_cores = n_cores)
     }else{
-      pairscan_perm <- pairscan_null_query(data_obj, geno_obj, 
-        marker_pairs = marker_pairs, scan_what = scan_what, 
+      pairscan_perm <- pairscan_null_query(data_obj, pairscan_geno = gene, 
+        marker_pairs = pared_marker_mat, scan_what = scan_what, 
         pairscan_null_size = pairscan_null_size, max_pair_cor = max_pair_cor, 
         min_per_geno = min_per_genotype, verbose = verbose, 
         marker_selection_method = marker_selection_method, 
