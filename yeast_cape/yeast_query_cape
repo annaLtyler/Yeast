@@ -8,10 +8,10 @@
 #SBATCH -e slurm.%N.%j.err # STDERR
 #SBATCH --mail-user=anna.tyler@jax.org
 #SBATCH --mail-type=END
-# example use: sbatch --export=exp_name="GAL_query",delete_previous="TRUE",remove_chr9="TRUE",testing=FALSE yeast_query_cape
+# example use: sbatch --export=exp_name="GAL_query",delete_previous="TRUE",remove_chr9="TRUE",test_markers=FALSE,test_ind=TRUE yeast_query_cape
 
 cd $SLURM_SUBMIT_DIR
 
 module load singularity
 
-singularity exec /projects/carter-lab/atyler/Containers/som.sif R -e 'rmarkdown::render(here::here("Documents", "Query_CAPE.Rmd"))' --args "$exp_name" "$delete_previous" "$remove_chr9" "$testing"
+singularity exec /projects/carter-lab/atyler/Containers/som.sif R -e 'rmarkdown::render(here::here("Documents", "Query_CAPE.Rmd"))' --args "$exp_name" "$delete_previous" "$remove_chr9" "$test_markers" "$test_ind"

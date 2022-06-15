@@ -26,13 +26,15 @@ args <- commandArgs(trailingOnly=T)
 exp.name = args[1]
 delete_previous <- as.logical(args[2])
 remove_chr9 <- as.logical(args[3])
-testing <- as.logical(args[4])
+test.markers <- as.logical(args[4])
+test.ind  <- as.logical(args[5])
 
 if(is.na(exp.name)){
   exp.name <- "GAL_query"
   delete_previous <- TRUE
   remove_chr9 = TRUE #removes the proximal half of Chr 9 because of allele frequency weirdness.
-  testing <- TRUE
+  test.markers <- FALSE
+  test.ind <- TRUE
 }
 
 roi <- c("GAL3" = "chr04_463411")
@@ -96,13 +98,20 @@ if(remove_chr9){
     geno <- cross_obj[[2]]$geno
 }
 
-if(testing){
+if(test.markers){
     subsample.locale <- sort(sample(1:length(pheno_obj$chromosome), 2000))
     geno <- geno[,,subsample.locale]
     pheno_obj$chromosome <- pheno_obj$chromosome[subsample.locale]
     pheno_obj$marker_num <- pheno_obj$marker_num[subsample.locale]
     pheno_obj$marker_location <- pheno_obj$marker_location[subsample.locale]
     pheno_obj$geno_names[[3]] <- pheno_obj$geno_names[[3]][subsample.locale]
+}
+
+if(test.ind){
+    subsample.locale <- sort(sample(1:nrow(pheno_obj$pheno), 2000))
+    pheno_obj$pheno <- pheno_obj$pheno[subsample.locale,]
+    geno <- geno[subsample.locale,,]
+    pheno_obj$geno_names[[1]] <- pheno_obj$geno_names[[1]][subsample.locale]
 }
 
 #str(pheno_obj)
