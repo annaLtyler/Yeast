@@ -127,7 +127,7 @@ will test for interaction against all other individual alleles.
 
 ```{r gal3}
 
-marker.pos <- sapply(strsplit(dimnames(pop$geno)[[3]], "_"), function(x) as.numeric(x[2]))
+marker.pos <- sapply(strsplit(dimnames(geno_obj)[[3]], "_"), function(x) as.numeric(x[2]))
 marker.idx <- rep(NA, length(roi))
 names(marker.idx) <- names(roi)
 
@@ -136,12 +136,12 @@ for(i in 1:length(roi)){
     split.marker <- strsplit(nearest.marker, "_")
     chr <- as.numeric(gsub("chr", "", split.marker[[1]][1]))
     pos <- as.numeric(split.marker[[1]][2])
-    chr.locale <- which(pop$chromosome == chr)
+    chr.locale <- which(pheno_obj$chromosome == chr)
     pos.locale <- which(marker.pos == pos)
     marker.idx[i] <- intersect(chr.locale, pos.locale)
 }
 
-gal.geno <- pop$geno[,,marker.idx]
+gal.geno <- geno_obj[,,marker.idx]
 
 #use one of the introgressed alleles that we know is non-functional
 selected.alleles <- gal.geno[,query.alleles,drop=FALSE]
