@@ -45,7 +45,7 @@ marker_selection_method:
 # Pairscan Parameters 
 #================================================
 min_per_genotype:
- - 100
+ - 10
 pairscan_null_size:
  - 10000
 transform_to_phenospace:

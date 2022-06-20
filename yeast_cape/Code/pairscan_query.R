@@ -80,8 +80,7 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
   
   if(!run_parallel){n_cores = 1}
   
-  use_kinship <- data_obj$use_kinship
-  
+  use_kinship <- data_obj$use_kinship  
   
   if(overwrite_alert){
     choice <- readline(prompt = "Please make sure you assign the output 
