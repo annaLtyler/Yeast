@@ -274,7 +274,6 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
           plot_pairscan_query(data_obj, pairscan_obj)
           dev.off()
         }
-      }
 
       data_obj$save_rds(pairscan_obj, pairscan_file)
       data_obj$save_rds(data_obj, results_file)
