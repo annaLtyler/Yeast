@@ -86,6 +86,10 @@ pheno_obj$pheno <- apply(pheno_obj$pheno, 2, log10)
 #mean center
 pheno_obj$pheno <- apply(pheno_obj$pheno, 2, function(x) x - mean(x, na.rm = TRUE))
 
+#replace the marker_location with the actual marker_location
+marker.loc <- sapply(strsplit(pheno_obj$geno_names[[3]], "_"), function(x) as.numeric(x[2]))
+pheno_obj$marker_location <- marker.loc
+
 if(remove_chr9){
     chr9.locale <- which(cross_obj[[1]]$chromosome == 9)
     to.remove <- head(chr9.locale, length(chr9.locale)/2)

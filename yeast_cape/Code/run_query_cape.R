@@ -267,21 +267,18 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
         min_per_genotype = data_obj$min_per_genotype, max_pair_cor = data_obj$max_pair_cor, 
         verbose = verbose, num_pairs_limit = Inf, overwrite_alert = FALSE, 
         run_parallel = run_parallel, n_cores = n_cores, kin_obj = kin_obj)
-      
-      data_obj$save_rds(pairscan_obj, pairscan_file)
-      
-      if(data_obj$save_results){
-        if (data_obj$plot_pdf) {
-          if(verbose){cat("Plotting pairscan_regression.pdf...\n")}
-          data_obj$plotPairscan("Pairscan_Regression.pdf", pairscan_obj, 
-            phenotype = NULL, show_marker_labels = TRUE, show_alleles = FALSE)
+
+    if(data_obj$save_results){
+        if(verbose){cat("Plotting pairscan results...\n")}
+          pdf(file.path(results_path, paste0("Pairscan.pdf")), width = 10, height = 9)
+          plot_pairscan_query(data_obj, pairscan_obj)
+          dev.off()
         }
-        if(verbose){cat("Plotting pairscan_regression.jpg...\n")}
-        data_obj$plotPairscan("Pairscan_Regression.jpg", pairscan_obj, 
-          phenotype = NULL, show_marker_labels = TRUE, show_alleles = FALSE)
       }
 
+      data_obj$save_rds(pairscan_obj, pairscan_file)
       data_obj$save_rds(data_obj, results_file)
+
 
   }
   
