@@ -196,11 +196,8 @@ pairscan_query <- function(data_obj, geno_obj = NULL, query_genotype,
     }else{
       pairscan_perm <- pairscan_null_query(data_obj, pairscan_geno = gene, 
         marker_pairs = pared_marker_mat, scan_what = scan_what, 
-        pairscan_null_size = pairscan_null_size, max_pair_cor = max_pair_cor, 
-        min_per_geno = min_per_genotype, verbose = verbose, 
-        marker_selection_method = marker_selection_method, 
-        run_parallel = run_parallel, n_cores = n_cores, 
-        specific_markers = setdiff(colnames(gene), "query"))
+        pairscan_null_size = pairscan_null_size, verbose = verbose, 
+        run_parallel = run_parallel, n_cores = n_cores)
     }
     #add the results to the data object
     pairscan_obj$pairscan_perm <- pairscan_perm$pairscan_perm 

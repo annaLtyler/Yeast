@@ -38,10 +38,9 @@
 #' @param verbose Whether to write progress to the screen
 #' @keywords internal
 #' 
-pairscan_null_query <- function(data_obj, pairscan_geno, marker_pairs,
-  specific_markers, scan_what = c("eigentraits", "raw_traits"), 
-  pairscan_null_size = NULL, max_pair_cor = NULL, min_per_geno = NULL, 
-  model_family = "gaussian", marker_selection_method = c("top_effects", "uniform", "effects_dist", "by_gene"),
+pairscan_null_query <- function(data_obj, pairscan_geno, marker_pairs, 
+  scan_what = c("eigentraits", "raw_traits"), 
+  pairscan_null_size = NULL, model_family = "gaussian", 
   run_parallel = FALSE, n_cores = 4, verbose = FALSE){
   
   ref_allele <- data_obj$ref_allele
@@ -84,7 +83,7 @@ pairscan_null_query <- function(data_obj, pairscan_geno, marker_pairs,
   
   all_pairs_tested <- NULL
   
-  n_top_markers <- ncol(data_obj$geno_for_pairscan)
+  n_top_markers <- ncol(pairscan_geno)
   final_perm <- 1
   while(final_perm < pairscan_null_size){
     perm_order <- sample(1:dim(pheno)[1]) #randomize phenotype
