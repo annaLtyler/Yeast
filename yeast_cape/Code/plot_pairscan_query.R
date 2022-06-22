@@ -11,6 +11,22 @@ plot_pairscan_query <- function(data_obj, pairscan_obj){
     all_query_effects <- lapply(pairscan_results, function(x) as.numeric(x[[1]][,3]))
     all_test_effects <- lapply(pairscan_results, function(x) as.numeric(x[[1]][,4]))
     all_int_effects <- lapply(pairscan_results, function(x) as.numeric(x[[1]][,5]))
+    
+    all_perm_query_effects <- lapply(pairscan_perm, function(x) as.numeric(x[[1]][,3]))
+    all_perm_test_effects <- lapply(pairscan_perm, function(x) as.numeric(x[[1]][,4]))
+    all_perm_int_effects <- lapply(pairscan_perm, function(x) as.numeric(x[[1]][,5]))
+
+    query_conf <- lapply(all_perm_query_effects, 
+        function(x) c(get.percentile(x, 1), get.percentile(x, 99)))
+
+    test_conf <- lapply(all_perm_test_effects, 
+        function(x) c(get.percentile(x, 1), get.percentile(x, 99)))
+
+    int_conf <- lapply(all_perm_int_effects, 
+        function(x) c(get.percentile(x, 1), get.percentile(x, 99)))
+
+    #boxplot(all_test_effects);abline(h = c(test_conf[[1]]))
+    #boxplot(all_query_effects);abline(h = c(query_conf[[2]]))
 
     effect_lim <- c(min(c(unlist(all_test_effects)), unlist(all_query_effects)), 
         max(c(unlist(all_test_effects), unlist(all_query_effects))))
@@ -22,32 +38,47 @@ plot_pairscan_query <- function(data_obj, pairscan_obj){
         marker_effect_locale <- match(chr_markers, trait_markers)
         marker_pos_locale <- match(chr_markers, all_markers)
         marker_pos <- data_obj$marker_location[marker_pos_locale]
-            
+
+
         for(p in 1:length(pairscan_results)){
-            layout(matrix(c(1,1,2,2,3,4), nrow = 3, byrow = TRUE))
+            layout(matrix(c(1,1,1,2,2,2,3,4,5), nrow = 3, byrow = TRUE))
             plot(marker_pos, all_query_effects[[p]][marker_effect_locale], type = "h", 
                 ylim = effect_lim, ylab = "Effect Size", xlab = "Genomic Position",
                 main = paste("Main Effects Chr", ch, names(pairscan_results)[p]))
             points(marker_pos, all_test_effects[[p]][marker_effect_locale], 
                 col = "red", type = "h")
-            
-            abline(h = 0)
+            abline(h = c(0, test_conf[[p]]))
+            abline(h = query_conf[[p]], col = "red")
+
             plot(marker_pos, all_int_effects[[p]][marker_effect_locale], 
                 type = "h", ylab = "Interaction Effect Size", 
                 xlab = "Genomic Position", ylim = int_effect_lim,
                 main = paste("Interaction Effects\nChr", ch, names(pairscan_results)[p]))
             abline(h = 0)
+            abline(h = int_conf[[p]])
 
+            test_effect_col <- colors.from.values(all_test_effects[[p]][marker_effect_locale], use.pheatmap.colors = TRUE)
             plot.with.model(all_query_effects[[p]], all_int_effects[[p]],
             xlab = "Main Effect of Query Locus", ylab = "Interaction Effects",
-            main = "Query Effects vs. Interaction Effects")
+            main = "Query Effects vs. Interaction Effects", col = test_effect_col)
             abline(h = 0, v = 0)
 
+            query_effect_col <- colors.from.values(all_query_effects[[p]][marker_effect_locale], use.pheatmap.colors = TRUE)
             plot.with.model(all_test_effects[[p]], all_int_effects[[p]],
             xlab = "Main Effect of Test Locus", ylab = "Interaction Effects",
-            main = "Test Effects vs. Interaction Effects")
+            main = "Test Effects vs. Interaction Effects", col = query_effect_col)
             abline(h = 0, v = 0)
-        
+
+            int_effect_col <- colors.from.values(all_int_effects[[p]][marker_effect_locale], use.pheatmap.colors = TRUE)
+            plot.with.model(all_query_effects[[p]], all_test_effects[[p]],
+            xlab = "Main Effect of Query Locus", ylab = "Main Effect of Test Locus",
+            col = int_effect_col) 
+
+        #    boxplot(list(all_query_effects[[p]][marker_effect_locale], 
+        #        all_test_effects[[p]][marker_effect_locale], 
+        #        all_int_effects[[p]][marker_effect_locale]), 
+        #        names = c("Query", "Test", "Interaction"))
+        #    abline(h = 0)
         }
     }
 

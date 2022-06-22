@@ -270,7 +270,7 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
 
     if(data_obj$save_results){
         if(verbose){cat("Plotting pairscan results...\n")}
-          pdf(file.path(results_path, paste0("Pairscan.pdf")), width = 10, height = 9)
+          pdf(file.path(results_path, paste0("Pairscan.pdf")), width = 8, height = 9)
           plot_pairscan_query(data_obj, pairscan_obj)
           dev.off()
         }
@@ -323,60 +323,8 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
     data_obj$writeVariantInfluences("Variant_Influences_Interactions.csv", 
       include_main_effects = FALSE, p_or_q = max(c(p_or_q, 0.2)))
   
-    if (data_obj$plot_pdf) {
-      if(verbose){cat("Plotting Variant_influences.pdf...\n")}
-      data_obj$plotVariantInfluences("variant_influences.pdf", width = 10, height = 7,
-                                     p_or_q = p_or_q, standardize = FALSE, not_tested_col = "lightgray", 
-                                     covar_width = NULL, pheno_width = NULL)
-    }
-    if(verbose){cat("Plotting Variant_influences.jpg...\n")}
-    data_obj$plotVariantInfluences("variant_influences.jpg", width = 10, height = 7,
-      p_or_q = p_or_q, standardize = FALSE, not_tested_col = "lightgray", 
-      covar_width = NULL, pheno_width = NULL)
   }
 
-  if(!data_obj$use_saved_results || is.null(data_obj$full_net)){
-    data_obj <- get_network(data_obj, geno_obj, p_or_q = p_or_q, 
-    collapse_linked_markers = FALSE)
-  }
-  
-  if(!data_obj$use_saved_results || is.null(data_obj$collapsed_net)){
-    data_obj <- get_network(data_obj, geno_obj, p_or_q = p_or_q, threshold_power = 1, 
-    collapse_linked_markers = TRUE, plot_linkage_blocks = FALSE)
-  }
-  
-  data_obj$save_rds(data_obj, results_file)
-  
-  if(data_obj$save_results){
-    if (data_obj$plot_pdf) {
-      if(verbose){cat("Plotting Network_Circular.pdf...\n")}
-      data_obj$plotNetwork("Network_Circular.pdf", label_gap = 10, label_cex = 1.5, show_alleles = FALSE)
-    }
-    if(verbose){cat("Plotting Network_Circular.jpg...\n")}
-    data_obj$plotNetwork("Network_Circular.jpg", label_gap = 10, label_cex = 1.5, show_alleles = FALSE)
-  
-    if(dim(geno_obj)[2] == 8){
-      if (data_obj$plot_pdf) {
-        if(verbose){cat("Plotting Network_Circular_DO.pdf...\n")}
-        data_obj$plotNetwork("Network_Circular_DO.pdf", label_gap = 10, label_cex = 1.5, show_alleles = TRUE)
-      }
-      if(verbose){cat("Plotting Network_Circular_DO.jpg...\n")}
-      data_obj$plotNetwork("Network_Circular_DO.jpg", label_gap = 10, label_cex = 1.5, show_alleles = TRUE)
-    }	
-  
-    if (data_obj$plot_pdf) {
-      data_obj$plotFullNetwork("Network_View.pdf", zoom = 1.2, node_radius = 0.3, 
-                               label_nodes = TRUE, label_offset = 0.4, label_cex = 0.5, bg_col = "lightgray", 
-                               arrow_length = 0.1, layout_matrix = "layout_with_kk", legend_position = "topright", 
-                               edge_lwd = 1, legend_radius = 2, legend_cex = 0.7, xshift = -1)
-    }
-  
-    data_obj$plotFullNetwork("Network_View.jpg", zoom = 1.2, node_radius = 0.3, 
-      label_nodes = TRUE, label_offset = 0.4, label_cex = 0.5, bg_col = "lightgray", 
-      arrow_length = 0.1, layout_matrix = "layout_with_kk", legend_position = "topright", 
-      edge_lwd = 1, legend_radius = 2, legend_cex = 0.7, xshift = -1)
-  }
-  
   data_obj$save_rds(data_obj, results_file)
   
   invisible(data_obj)
