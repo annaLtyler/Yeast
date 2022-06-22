@@ -60,9 +60,15 @@ for(i in 1:length(all.fun)){source(all.fun[i])}
 
 ```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
-needed.libraries <- c("pheatmap")
+needed.libraries <- c("pheatmap", "hexbin", "RColorBrewer", "gridExtra")
 load_libraries(needed.libraries, personal.library = TRUE)
 load_latest_cape(here("Code", "cape"), personal.library = TRUE)
+```
+
+```{r load_existing_results, eval = FALSE}
+data_obj <- readRDS(file.path(results.dir, "cross.RDS"))
+geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
+pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 ```
 
 ## Load data

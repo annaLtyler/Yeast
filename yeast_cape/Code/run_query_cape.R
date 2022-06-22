@@ -275,6 +275,12 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
           dev.off()
         }
 
+    if(data_obj$save_results){
+      pdf(file.path(results_path, paste0("Variant_Influences.pdf")), width = 8, height = 5)
+      plot_variant_influences_query(data_obj, p_or_q = p_or_q)
+      dev.off()
+    }
+
       data_obj$save_rds(pairscan_obj, pairscan_file)
       data_obj$save_rds(data_obj, results_file)
 

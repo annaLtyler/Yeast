@@ -32,13 +32,12 @@ plot_pairscan_query <- function(data_obj, pairscan_obj){
         max(c(unlist(all_test_effects), unlist(all_query_effects))))
     int_effect_lim <- c(min(unlist(all_int_effects)), max(unlist(all_int_effects)))
     for(ch in chr){
-        #quartz()
+        #quartz(width = 8, height = 6)
         chr_locale <- which(all_chr == ch)
         chr_markers <- all_markers[chr_locale]
         marker_effect_locale <- match(chr_markers, trait_markers)
         marker_pos_locale <- match(chr_markers, all_markers)
         marker_pos <- data_obj$marker_location[marker_pos_locale]
-
 
         for(p in 1:length(pairscan_results)){
             layout(matrix(c(1,1,1,2,2,2,3,4,5), nrow = 3, byrow = TRUE))
@@ -56,23 +55,21 @@ plot_pairscan_query <- function(data_obj, pairscan_obj){
                 main = paste("Interaction Effects\nChr", ch, names(pairscan_results)[p]))
             abline(h = 0)
             abline(h = int_conf[[p]])
+            
+            plot.hexbin.as.plot(all_query_effects[[p]], all_int_effects[[p]], 
+                xlab = "Query Main Effects", ylab = "Interaction Effects", 
+                main = "Query vs. Interaction", min.cex = 1, max.cex = 3,
+                legend.pos = "topright", round.legend = 500)
 
-            test_effect_col <- colors.from.values(all_test_effects[[p]][marker_effect_locale], use.pheatmap.colors = TRUE)
-            plot.with.model(all_query_effects[[p]], all_int_effects[[p]],
-            xlab = "Main Effect of Query Locus", ylab = "Interaction Effects",
-            main = "Query Effects vs. Interaction Effects", col = test_effect_col)
-            abline(h = 0, v = 0)
+            plot.hexbin.as.plot(all_test_effects[[p]], all_int_effects[[p]], 
+                xlab = "Test Main Effects", ylab = "Interaction Effects", 
+                main = "Test vs. Interaction", min.cex = 1, max.cex = 3,
+                legend.pos = "topright", round.legend = 500)
 
-            query_effect_col <- colors.from.values(all_query_effects[[p]][marker_effect_locale], use.pheatmap.colors = TRUE)
-            plot.with.model(all_test_effects[[p]], all_int_effects[[p]],
-            xlab = "Main Effect of Test Locus", ylab = "Interaction Effects",
-            main = "Test Effects vs. Interaction Effects", col = query_effect_col)
-            abline(h = 0, v = 0)
-
-            int_effect_col <- colors.from.values(all_int_effects[[p]][marker_effect_locale], use.pheatmap.colors = TRUE)
-            plot.with.model(all_query_effects[[p]], all_test_effects[[p]],
-            xlab = "Main Effect of Query Locus", ylab = "Main Effect of Test Locus",
-            col = int_effect_col) 
+            plot.hexbin.as.plot(all_query_effects[[p]], all_test_effects[[p]], 
+                xlab = "Query Main Effects", ylab = "Test Main Effects", 
+                main = "Query vs. Test", min.cex = 1, max.cex = 3,
+                legend.pos = "topright", round.legend = 500)
 
         #    boxplot(list(all_query_effects[[p]][marker_effect_locale], 
         #        all_test_effects[[p]][marker_effect_locale], 
