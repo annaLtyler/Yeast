@@ -136,7 +136,6 @@ For query cape, we will supply a genotype vector that CAPE
 will test for interaction against all other individual alleles.
 
 ```{r gal3}
-
 marker.pos <- sapply(strsplit(dimnames(geno_obj)[[3]], "_"), function(x) as.numeric(x[2]))
 marker.idx <- rep(NA, length(roi))
 names(marker.idx) <- names(roi)
@@ -189,3 +188,15 @@ The plots are saved in the Results folder called `r exp.name.
 pairscan.obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 plot.null.dist(final_obj, pairscan.obj, path = results.dir)
 ```
+
+## Variant Effects
+
+The following code produces a pdf that shows the deviation from 
+the expected trait for each interaction. 
+
+```{r var_effects}
+pdf(file.path(results.dir, "Interaction.Effects.pdf"), width = 10, height = 6)
+plot_variant_effects_query(data_obj, geno_obj, query_genotype = gal.null, 
+  pheno_type = "pheno", p_or_q = 1e-6)
+dev.off()
+``` 

@@ -1,4 +1,4 @@
-plot_variant_influences_query <- function(data_obj, p_or_q = 0.05){
+plot_variant_influences_query <- function(data_obj, geno_obj, query_genotype, p_or_q = 0.05){
 
     trait_cols <- categorical_pal(8)
 
