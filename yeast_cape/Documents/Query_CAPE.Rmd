@@ -164,7 +164,6 @@ colnames(gal.null) <- "GAL-query"
 
 ```{r run_cape}
 run.finished <- as.logical(file.exists(file.path(results.dir, "Variant_Influences.csv")))
-stop()
 if(!run.finished){
   final_obj <- run_query_cape(pheno_obj, geno_obj,  
     query_genotype = gal.null,
