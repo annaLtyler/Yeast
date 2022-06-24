@@ -268,22 +268,8 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
         verbose = verbose, num_pairs_limit = Inf, overwrite_alert = FALSE, 
         run_parallel = run_parallel, n_cores = n_cores, kin_obj = kin_obj)
 
-    if(data_obj$save_results){
-        if(verbose){cat("Plotting pairscan results...\n")}
-          pdf(file.path(results_path, paste0("Pairscan.pdf")), width = 8, height = 9)
-          plot_pairscan_query(data_obj, pairscan_obj)
-          dev.off()
-        }
-
-    if(data_obj$save_results){
-      pdf(file.path(results_path, paste0("Variant_Influences.pdf")), width = 8, height = 5)
-      plot_variant_influences_query(data_obj, p_or_q = p_or_q)
-      dev.off()
-    }
-
       data_obj$save_rds(pairscan_obj, pairscan_file)
       data_obj$save_rds(data_obj, results_file)
-
 
   }
   
@@ -292,43 +278,35 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
   #===============================================================
   
   if(verbose){cat("Running reparameterization...\n")}
-  if(!data_obj$use_saved_results || is.null(data_obj$var_to_var_influences)){
-    data_obj <- error_prop(data_obj, pairscan_obj, perm = FALSE, verbose = verbose,
-      n_cores = n_cores, run_parallel = run_parallel)
+  data_obj <- error_prop(data_obj, pairscan_obj, perm = FALSE, verbose = verbose,
+    n_cores = n_cores, run_parallel = run_parallel)
+  data_obj$save_rds(data_obj, results_file)
+
+  data_obj <- error_prop(data_obj, pairscan_obj, perm = TRUE, verbose = verbose,
+    n_cores = n_cores, run_parallel = run_parallel)
     data_obj$save_rds(data_obj, results_file)
-  }
   
-  if(!data_obj$use_saved_results || is.null(data_obj$var_to_var_influences_perm)){	
-    data_obj <- error_prop(data_obj, pairscan_obj, perm = TRUE, verbose = verbose,
-      n_cores = n_cores, run_parallel = run_parallel)
-     data_obj$save_rds(data_obj, results_file)
-  }
-  
-  if(!data_obj$use_saved_results || is.null(data_obj$var_to_var_p_val)){
-    data_obj <- calc_p(data_obj, pval_correction = data_obj$pval_correction)
-  }
-  
-  #if(length(grep("e", data_obj$scan_what, ignore_case = TRUE)) > 0){
-  #  transform_to_phenospace <- TRUE
-  #}else{
-  #  transform_to_phenospace <- FALSE	
-  #}
-  
-  if(!data_obj$use_saved_results || is.null(data_obj$max_var_to_pheno_influence)){
-    data_obj <- direct_influence(data_obj, pairscan_obj, 
-      transform_to_phenospace = data_obj$transform_to_phenospace, verbose = verbose, 
-      pval_correction = data_obj$pval_correction, save_permutations = TRUE, 
-      n_cores = n_cores)
-      data_obj$save_rds(data_obj, results_file)
-  }
-  
+  data_obj <- calc_p(data_obj, pval_correction = data_obj$pval_correction)
+ 
+  data_obj <- direct_influence(data_obj, pairscan_obj, 
+    transform_to_phenospace = data_obj$transform_to_phenospace, verbose = verbose, 
+    pval_correction = data_obj$pval_correction, save_permutations = TRUE, 
+    n_cores = n_cores)
+    data_obj$save_rds(data_obj, results_file)
+
+if(data_obj$save_results){
+      pdf(file.path(results_path, paste0("Variant_Influences.pdf")), width = 8, height = 5)
+      plot_variant_influences_query(data_obj, p_or_q = p_or_q)
+      dev.off()
+    }
+
+
   if(data_obj$save_results){
     if(verbose){cat("Saving Variant_influences results...\n")}
     data_obj$writeVariantInfluences("Variant_Influences.csv", p_or_q = max(c(p_or_q, 0.2)))
     if(verbose){cat("Saving Variant_Interactions results...\n")}
     data_obj$writeVariantInfluences("Variant_Influences_Interactions.csv", 
       include_main_effects = FALSE, p_or_q = max(c(p_or_q, 0.2)))
-  
   }
 
   data_obj$save_rds(data_obj, results_file)
