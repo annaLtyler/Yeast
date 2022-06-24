@@ -307,7 +307,7 @@ if(data_obj$save_results){
     data_obj$writeVariantInfluences("Variant_Influences_Interactions.csv", 
       include_main_effects = FALSE, p_or_q = max(c(p_or_q, 0.2)))
   }
-.
+
   data_obj$save_rds(data_obj, results_file)
   
   invisible(data_obj)
