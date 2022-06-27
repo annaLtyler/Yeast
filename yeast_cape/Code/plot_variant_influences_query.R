@@ -1,5 +1,6 @@
-plot_variant_influences_query <- function(data_obj, geno_obj, query_genotype, p_or_q = 0.05){
+plot_variant_influences_query <- function(data_obj, geno_obj, p_or_q = 0.05){
 
+    query_genotype <- data_obj$query_genotype
     trait_cols <- categorical_pal(8)
 
     var_inf <- write_variant_influences(data_obj, p_or_q = p_or_q, 
