@@ -10,9 +10,12 @@ get_query_geno <- function(data_obj, geno_obj, query_genotype){
     start_idx <- 1
     n_alleles <- dim(geno)[2]
     n_markers <- dim(geno)[3] - 1
-    for(i in 1:n_markers){
-        gene[,start_idx:(start_idx+n_alleles-1)] <- geno[,,i]
-        start_idx = start_idx + n_alleles
+    for(m in 1:n_markers){
+        for(a in n_alleles){
+            allele_idx <- 
+            gene[,start_idx:(start_idx+n_alleles-1)] <- geno[,,i]
+            start_idx = start_idx + n_alleles
+        }
     }
     fill_markers <- rep(dimnames(geno_obj)[[3]][-c(dim(geno_obj)[3])], each = n_alleles)
     fill_alleles <- rep(dimnames(geno_obj)[[2]], n_markers)

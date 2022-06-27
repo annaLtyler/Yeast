@@ -65,12 +65,6 @@ load_libraries(needed.libraries, personal.library = TRUE)
 load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
 
-```{r load_existing_results, eval = FALSE}
-data_obj <- readRDS(file.path(results.dir, "cross.RDS"))
-geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
-pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
-```
-
 ## Load data
 
 ```{r read_data}
@@ -171,11 +165,12 @@ if(!run.finished){
     initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
     param_file = file.path(results.dir, "cape.parameters.yml"), 
     yaml_params = NULL, results_path = results.dir, plot_pdf = TRUE)
-}else{
-  final_obj <- readRDS(file.path(results.dir, "cross.RDS"))
-  geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
-  pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 }
+
+#read in processed data
+final_obj <- readRDS(file.path(results.dir, "cross.RDS"))
+geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
+pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 ```
 
 ## Null Distribution

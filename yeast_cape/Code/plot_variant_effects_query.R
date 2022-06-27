@@ -1,16 +1,14 @@
-plot_variant_effects_query <- function(data_obj, geno_obj, query_genotype, 
-    pheno_type = c("pheno", "ET"), p_or_q = 0.05){
+plot_variant_effects_query <- function(data_obj, geno_obj, 
+    pheno_type = c("pheno", "ET"), p_or_q = 0.05, verbose = FALSE){
 
+    query_genotype <- data_obj$query_genotype
     trait_cols <- categorical_pal(8)
 
-    gene <- get_query_geno(data_obj, geno_obj, query_genotype)
-
     if(pheno_type == "pheno"){
-        pheno <- data_obj$pheno[match(rownames(gene), rownames(data_obj$pheno)),]
+        pheno <- data_obj$pheno
     }else{
-        pheno <- data_obj$ET[match(rownames(gene), rownames(data_obj$ET)),]
+        pheno <- data_obj$ET
     }
-    query <- query_genotype[match(rownames(gene), rownames(query_genotype)),1,drop=FALSE]
 
     var_int <- write_variant_influences(data_obj, p_or_q = p_or_q, 
         include_main_effects = FALSE, mark_covar = FALSE, 
@@ -30,8 +28,9 @@ plot_variant_effects_query <- function(data_obj, geno_obj, query_genotype,
     get_int <- function(phenoV, geno1, geno2){
         geno_pairs <- pair.matrix(c(0,1), self.pairs = TRUE, ordered = TRUE)
         pheno.groups <- apply(geno_pairs, 1, function(x) phenoV[intersect(which(geno1 == x[1]), which(geno2 == x[2]))])
-        group.means <- sapply(pheno.groups, mean)
-        #group.se <- sapply(pheno.groups, function(x) sd(x)/sqrt(length(x)))
+        #boxplot(pheno.groups)
+        group.means <- sapply(pheno.groups, function(x) mean(x, na.rm = TRUE))
+        #group.se <- sapply(pheno.groups, function(x) sd(x, na.rm = TRUE)/sqrt(length(x)))
         centered.means <- group.means - group.means[1]
         add.pred <- centered.means[2] + centered.means[4]
 
@@ -47,17 +46,28 @@ plot_variant_effects_query <- function(data_obj, geno_obj, query_genotype,
     names(source.ch.pos) <- names(target.ch.pos) <- u_chr
     
     for(ch in u_chr){
+        if(verbose){report.progress(ch, length(u_chr))}
         target.chr.locale <- which(target.chr == ch)
         source.chr.locale <- which(source.chr == ch)
 
         target.markers <- var_int[target.chr.locale,"Target"]
         source.markers <- var_int[source.chr.locale,"Source"]
         
-        target.main.idx <- match(target.markers, colnames(gene))
-        source.main.idx <- match(source.markers, colnames(gene))
+        split.target <- strsplit(target.markers, "_")
+        target.marker.names <- sapply(split.target, function(x) x[1])
+        target.allele.names <- sapply(split.target, function(x) x[2])
 
-        target.int <- lapply(1:ncol(pheno), function(y) t(sapply(target.main.idx, function(x) get_int(pheno[,y], query, gene[,x]))))
-        source.int <- lapply(1:ncol(pheno), function(y) t(sapply(source.main.idx, function(x) get_int(pheno[,y], query, gene[,x]))))
+        split.source <- strsplit(source.markers, "_")
+        source.marker.names <- sapply(split.source, function(x) x[1])
+        source.allele.names <- sapply(split.source, function(x) x[2])
+
+        target.geno <- sapply(1:length(target.marker.names), function(x) geno_obj[,target.allele.names[x], target.marker.names[x]])
+        colnames(target.geno) <- target.markers
+        source.geno <- sapply(1:length(source.marker.names), function(x) geno_obj[,source.allele.names[x], source.marker.names[x]])
+        colnames(source.geno) <- source.markers
+        
+        target.int <- lapply(1:ncol(pheno), function(y) t(apply(target.geno, 2, function(x) get_int(pheno[,y], query_genotype, x))))
+        source.int <- lapply(1:ncol(pheno), function(y) t(apply(source.geno, 2, function(x) get_int(pheno[,y], query_genotype, x))))
 
         source.ch.pos[[ch]] <- source.pos[source.chr.locale]
         target.ch.pos[[ch]] <- target.pos[target.chr.locale]

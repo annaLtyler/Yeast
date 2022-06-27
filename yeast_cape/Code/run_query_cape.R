@@ -71,6 +71,9 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
   		geno = geno_obj,
   		plot_pdf = plot_pdf
   )
+
+  #add the query genotype to the data_obj so we can access it later
+  data_obj$query_genotype <- query_genotype
   
   results_base_name <- gsub(".RDS", "", results_file)
     
