@@ -190,7 +190,6 @@ the expected trait for each interaction.
 
 ```{r var_effects}
 pdf(file.path(results.dir, "Interaction.Effects.pdf"), width = 10, height = 6)
-plot_variant_effects_query(final_obj, geno_obj, query_genotype = gal.null, 
-  pheno_type = "pheno", p_or_q = 1e-6)
+plot_variant_effects_query(final_obj, geno_obj, pheno_type = "pheno", p_or_q = 1e-6)
 dev.off()
 ``` 
