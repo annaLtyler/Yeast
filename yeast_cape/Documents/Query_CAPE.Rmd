@@ -38,7 +38,6 @@ if(is.na(exp.name)){
   test.ind <- TRUE
 }
 
-
 results.dir <- here("Results", exp.name)
 ```
 
@@ -159,7 +158,7 @@ colnames(query.allele) <- "query-allele"
 run.finished <- as.logical(file.exists(file.path(results.dir, "Variant_Influences.csv")))
 if(!run.finished){
   final_obj <- run_query_cape(pheno_obj, geno_obj,  
-    query_genotype = gal.null,
+    query_genotype = query.allele,
     results_file = "cross.RDS", p_or_q = 1e-6, n_cores = 4, 
     initialize_only = FALSE, verbose = TRUE, run_parallel = FALSE, 
     param_file = file.path(results.dir, "cape.parameters.yml"), 
