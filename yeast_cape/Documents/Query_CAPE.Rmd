@@ -28,9 +28,10 @@ remove_chr9 <- as.logical(args[2])
 test.markers <- as.logical(args[3])
 test.ind  <- as.logical(args[4])
 
+exp.name <- "GAL_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
+#exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
+
 if(is.na(exp.name)){
-  #exp.name <- "GAL_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
-  exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
   delete_previous <- TRUE
   remove_chr9 = TRUE #removes the proximal half of Chr 9 because of allele frequency weirdness.
   test.markers <- FALSE
