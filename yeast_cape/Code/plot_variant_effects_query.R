@@ -3,6 +3,7 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
 
     query_genotype <- data_obj$query_genotype
     trait_cols <- categorical_pal(8)
+    pheno_type <- pheno_type[1]
 
     if(pheno_type == "pheno"){
         pheno <- data_obj$pheno
@@ -72,8 +73,14 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
         source.ch.pos[[ch]] <- source.pos[source.chr.locale]
         target.ch.pos[[ch]] <- target.pos[target.chr.locale]
 
-        target.deviation[[ch]] <- sapply(target.int, function(x) x[,"int"] - x[,"add"])
-        source.deviation[[ch]] <- sapply(source.int, function(x) x[,"int"] - x[,"add"])
+        target.effects <- sapply(target.int, function(x) x[,"int"] - x[,"add"])
+        colnames(target.effects) <- colnames(pheno)
+
+        source.effects <- sapply(source.int, function(x) x[,"int"] - x[,"add"])
+        colnames(source.effects) <- colnames(pheno)
+
+        target.deviation[[ch]] <- target.effects
+        source.deviation[[ch]] <- source.effects
     }
 
 
@@ -117,4 +124,9 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
 
         mtext(paste("Chr", ch), side = 3, outer = TRUE, line = -1)
     }
+
+    results <- list("deviation_with_query_as_source" = target.deviation,
+        "deviation_with_query_as_target" = source.deviation)
+    invisible(results)
+
 }
