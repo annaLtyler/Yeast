@@ -47,6 +47,6 @@ marker_selection_method:
 min_per_genotype:
  - 10
 pairscan_null_size:
- - 10000
+ - 100000
 transform_to_phenospace:
  - false
