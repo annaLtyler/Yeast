@@ -23,11 +23,10 @@ crazy with the pairwise testing.
 library(here)
 
 args <- commandArgs(trailingOnly=T)
-exp.name = args[1]
-delete_previous <- as.logical(args[2])
-remove_chr9 <- as.logical(args[3])
-test.markers <- as.logical(args[4])
-test.ind  <- as.logical(args[5])
+delete_previous <- as.logical(args[1])
+remove_chr9 <- as.logical(args[2])
+test.markers <- as.logical(args[3])
+test.ind  <- as.logical(args[4])
 
 if(is.na(exp.name)){
   #exp.name <- "GAL_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
