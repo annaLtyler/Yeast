@@ -28,16 +28,19 @@ remove_chr9 <- as.logical(args[2])
 test.markers <- as.logical(args[3])
 test.ind  <- as.logical(args[4])
 
-#exp.name <- "GAL_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
-exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
+#exp.name <- "GAL3_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
+#exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
+exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
 
 if(is.na(delete_previous)){
-  delete_previous <- TRUE
+  delete_previous <- FALSE
   remove_chr9 = TRUE #removes the proximal half of Chr 9 because of allele frequency weirdness.
   test.markers <- FALSE
   test.ind <- TRUE
 }
 
+is.interactive = FALSE
+#is.interactive = TRUE
 results.dir <- here("Results", exp.name)
 ```
 
@@ -164,7 +167,10 @@ if(!run.finished){
     param_file = file.path(results.dir, "cape.parameters.yml"), 
     yaml_params = NULL, results_path = results.dir, plot_pdf = TRUE)
 }
+```
 
+
+```{r read_results}
 #read in processed data
 final_obj <- readRDS(file.path(results.dir, "cross.RDS"))
 geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
@@ -187,31 +193,71 @@ The following code produces a pdf that shows the deviation from
 the expected trait for each interaction. 
 
 ```{r var_effects}
-pdf(file.path(results.dir, "Interaction.Effects.pdf"), width = 10, height = 6)
-trait_deviation <- plot_variant_effects_query(final_obj, geno_obj, 
-  pheno_type = "pheno", p_or_q = 1e-6)
-dev.off()
-``` 
 
-```{r eval = FALSE}
+trait.deviation.file <- file.path(results.dir, "Deviation_from_Additivity.RDS")
+
+if(!file.exists(trait.deviation.file)){
+  pdf(file.path(results.dir, "Interaction.Effects.pdf"), width = 10, height = 6)
+  trait_deviation <- plot_variant_effects_query(final_obj, geno_obj, 
+    pheno_type = "norm_pheno", p_or_q = 1e-6)
+  dev.off()
+  saveRDS(trait_deviation, trait.deviation.file)
+}else{
+  trait_deviation <- readRDS(trait.deviation.file)
+}
+
+```
+
+The following histogram shows the distributions of 
+interaction effects.
+
+```{r inf_dist}
 var.int <- write_variant_influences(final_obj, p_or_q = 1e-6, include_main_effects = FALSE)
 hist(as.numeric(var.int[,"Effect"]), breaks = 100)
-hist(as.numeric(var.int[,"|Effect|/SE"]), breaks = 100)
+#hist(as.numeric(var.int[,"|Effect|/SE"]), breaks = 100)
+```
 
-for(ph in 1:ncol(trait_deviation[[1]])){
+
+The following box plots show the trait deviation
+for each trait grouped by chromosome. 
+
+```{r deviation_by_chr, fig.width = 10, fig.height = 5}
+ylim <- c(min(unlist(trait_deviation)), max(unlist(trait_deviation)))
+for(ph in 1:ncol(trait_deviation[[1]][[1]])){
+  if(is.interactive){quartz(width = 10, height = 5)}
   dev_by_trait <- lapply(trait_deviation, function(x) lapply(x, function(y) y[,ph]))
-  quartz()
-  plot.grouped.boxes(dev_by_trait, main = colnames(trait_deviation[[1]][[1]])[ph])
+  plot.grouped.boxes(dev_by_trait, main = colnames(trait_deviation[[1]][[1]])[ph], 
+    print.vals = NA, ylim = ylim)
+  abline(h = 0)
 }
+```
 
-plot.grouped.boxes(trait_deviation)
-for(i in 1:length(trait_deviation)){
-  for(j in 1:ncol(trait_deviation[[1]])){
+The following figure shows a direct comparison of the deviation from additivity
+for each trait. Epistasis has a larger effect on traits in the GAL environment.
 
-  }
-}
-test <- lapply(trait_deviation$deviation_with_query_as_target, function(x) x[,1])
-boxplot(test);abline(h = 0)
+```{r dev_by_trait, fig.width = 5, fig.height = 5}
+dev_by_trait <- lapply(1:ncol(final_obj$pheno), function(x) lapply(trait_deviation, function(y) lapply(y, function(z) z[,x])))
+
+boxplot(list(abs(unlist(dev_by_trait[[1]])), abs(unlist(dev_by_trait[[2]]))), 
+  names = colnames(final_obj$pheno))
+```
+
+The following plots show the correlation between the deviation
+from additivity for the two traits.
+
+```{r deviation_correlation, fig.width = 10, fig.height = 6}
+trait.cor <- t(sapply(trait_deviation, function(y) sapply(y, function(x) cor(x[,1], x[,2], use = "pairwise.complete.obs"))))
+barplot(trait.cor, beside = TRUE);abline(h = 0)
+```
+
+```{r check_one, eval = FALSE}
+
+test.marker <- c("GAL3" = "X04463411")
+test.marker <- c("GAl1/7/10" = "X02271559_6") #allele 6 of GAL1/7/10, should rescue GAL3 null in GAL environment
+test.marker <- c("GAL4" = "X1680216") 
+
+par(mfrow = c(5,2))
+plot_one_variant_effect(final_obj, geno_obj, test.marker)
 
 
 ```

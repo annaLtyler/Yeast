@@ -2,15 +2,23 @@ plot.grouped.boxes <- function(group.list, group.labels = names(group.list),
 group.cols = c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3"),
 main = "", type = c("list", "matrix"), 
 plot.type = c("box", "strip"), print.vals = c("mean", "median"), 
-text.cex = 0.7, label.srt = 0, legend.x = NULL, legend.y = NULL, notch = FALSE){
+text.cex = 0.7, label.srt = 0, legend.x = NULL, legend.y = NULL, 
+ylim = NULL, notch = FALSE){
 
 	plot.type = plot.type[1]
 	print.vals <- print.vals[1]
 	type <- type[1]
 
-	ymin <- min(unlist(group.list), na.rm = TRUE)*0.9
-	ymax <- max(unlist(group.list), na.rm = TRUE)*1.1
+	if(is.null(ylim)){
+		ymin <- min(unlist(group.list), na.rm = TRUE)*0.9
+		ymax <- max(unlist(group.list), na.rm = TRUE)*1.1
+	}else{
+		ymin <- ylim[1]
+		ymax <- ylim[2]
+	}
+
 	xmin = 0
+
 
 	if(type == "list"){
 		xmax <- sum(unlist(lapply(group.list, length))) + 1

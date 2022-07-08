@@ -10,13 +10,15 @@ output:
     toc_float: yes
 ---
 
-The purpose of this workflow is to analyze results from Query_CAPE.Rmd
+The purpose of this workflow is to analyze results from
+multiple runs of Query_CAPE.Rmd
+
 ```{r get_exp_name}
 library(here)
-exp.name <- "GAL_query"
-results.dir <- here("Results", exp.name)
+exp.names <- c("GAL_query", "GAL4_query")
 is.interactive = FALSE
 #is.interactive = TRUE
+u_chr <- 1:16
 ```
 
 The results here pertain to the directory `r exp.name`.
@@ -35,28 +37,69 @@ load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 
 ## Load data
 
-```{r read_data}
-final_obj <- readRDS(file.path(results.dir, "cross.RDS"))
-geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
-```
-
-The following barplot shows the total number of interactions per
+The following barplots show the total number of interactions per
 chromosome.
 
 ```{r var_inf}
-var_inf <- write_variant_influences(final_obj, p_or_q = 1e-6, 
-  include_main_effects = FALSE, write_file = FALSE)
-all_chr <- c(var_inf[,2], var_inf[,5])
+var_inf <- lapply(exp.names, 
+  function(x) as.matrix(read.csv(here("Results", x, "Variant_Influences_Interactions.csv"))))
+```
 
-barplot(table(all_chr[which(all_chr != 0)]), 
-  main = "Number of Interactions per Chromosome")
+```{r int_per_chrom}
+int_per_chrom <- function(var.inf.table, chrom = 1:16, p.or.q = 1e-6, 
+    plot.results = FALSE, plot.label = ""){
+  sig.idx <- which(as.numeric(var.inf.table[,"p_adjusted"]) <= p.or.q)
+  source.query.idx <- which(var.inf.table[,"Source"] == "query")
+  target.query.idx <- which(var.inf.table[,"Target"] == "query")
+
+  source.query.table <- var.inf.table[intersect(sig.idx,source.query.idx),]
+  target.query.table <- var.inf.table[intersect(sig.idx,target.query.idx),]
+
+  source.chrom.idx <- lapply(chrom, function(x) which(as.numeric(source.query.table[,5]) == x))
+  target.chrom.idx <- lapply(chrom, function(x) which(as.numeric(target.query.table[,2]) == x))
+
+  source.chrom.count <- sapply(source.chrom.idx, length)
+  target.chrom.count <- sapply(target.chrom.idx, length)
+  counts.by.chrom <- rbind(source.chrom.count, target.chrom.count)
+  colnames(counts.by.chrom) <- chrom
+  rownames(counts.by.chrom) <- c("Query as Source", "Query as Target")
+
+  if(plot.results){
+    if(is.interactive){quartz(width = 10, height = 5)}
+    barplot(counts.by.chrom, beside = TRUE, 
+    col = c("#7fc97f", "#beaed4"), main = plot.label)
+    legend("topright", fill = c("#7fc97f", "#beaed4"), 
+      legend = c("Query as Source", "Query as Target"))
+  }
+
+  source.chrom.effect <- lapply(source.chrom.idx, function(x) as.numeric(source.query.table[x,"Effect"]))
+  names(source.chrom.effect) <- chrom
+  target.chrom.effect <- lapply(target.chrom.idx, function(x) as.numeric(target.query.table[x,"Effect"]))
+  names(target.chrom.effect) <- chrom
+  all.effects <- list(source.chrom.effect, target.chrom.effect)
+  names(all.effects) <- c("Query as Source", "Query as Target")
+  
+  if(plot.results){
+    if(is.interactive){quartz(width = 10, height = 5)}
+    plot.grouped.boxes(all.effects, print.vals = NA, main = plot.label)
+    abline(h = 0)
+  }
+
+  all.results <- list("Counts_by_Chromosome" = counts.by.chrom, 
+  "Effects_by_Chrom" = all.effects)
+  invisible(all.results)
+
+}
+
+for(i in 1:length(var_inf)){
+  int_per_chrom(var_inf[[i]], plot.results = TRUE, plot.label = exp.names[i])
+}
 ```
 
 The following plot shows the interaction counts along the 
 genome in a sliding window.
 
 ```{r interactions_along_genome}
-u_chr <- 1:16
 
 interaction_count <- function(u_chr, marker_names, window.size = 1e4, gap.size = 5e3){
   split_marker <- strsplit(marker_names, "_")
@@ -151,15 +194,19 @@ plot_two_counts <- function(count_results1, count_results2, plot.label = ""){
 ```
 
 The following plots show how the source markers are distributed
-across the genome. These are the markers that target the GAL
-introgression.
+across the genome. 
 
 ```{r source_dist, fig.width = 10, fig.height = 5}
-source_markers <- var_inf[,"Source"]
-source_markers <- source_markers[which(source_markers != "query")]
-source_counts <- interaction_count(u_chr, source_markers, 1e4, 5e3)
-if(is.interactive){quartz(width = 10, height = 5)}
-plot_counts(source_counts, plot.label = "Source Marker Positions")
+all.source.counts <- vector(mode = "list", length = length(var_inf))
+names(all.source.counts) <- exp.names
+for(i in 1:length(var_inf)){
+  source_markers <- var_inf[[i]][,"Source"]
+  source_markers <- source_markers[which(source_markers != "query")]
+  source_counts <- interaction_count(u_chr, source_markers, 1e4, 5e3)
+  if(is.interactive){quartz(width = 10, height = 5)}
+  plot_counts(source_counts, plot.label = paste(exp.names[i], "Source Marker Positions"))
+  all.source.counts[[i]] <- source_counts
+}
 ```
 
 The following plots show how the target markers are distributed
@@ -168,37 +215,67 @@ the GAL introgression.
 
 
 ```{r target_dist, fig.width = 10, fig.height = 5}
-target_markers <- var_inf[,"Target"]
-target_markers <- target_markers[which(target_markers != "query")]
-target_counts <- interaction_count(u_chr, target_markers, 1e4, 5e3)
-if(is.interactive){quartz(width = 10, height = 5)}
-plot_counts(target_counts, plot.label = "Target Marker Positions")
+all.target.counts <- vector(mode = "list", length = length(exp.names))
+names(all.target.counts) <- exp.names
+for(i in 1:length(var_inf)){
+  target_markers <- var_inf[[i]][,"Target"]
+  target_markers <- target_markers[which(target_markers != "query")]
+  target_counts <- interaction_count(u_chr, target_markers, 1e4, 5e3)
+  if(is.interactive){quartz(width = 10, height = 5)}
+  plot_counts(target_counts, plot.label = "Target Marker Positions")
+  all.target.counts[[i]] <- target_counts
+}
 ```
 
 The following plot shows a direct comparison of the distributions of the
 source markers (top, brown) and the target markers (bottom blue).
 
 ```{r comp, fig.width = 10, fig.height = 5}
-plot_two_counts(count_results1 = source_counts, count_results2 = target_counts)
+for(i in 1:length(exp.names)){
+  if(is.interactive){quartz(width = 10, height = 5)}
+  plot_two_counts(count_results1 = all.source.counts[[i]], 
+  count_results2 = all.target.counts[[i]], plot.label = exp.names[i])
+}
 ```
 
 ## Effect Sizes
 
 ```{r effect_sizes}
-#head(var_inf)
-query.as.source <- which(var_inf[,"Source"] == "query")
-query.as.target <- which(var_inf[,"Target"] == "query")
-source.effects <- as.numeric(var_inf[query.as.source,"Effect"])
-target.effects <- as.numeric(var_inf[query.as.target,"Effect"])
+for(i in 1:length(var_inf)){
+  query.as.source <- which(var_inf[[i]][,"Source"] == "query")
+  query.as.target <- which(var_inf[[i]][,"Target"] == "query")
+  source.effects <- as.numeric(var_inf[[i]][query.as.source,"Effect"])
+  target.effects <- as.numeric(var_inf[[i]][query.as.target,"Effect"])
 
-boxplot(list(source.effects,target.effects), 
-  names = c("Query as Source", "Query as Target"))
-abline(h = 0)
+  if(is.interactive){quartz()}
+  boxplot(list(source.effects,target.effects), 
+    names = c("Query as Source", "Query as Target"), main = exp.names[i])
+  abline(h = 0)
+}
 ```
 
-```{r pheno_effects, fig.width = 8, fig.height = 8}
-pheno.effects <- pheno.effects.DO(final_obj, geno_obj, covar = NULL, 
-	geno.coding = c("Additive", "Dominant", "Recessive"), 
-	collapsed.net = FALSE, color.scheme = c("other", "DO/CC"))
+## Network Effects
+
+We would eventually like to build a network of effects
+across multiple query cape runs. How many of the interactions
+of one query are present in the other?
+
+```{r fun}
+
+
+```
+
+```{r overlapping_interactions}
+
+all.nets <- vector(mode = "list", length = length(exp.names))
+names(all.nets) <- exp.names
+
+for(i in 1:length(var_inf)){
+  int.net <- graph_from_edgelist(var_inf[[i]][,c("Source", "Target")])
+  V(int.net)$chrom <- sapply(V(int.net)$name, function(x) substr(x, 2,3))
+  E(int.net)$effect <- as.numeric(var_inf[[i]][,"Effect"])
+  E(int.net)$p <- as.numeric(var_inf[[i]][,"p_adjusted"])
+  all.nets[[i]] <- int.net
+}
 
 ```
