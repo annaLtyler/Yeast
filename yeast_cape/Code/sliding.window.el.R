@@ -8,14 +8,19 @@ sliding.window.el <- function(elV, window.size, gap.size){
 	
 	start.pos <- 1
 	list.ind <- 1
-	while(start.pos + window.size <= total.num){
-		el.list[[list.ind]] <- elV[start.pos:(start.pos+window.size-1)]
-		list.ind = list.ind + 1
-		start.pos = start.pos + gap.size
-		}
-	if(start.pos < total.num){
-		el.list[[list.ind]] <- elV[start.pos:total.num]
-		}
+	if(start.pos + window.size >= total.num){
+		el.list[[1]] <- elV
+	}else{
+
+		while(start.pos + window.size <= total.num){
+			el.list[[list.ind]] <- elV[start.pos:(start.pos+window.size-1)]
+			list.ind = list.ind + 1
+			start.pos = start.pos + gap.size
+			}
+		if(start.pos < total.num){
+			el.list[[list.ind]] <- elV[start.pos:total.num]
+			}
+	}
 	
 	return(el.list)
 	

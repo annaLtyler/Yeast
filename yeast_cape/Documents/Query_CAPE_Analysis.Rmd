@@ -21,7 +21,7 @@ is.interactive = FALSE
 u_chr <- 1:16
 ```
 
-The results here pertain to the directory `r exp.name`.
+The results here pertain to the directory `r exp.names`.
 
 ```{r load_code}
 all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
@@ -197,12 +197,14 @@ The following plots show how the source markers are distributed
 across the genome. 
 
 ```{r source_dist, fig.width = 10, fig.height = 5}
+window.size <- 1e4; gap.size = window.size/2
 all.source.counts <- vector(mode = "list", length = length(var_inf))
 names(all.source.counts) <- exp.names
 for(i in 1:length(var_inf)){
   source_markers <- var_inf[[i]][,"Source"]
   source_markers <- source_markers[which(source_markers != "query")]
-  source_counts <- interaction_count(u_chr, source_markers, 1e4, 5e3)
+  source_counts <- interaction_count(u_chr, marker_names = source_markers, 
+    window.size = window.size, gap.size = gap.size)
   if(is.interactive){quartz(width = 10, height = 5)}
   plot_counts(source_counts, plot.label = paste(exp.names[i], "Source Marker Positions"))
   all.source.counts[[i]] <- source_counts
@@ -220,7 +222,7 @@ names(all.target.counts) <- exp.names
 for(i in 1:length(var_inf)){
   target_markers <- var_inf[[i]][,"Target"]
   target_markers <- target_markers[which(target_markers != "query")]
-  target_counts <- interaction_count(u_chr, target_markers, 1e4, 5e3)
+  target_counts <- interaction_count(u_chr, target_markers, window.size, gap.size)
   if(is.interactive){quartz(width = 10, height = 5)}
   plot_counts(target_counts, plot.label = "Target Marker Positions")
   all.target.counts[[i]] <- target_counts
@@ -260,7 +262,7 @@ We would eventually like to build a network of effects
 across multiple query cape runs. How many of the interactions
 of one query are present in the other?
 
-```{r overlapping_interactions}
+```{r overlapping_interactions, fig.width = 8, fig.height = 4}
 all.interactors <- lapply(var_inf, 
   function(x) list(unique(x[which(x[,"Source"] != "query"),"Source"]), 
   unique(x[which(x[,"Target"] != "query"),"Target"])))
@@ -292,6 +294,7 @@ for(i in 1:nrow(query_pairs)){
   xlim = c(plot.min, plot.max), ylim = c(plot.min, plot.max), main = "Query as Target")
   abline(h = 0, v = 0)
 
+  mtext(paste(exp.names[exp1], "vs." exp.names[exp2]), side = 3, line = -1.5, outer = TRUE)
 }
 
 ```
