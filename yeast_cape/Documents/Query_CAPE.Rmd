@@ -130,7 +130,7 @@ geno_obj <- geno
 For query cape, we will supply a genotype vector that CAPE 
 will test for interaction against all other individual alleles.
 
-```{r gal3}
+```{r get_query}
 marker.pos <- sapply(strsplit(dimnames(geno_obj)[[3]], "_"), function(x) as.numeric(x[2]))
 marker.idx <- rep(NA, length(roi))
 names(marker.idx) <- names(roi)
