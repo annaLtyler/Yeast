@@ -15,7 +15,7 @@ multiple runs of Query_CAPE.Rmd
 
 ```{r get_exp_name}
 library(here)
-exp.names <- c("GAL_query", "GAL4_query")
+exp.names <- c("GAL3_query", "GAL4_query")
 is.interactive = FALSE
 #is.interactive = TRUE
 u_chr <- 1:16
@@ -260,22 +260,38 @@ We would eventually like to build a network of effects
 across multiple query cape runs. How many of the interactions
 of one query are present in the other?
 
-```{r fun}
-
-
-```
-
 ```{r overlapping_interactions}
+all.interactors <- lapply(var_inf, 
+  function(x) list(unique(x[which(x[,"Source"] != "query"),"Source"]), 
+  unique(x[which(x[,"Target"] != "query"),"Target"])))
+names(all.interactors) <- exp.names
 
-all.nets <- vector(mode = "list", length = length(exp.names))
-names(all.nets) <- exp.names
+query_pairs <- pair.matrix(1:length(exp.names))
 
-for(i in 1:length(var_inf)){
-  int.net <- graph_from_edgelist(var_inf[[i]][,c("Source", "Target")])
-  V(int.net)$chrom <- sapply(V(int.net)$name, function(x) substr(x, 2,3))
-  E(int.net)$effect <- as.numeric(var_inf[[i]][,"Effect"])
-  E(int.net)$p <- as.numeric(var_inf[[i]][,"p_adjusted"])
-  all.nets[[i]] <- int.net
+for(i in 1:nrow(query_pairs)){
+  exp1 <- query_pairs[i,1]
+  exp2 <- query_pairs[i,2]
+  common.query.sources <- intersect(all.interactors[[exp1]][[1]], all.interactors[[exp2]][[1]])
+  common.source.effects <- cbind(as.numeric(var_inf[[exp1]][match(common.query.sources, var_inf[[exp1]][,"Source"]),"Effect"]),
+    as.numeric(var_inf[[exp2]][match(common.query.sources, var_inf[[exp2]][,"Source"]),"Effect"]))
+
+  common.query.targets <- intersect(all.interactors[[exp1]][[2]], all.interactors[[exp2]][[2]])
+  common.target.effects <- cbind(as.numeric(var_inf[[exp1]][match(common.query.targets, var_inf[[exp1]][,"Target"]),"Effect"]),
+    as.numeric(var_inf[[exp2]][match(common.query.targets, var_inf[[exp2]][,"Target"]),"Effect"]))
+
+  if(is.interactive){quartz(width = 8, height = 4)}
+  par(mfrow = c(1,2))
+  plot.min <- min(c(min(common.source.effects), min(common.target.effects)))
+  plot.max <- max(c(max(common.source.effects), max(common.target.effects)))
+  
+  plot(common.target.effects, xlab = exp.names[exp1], ylab = exp.names[exp2],
+  xlim = c(plot.min, plot.max), ylim = c(plot.min, plot.max), main = "Query as Source")
+  abline(h = 0, v = 0)
+
+  plot(common.source.effects, xlab = exp.names[exp1], ylab = exp.names[exp2],
+  xlim = c(plot.min, plot.max), ylim = c(plot.min, plot.max), main = "Query as Target")
+  abline(h = 0, v = 0)
+
 }
 
 ```
