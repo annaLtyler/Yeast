@@ -15,7 +15,7 @@ multiple runs of Query_CAPE.Rmd
 
 ```{r get_exp_name}
 library(here)
-exp.names <- c("GAL3_query", "GAL4_query")
+exp.names <- c("GAL3_query", "GAL4_query", "GAL80_query", "MSS11_query")
 is.interactive = FALSE
 #is.interactive = TRUE
 u_chr <- 1:16
@@ -294,7 +294,7 @@ for(i in 1:nrow(query_pairs)){
   xlim = c(plot.min, plot.max), ylim = c(plot.min, plot.max), main = "Query as Target")
   abline(h = 0, v = 0)
 
-  mtext(paste(exp.names[exp1], "vs." exp.names[exp2]), side = 3, line = -1.5, outer = TRUE)
+  mtext(paste(exp.names[exp1], "vs.", exp.names[exp2]), side = 3, line = -1.5, outer = TRUE)
 }
 
 ```

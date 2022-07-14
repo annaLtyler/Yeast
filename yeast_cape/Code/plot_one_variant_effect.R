@@ -11,6 +11,14 @@ plot_one_variant_effect <- function(data_obj, geno_obj, marker_name,
         pheno <- data_obj$ET
     }
 
+    common.ind <- Reduce("intersect", list(rownames(pheno), rownames(geno_obj), rownames(query_genotype)))
+    common.pheno.locale <- match(common.ind, rownames(pheno))
+    common.geno.locale <- match(common.ind, rownames(geno_obj))
+    common.query.locale <- match(common.ind, rownames(query_genotype))
+    matched.pheno <- pheno[common.pheno.locale,]
+    matched.geno <- geno_obj[common.geno.locale,,]
+    matched.query <- query_genotype[common.query.locale,]
+
     var_int <- write_variant_influences(data_obj, p_or_q = p_or_q, 
         include_main_effects = FALSE, mark_covar = FALSE, 
         write_file = FALSE)
@@ -25,15 +33,57 @@ plot_one_variant_effect <- function(data_obj, geno_obj, marker_name,
     get_int <- function(phenoV, geno1, geno2){
         geno_pairs <- pair.matrix(c(0,1), self.pairs = TRUE, ordered = TRUE)
         pheno.groups <- apply(geno_pairs, 1, function(x) phenoV[intersect(which(geno1 == x[1]), which(geno2 == x[2]))])
-        #boxplot(pheno.groups)
+        #boxplot(pheno.groups, names = apply(geno_pairs, 1, function(x) paste(x, collapse = "_")))
         group.means <- sapply(pheno.groups, function(x) mean(x, na.rm = TRUE))
-        #group.se <- sapply(pheno.groups, function(x) sd(x, na.rm = TRUE)/sqrt(length(x)))
+        #centered.groups <- lapply(pheno.groups, function(x) x-group.means[1])
+        #boxplot(centered.groups, names = apply(geno_pairs, 1, function(x) paste(x, collapse = "_")))
+        group.se <- sapply(pheno.groups, function(x) sd(x, na.rm = TRUE)/sqrt(length(x)))
         centered.means <- group.means - group.means[1]
         add.pred <- centered.means[2] + centered.means[4]
 
-        result <- c("main1" = centered.means[4], "main2" = centered.means[2], 
-            "add" = add.pred, "int" = centered.means[3])
+        result <- rbind(c(centered.means[4], centered.means[2], add.pred, centered.means[3]),
+              c(group.se[4], group.se[2], group.se[2] + group.se[4], group.se[3]))  
+        rownames(result) <- c("effect", "se")
+        colnames(result) <- c("main1", "main2", "add", "int")
+        return(result)
+    }
 
+    plot.effects <- function(marker.idx, source.target = c("Source", "Target")){
+        marker.label <- var_int[marker.idx,source.target]
+        split.marker <- strsplit(marker.label, "_")
+        marker.names <- sapply(split.marker, function(x) x[1])
+        allele.names <- sapply(split.marker, function(x) x[2])
+        marker.geno <- sapply(1:length(marker.names), function(x) matched.geno[,allele.names[x], marker.names[x]])
+        colnames(marker.geno) <- marker.names
+        
+        marker.int <- lapply(1:ncol(matched.pheno), function(y) lapply(1:ncol(marker.geno), function(x) get_int(matched.pheno[,y], marker.geno[,x], matched.query)))
+        names(marker.int) <- colnames(matched.pheno)
+
+        for(p in 1:length(marker.int)){
+            mean.vals <- marker.int[[p]][[1]][1,]
+            se.vals <- marker.int[[p]][[1]][2,]
+            max.val <- max(mean.vals+se.vals)
+            min.val <- min(mean.vals-se.vals)
+            if(max.val < 0){max.val <- 0}
+            if(min.val > 0){min.val <- 0}
+
+            a <- barplot(mean.vals, 
+            main = paste(colnames(matched.pheno)[p], marker.label, sep = "\n"), 
+            names = c(marker.label, "query", "Additive", "Actual"),
+            col = trait_cols[as.numeric(allele.names)], ylim = c(min.val, max.val))
+            segments(a[,1], mean.vals-se.vals, a[,1], mean.vals+se.vals)
+            segments(a[,1]-0.2, mean.vals-se.vals, a[,1]+0.2, mean.vals-se.vals)
+            segments(a[,1]-0.2, mean.vals+se.vals, a[,1]+0.2, mean.vals+se.vals)
+            abline(h = 0)
+        }
+
+        add.dev <- sapply(marker.int, function(x) x[[1]][1,"int"] - x[[1]][1,"add"])
+        if(!is.null(nrow(add.dev))){
+            colnames(add.dev) <- colnames(pheno)
+        }else{
+            names(add.dev) <- colnames(pheno)
+        }
+        return(add.dev)
     }
 
     source.deviation <- vector(mode = "list", length = length(test.source.idx))
@@ -41,29 +91,8 @@ plot_one_variant_effect <- function(data_obj, geno_obj, marker_name,
     
     if(length(test.source.idx) > 0){
         for(s in 1:length(test.source.idx)){
-            split.source <- strsplit(var_int[test.source.idx[s],"Source"], "_")
-            source.marker.names <- sapply(split.source, function(x) x[1])
-            source.allele.names <- sapply(split.source, function(x) x[2])
-
-            source.geno <- sapply(1:length(source.marker.names), function(x) geno_obj[,source.allele.names[x], source.marker.names[x]])
-            colnames(source.geno) <- source.marker.names
-            
-            source.int <- lapply(1:ncol(pheno), function(y) t(apply(source.geno, 2, function(x) get_int(pheno[,y], x, query_genotype))))
-
-            for(p in 1:length(source.int)){
-                barplot(source.int[[p]], 
-                main = paste(colnames(pheno)[p], names(source.deviation)[s], sep = "\n"), 
-                names = c(names(source.deviation)[s], "query", "Additive", "Actual"))
-                abline(h = 0)
-            }
-
-            source.effects <- sapply(source.int, function(x) x[,"int"] - x[,"add"])
-            if(!is.null(nrow(source.effects))){
-                colnames(source.effects) <- colnames(pheno)
-            }else{
-                names(source.effects) <- colnames(pheno)
-            }
-            source.deviation[[s]] <- source.effects
+            #par(mfrow = c(1,2))
+            source.deviation[[s]] <- plot.effects(test.source.idx[s], "Source")
         }
     }
 
@@ -72,32 +101,10 @@ plot_one_variant_effect <- function(data_obj, geno_obj, marker_name,
 
     if(length(test.target.idx) > 0){
         for(s in 1:length(test.target.idx)){
-            split.target <- strsplit(var_int[test.target.idx[s],"Target"], "_")
-            target.marker.names <- sapply(split.target, function(x) x[1])
-            target.allele.names <- sapply(split.target, function(x) x[2])
-
-            target.geno <- sapply(1:length(target.marker.names), function(x) geno_obj[,target.allele.names[x], target.marker.names[x]])
-            colnames(target.geno) <- target.marker.names
-            
-            target.int <- lapply(1:ncol(pheno), function(y) t(apply(target.geno, 2, function(x) get_int(pheno[,y], query_genotype, x))))
-
-            for(p in 1:length(target.int)){
-                barplot(target.int[[p]], 
-                main = paste(colnames(pheno)[p], names(target.deviation)[s], sep = "\n"), 
-                names = c(names(target.deviation)[s], "query", "Additive", "Actual"))
-                abline(h = 0)
-            }
-
-            target.effects <- sapply(target.int, function(x) x[,"int"] - x[,"add"])
-            if(!is.null(nrow(target.effects))){
-                colnames(target.effects) <- colnames(pheno)
-            }else{
-                names(target.effects) <- colnames(pheno)
-            }
-            target.deviation[[s]] <- target.effects
+            target.deviation[[s]] <- plot.effects(test.target.idx[s], "Target")
         }
-
     }
+
     results <- list("deviation_with_query_as_source" = target.deviation,
         "deviation_with_query_as_target" = source.deviation)
     invisible(results)

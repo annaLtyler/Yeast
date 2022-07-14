@@ -31,13 +31,14 @@ test.ind  <- as.logical(args[4])
 #exp.name <- "GAL3_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
 #exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
 #exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
-exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
+#exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
+exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
 
 if(is.na(delete_previous)){
   delete_previous <- FALSE
   remove_chr9 = TRUE #removes the proximal half of Chr 9 because of allele frequency weirdness.
   test.markers <- FALSE
-  test.ind <- TRUE
+  test.ind <- FALSE
 }
 
 is.interactive = FALSE
@@ -126,6 +127,51 @@ geno_obj <- geno
 
 ```
 
+## Variance
+
+```{r variance, eval = FALSE}
+boot.var <- function(v, nboot = 100){
+  all.var <- rep(NA, nboot)
+  for(b in 1:nboot){
+    all.var[b] <- var(sample(v, replace = TRUE), na.rm = TRUE)
+  }
+  return(all.var)
+}
+
+for(ph in 1:ncol(pheno_obj$pheno)){
+  allele.var <- matrix(NA, nrow = 8, ncol = dim(geno_obj)[3])
+
+  overall.var <- var(log10(pheno_obj$pheno[,ph]), na.rm = TRUE)
+  for(i in 1:dim(geno_obj)[3]){
+    report.progress(i, dim(geno_obj)[3])
+    allele.pheno <- apply(geno_obj[,,i], 2, function(x) pheno_obj$pheno[which(x == 1),ph])  
+    one.var <- sapply(allele.pheno, function(x) var(x, na.rm = TRUE))
+    allele.var[,i] <- one.var
+    #var.order <- order(one.var)
+    #boxplot(allele.pheno[var.order], col = categorical_pal(8)[var.order])
+    #stripchart(lapply(allele.pheno[var.order], function(x) round(x, 2)), 
+    #  method = "stack", offset = 0.1, col = "lightgray",
+    #  pch = 16, vertical = TRUE)
+    #plot(one.var[var.order], col = categorical_pal(8)[var.order], pch = 16)
+  }
+
+  pdf(paste0("~/Desktop/variance_", colnames(pheno_obj$pheno)[ph], ".pdf"), width = 7, height = 5)
+  for(ch in 1:16){
+    chr.locale <- which(pheno_obj$chromosome == ch)
+    chr.pos <- pheno_obj$marker_location[chr.locale]
+    plot.new()
+    plot.window(xlim = c(1, max(chr.pos)/1e3), ylim = c(min(allele.var), max(allele.var)))
+    for(a in 1:8){
+      points(x = chr.pos/1e3, allele.var[a,chr.locale], type = "l", col = categorical_pal(8)[a])
+    }
+    abline(h = overall.var)
+    mtext(ch, side = 3)
+    axis(1);axis(2)
+  }
+  dev.off()
+}
+```
+
 ## Pull out single marker of interest
 
 For query cape, we will supply a genotype vector that CAPE 
@@ -191,22 +237,16 @@ plot.null.dist(final_obj, pairscan.obj, path = results.dir)
 ## Variant Effects
 
 The following code produces a pdf that shows the deviation from 
-the expected trait for each interaction. 
+the expected trait for each interaction. The coordinates are in kb
+as specified by scale_coord.
 
 ```{r var_effects}
-
 trait.deviation.file <- file.path(results.dir, "Deviation_from_Additivity.RDS")
-
-if(!file.exists(trait.deviation.file)){
-  pdf(file.path(results.dir, "Interaction.Effects.pdf"), width = 10, height = 6)
-  trait_deviation <- plot_variant_effects_query(final_obj, geno_obj, 
-    pheno_type = "norm_pheno", p_or_q = 1e-6)
-  dev.off()
-  saveRDS(trait_deviation, trait.deviation.file)
-}else{
-  trait_deviation <- readRDS(trait.deviation.file)
-}
-
+pdf(file.path(results.dir, "Interaction.Effects.pdf"), width = 10, height = 6)
+trait_deviation <- plot_variant_effects_query(final_obj, geno_obj, 
+  pheno_type = "norm_pheno", p_or_q = 1e-6, scale_coord = 1e3)
+dev.off()
+saveRDS(trait_deviation, trait.deviation.file)
 ```
 
 The following histogram shows the distributions of 
@@ -247,8 +287,11 @@ The following plots show the correlation between the deviation
 from additivity for the two traits.
 
 ```{r deviation_correlation, fig.width = 10, fig.height = 6}
-trait.cor <- t(sapply(trait_deviation, function(y) sapply(y, function(x) cor(x[,1], x[,2], use = "pairwise.complete.obs"))))
-barplot(trait.cor, beside = TRUE);abline(h = 0)
+trait.cor <- t(sapply(trait_deviation, function(y) sapply(y, function(x) if(length(x) > 0){cor(x[,1,drop=FALSE], x[,2,drop=FALSE], use = "pairwise.complete.obs")}else{NA})))
+trait.cor[which(!is.finite(trait.cor))] <- 0
+barplot(trait.cor, beside = TRUE, col = c("#7fc97f", "#beaed4"))
+legend("topright", fill = c("#7fc97f", "#beaed4"), legend = rownames(trait.cor))
+abline(h = 0)
 ```
 
 ```{r check_one, eval = FALSE}
@@ -256,9 +299,12 @@ barplot(trait.cor, beside = TRUE);abline(h = 0)
 test.marker <- c("GAL3" = "X04463411")
 test.marker <- c("GAl1/7/10" = "X02271559_6") #allele 6 of GAL1/7/10, should rescue GAL3 null in GAL environment
 test.marker <- c("GAL4" = "X1680216") 
+test.marker <- c("FLO11" = "X09393064")
 
-par(mfrow = c(5,2))
-plot_one_variant_effect(final_obj, geno_obj, test.marker)
+pdf("~/Desktop/interactions.pdf", width = 9, height = 7)
+par(mfrow = c(2,2))
+test <- plot_one_variant_effect(final_obj, geno_obj, marker_name = "X12292952")
+dev.off()
 
 
 ```
