@@ -315,7 +315,7 @@ dev.off()
 ```
 
 
-```{r synthetic_viability}
+```{r synthetic_viability, eval = FALSE}
 #look for allele pairs that are never found together
 #or never separated from the query.
 
