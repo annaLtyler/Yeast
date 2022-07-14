@@ -127,28 +127,32 @@ geno_obj <- geno
 
 ```
 
-## Variance
 
 ```{r variance, eval = FALSE}
-boot.var <- function(v, nboot = 100){
-  all.var <- rep(NA, nboot)
-  for(b in 1:nboot){
-    all.var[b] <- var(sample(v, replace = TRUE), na.rm = TRUE)
-  }
-  return(all.var)
+#look for separation of trait variance in individuals
+#with each allele at each locus. Does separation indicate
+#the presence of epistasi? Main effects?
+
+mad <- function(v){
+  mean.v <- mean(v, na.rm = TRUE)
+  abs.dev <- abs(v - mean.v)
+  mean.dev <- mean(abs.dev, na.rm = TRUE)
+  return(mean.dev)
 }
 
 for(ph in 1:ncol(pheno_obj$pheno)){
   allele.var <- matrix(NA, nrow = 8, ncol = dim(geno_obj)[3])
+  overall.var <- mad(pheno_obj$pheno[,ph])
+  cat("\n", colnames(pheno_obj$pheno)[ph], "\n")
 
-  overall.var <- var(log10(pheno_obj$pheno[,ph]), na.rm = TRUE)
   for(i in 1:dim(geno_obj)[3]){
     report.progress(i, dim(geno_obj)[3])
-    allele.pheno <- apply(geno_obj[,,i], 2, function(x) pheno_obj$pheno[which(x == 1),ph])  
-    one.var <- sapply(allele.pheno, function(x) var(x, na.rm = TRUE))
-    allele.var[,i] <- one.var
-    #var.order <- order(one.var)
-    #boxplot(allele.pheno[var.order], col = categorical_pal(8)[var.order])
+    allele.pheno <- lapply(1:ncol(geno_obj[,,i]), function(x) pheno_obj$pheno[which(geno_obj[,x,i] == 1),ph])
+    mean.dev <- sapply(allele.pheno, function(x) mad(x))
+    #dev.order <- order(mean.dev)  
+    #barplot(mean.dev[dev.order], col = categorical_pal(8)[dev.order])
+    #boxplot(allele.dev[dev.order], col = categorical_pal(8)[dev.order])
+    allele.var[,i] <- mean.dev
     #stripchart(lapply(allele.pheno[var.order], function(x) round(x, 2)), 
     #  method = "stack", offset = 0.1, col = "lightgray",
     #  pch = 16, vertical = TRUE)
@@ -160,7 +164,7 @@ for(ph in 1:ncol(pheno_obj$pheno)){
     chr.locale <- which(pheno_obj$chromosome == ch)
     chr.pos <- pheno_obj$marker_location[chr.locale]
     plot.new()
-    plot.window(xlim = c(1, max(chr.pos)/1e3), ylim = c(min(allele.var), max(allele.var)))
+    plot.window(xlim = c(1, max(chr.pos)/1e3), ylim = c(min(allele.var, na.rm = TRUE), max(allele.var, na.rm = TRUE)))
     for(a in 1:8){
       points(x = chr.pos/1e3, allele.var[a,chr.locale], type = "l", col = categorical_pal(8)[a])
     }
@@ -171,6 +175,7 @@ for(ph in 1:ncol(pheno_obj$pheno)){
   dev.off()
 }
 ```
+
 
 ## Pull out single marker of interest
 
@@ -306,5 +311,38 @@ par(mfrow = c(2,2))
 test <- plot_one_variant_effect(final_obj, geno_obj, marker_name = "X12292952")
 dev.off()
 
+
+```
+
+
+```{r synthetic_viability}
+#look for allele pairs that are never found together
+#or never separated from the query.
+
+query_genotype <- final_obj$query_genotype
+
+query_genotype <- geno_obj[,sample(1:8, 1), sample(1:dim(geno_obj)[3], 1)] #random query
+
+query_cor <- matrix(NA, nrow = 8, ncol = dim(geno_obj)[3])
+for(i in 1:dim(geno_obj)[3]){
+  report.progress(i, dim(geno_obj)[3])
+  query_cor[,i] <- apply(geno_obj[,,i], 2, function(x) cor(query_genotype, x, use = "pairwise.complete.obs"))
+}
+
+
+plot.new()
+plot.window(xlim = c(1, dim(geno_obj)[3]), ylim = c(-1, 1))
+for(i in 1:nrow(query_cor)){
+  points(query_cor[i,], type = "l", col = categorical_pal(8)[i])
+}
+axis(2)
+
+all.pairs <- pair.matrix(1:dim(geno_obj)[3])
+full.cor <- matrix(NA, nrow = dim(geno_obj)[3], ncol = dim(geno_obj)[3])
+for(i in 1:nrow(all.pairs)){
+  marker1 <- all.pairs[i,1]
+  marker2 <- all.pairs[i,2]
+  full.cor[marker1, marker2] <- cor(as.vector(geno_obj[,,marker1]), as.vector(geno_obj[,,marker2]), use = "pairwise.complete.obs")
+}
 
 ```
