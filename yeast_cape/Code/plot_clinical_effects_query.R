@@ -1,6 +1,6 @@
 plot_clinical_effects_query <- function(data_obj, geno_obj, 
     pheno_type = c("pheno", "norm_pheno", "ET"), p_or_q = 0.05, 
-    scale.coord = 1, verbose = FALSE){
+    path = ".", verbose = FALSE){
 
     query_genotype <- data_obj$query_genotype
     trait_cols <- categorical_pal(8)
@@ -54,24 +54,28 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
         add.pred <- source.effect + target.effect
 
         if(is.finite(add.pred)){
-			if(add.pred < 0){
-				int.expect <- "expect.negative"
-				}else{
-				int.expect <- "expect.positive"
-				}
-			
-			if(abs(actual.effect) < abs(add.pred)){
-				int.effect <- "alleviating"
-				}else{
-				int.effect <- "aggravating"
-				}
-			}else{
-				int.expect <- "none"
-				int.effect <- "none"
-				}
+            #are the main effects pushing in the same direction 
+            #or opposite directions
+            if(sign(source.effect) == sign(target.effect)){
+                main.effect <- "coherent"
+            }else{
+                main.effect <- "incoherent"
+            }
+
+            #is the actual trait closer to the reference
+            #than predicted
+            if(abs(actual.effect) < abs(add.pred)){
+                int.effect <- "alleviating"
+                }else{
+                int.effect <- "aggravating"
+                }
+            }else{
+                int.effect <- "none"
+                main.effect <- "none"
+            }
 		
 		pheno.result <- c("main1" = source.effect, "main2" = target.effect, 
-        "additive" = add.pred, "actual" = actual.effect, "additive.direction" = int.expect, 
+        "additive" = add.pred, "actual" = actual.effect, "main.effects" = main.effect, 
         "effect" = int.effect)
 		return(pheno.result)
     }
@@ -95,9 +99,6 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
         source.marker.names <- sapply(split.source, function(x) x[1])
         source.allele.names <- sapply(split.source, function(x) x[2])
 
-        source.allele[[ch]] <- source.allele.names
-        target.allele[[ch]] <- target.allele.names
-
         target.geno <- sapply(1:length(target.marker.names), function(x) matched.geno[,target.allele.names[x], target.marker.names[x]])
         colnames(target.geno) <- target.markers
         source.geno <- sapply(1:length(source.marker.names), function(x) matched.geno[,source.allele.names[x], source.marker.names[x]])
@@ -105,31 +106,57 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
         
         target.int <- lapply(1:ncol(matched.pheno), function(y) t(apply(target.geno, 2, function(x) get_effect(matched.pheno[,y], matched.query, x))))
         source.int <- lapply(1:ncol(matched.pheno), function(y) t(apply(source.geno, 2, function(x) get_effect(matched.pheno[,y], x, matched.query))))
+        names(target.int) <- names(source.int) <- colnames(matched.pheno)
 
         target.effects[[ch]] <- target.int
         source.effects[[ch]] <- source.int
 
     }
 
-    all.target.effects <- Reduce("rbind", target.effects)
-    all.source.effects <- lapply(1:ncol(pheno), function(y) Reduce("rbind", sapply(source.effects, function(x) x[[y]])))
+    plot_motif_effects <- function(motif.table, query_position = c("Source", "Target"), 
+        trait_name = ""){
 
-    classify_motif <- function(marker.effects){
-        if(sign(marker.effects[1]) == sign(marker.effects[2])){
-            main <- "coherent"
-        }else{
-            main <- "incoherent"
+        all.num.effects <- apply(motif.table[,1:4], 2, as.numeric)
+        int.types <- motif.table[,5:6]
+
+        type.idx <- apply(type.pairs, 1, function(x) intersect(which(int.types[,1] == x[1]), which(int.types[,2] == x[2])))
+        ylim <- c(min(all.num.effects), max(all.num.effects))
+        plot.height <- ylim[2]-ylim[1]
+        
+        #dim(all.num.effects)
+        pdf(file.path(path, paste0("motif_effects_", query_position, "_", trait_name, ".pdf")))
+        par(mfrow = c(2,2))
+        for(it in 1:nrow(type.pairs)){
+            plot.new()
+            plot.window(xlim = c(1,4), ylim = ylim)
+            apply(all.num.effects[type.idx[[it]],], 1, function(x) points(x, type = "b", col = "gray"))    
+            axis(2)
+            text(x = 1:4, y = (ylim[1]-(plot.height*0)), labels = c("Main1", "Main2", "Additive", "Actual"))
+            mtext(paste(type.pairs[it,], collapse = " "), side = 3)
+            abline(h = 0)
         }
+        mtext(trait_name, side = 3, line = -1.5, outer = TRUE)
+        dev.off()
     }
 
+    #do interactions have similar or different effects across multiple conditions?
+    all.target.effects <- lapply(1:ncol(pheno), function(y) Reduce("rbind", sapply(target.effects, function(x) x[[y]])))
+    all.source.effects <- lapply(1:ncol(pheno), function(y) Reduce("rbind", sapply(source.effects, function(x) x[[y]])))
+
+    target.main <- lapply(all.target.effects, function(x) as.factor(x[,"main.effects"]))
+    names(target.main) <- colnames(matched.pheno)
+    target.main.counts <- table(target.main)
+    source.main <- lapply(all.source.effects, function(x) as.factor(x[,"main.effects"]))
+    names(source.main) <- colnames(matched.pheno)
+    source.main.counts <- table(source.main)
+
+    main.types <- c("coherent", "incoherent")
+    int.effect <- c("aggravating", "alleviating")
+    type.pairs <- rbind(cbind(rep(main.types, length(int.effect)), rep(int.effect, each = length(main.types))))
+    
     for(p in 1:length(all.source.effects)){
-        all.num.effects <- apply(all.source.effects[[p]][,1:4], 2, as.numeric)
-        #dim(all.num.effects)
-        plot.new()
-        plot.window(xlim = c(1,4), ylim = c(min(all.num.effects), max(all.num.effects)))
-        apply(all.num.effects, 1, function(x) points(x, type = "b", col = "gray"))    
-        axis(2)
-        mtext(colnames(pheno)[p], side = 3, line = -1.5)
+        plot_motif_effects(all.target.effects[[p]], "Source", colnames(matched.pheno)[p])
+        plot_motif_effects(all.source.effects[[p]], "Target", colnames(matched.pheno)[p])
     }
 
 }
