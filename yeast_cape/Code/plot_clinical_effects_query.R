@@ -63,10 +63,13 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
             }
 
             sign.flipped = FALSE
-            if(main.effect == "coherent"){
-                if(sign(actual.effect) != sign(source.effect)){
-                    sign.flipped = TRUE
-                }
+            #if(main.effect == "coherent"){
+            #    if(sign(actual.effect) != sign(source.effect)){
+            #        sign.flipped = TRUE
+            #    }
+            #}
+            if(sign(add.pred) != sign(actual.effect)){
+                sign.flipped = TRUE
             }
 
             #is the actual trait closer to the reference
@@ -148,13 +151,16 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
 
         ylim <- c(min(all.num.effects), max(all.num.effects))
         plot.height <- ylim[2]-ylim[1]
-
         
         #dim(all.num.effects)
         pdf(file.path(path, paste0("motif_effects_", query_position, "_", trait_name, ".pdf")), 
-            width = 9, height = 6)
-        layout.mat <- matrix(c(3,1,4,2,6,5), byrow = FALSE, nrow = 2)
-        layout(layout.mat)
+            width = 12, height = 6)
+        #layout.mat <- matrix(c(3,1,4,2,6,5), byrow = FALSE, nrow = 2)
+        #layout(layout.mat)
+        #par(mfrow = c(2,4))
+        layout.mat <- matrix(c(1:8, 0,9,9,0), nrow = 3, byrow = TRUE)
+        layout(layout.mat, heights = c(1,1,0.1))
+        par(mar = c(2,4,4,2))
         for(it in 1:nrow(type.sets)){
             if(length(type.idx[[it]]) > 0){
                 plot.new()
@@ -172,11 +178,16 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
             if(type.sets[it,3] == "FALSE"){
                 mtext(paste(type.sets[it,1:2], collapse = " "), side = 3)
             }else{
-                mtext(paste(c(type.sets[it,2], "sign flipped"), collapse = " "), side = 3)
+                mtext(paste(c(type.sets[it,1:2], "\nsign flipped"), collapse = " "), side = 3)
             }
             
         }
         mtext(trait_name, side = 3, line = -1.5, outer = TRUE)
+        par(mar = c(0,0,0,0))
+        plot.new()
+        plot.window(xlim = c(0,1), ylim = c(0,1))
+        legend(0.1,1, legend = colnames(geno_obj), horiz = TRUE,
+            col = trait_cols[1:ncol(geno_obj)], lty = 1, lwd = 3)
         dev.off()
     }
 
@@ -194,10 +205,10 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
 
     main.types <- c("coherent", "incoherent")
     int.effect <- c("aggravating", "alleviating")
-    type.sets <- rbind(cbind(rep(main.types, length(int.effect)), 
-        rep(int.effect, each = length(main.types)), 
-        rep(FALSE, length(main.types)*length(int.effect))),
-        cbind(rep("coherent", length(int.effect)), int.effect, rep(TRUE, length(int.effect))))
+    int.main.sets <- rbind(cbind(rep(main.types, length(int.effect)), 
+        rep(int.effect, each = length(main.types))))
+    type.sets <- rbind(cbind(int.main.sets, rep("FALSE", nrow(int.main.sets))),
+                       cbind(int.main.sets, rep("TRUE", nrow(int.main.sets))))
     
     for(p in 1:length(all.source.effects)){
         plot_motif_effects(motif.table = all.target.effects[[p]], 
