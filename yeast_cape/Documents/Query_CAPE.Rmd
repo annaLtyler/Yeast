@@ -30,8 +30,8 @@ test.ind  <- as.logical(args[4])
 
 #exp.name <- "GAL3_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
 #exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
-exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
-#exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
+#exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
+exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
 #exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
 
 if(is.na(delete_previous)){
