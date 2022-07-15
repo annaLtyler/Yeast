@@ -1,5 +1,6 @@
 plot_one_variant_effect <- function(data_obj, geno_obj, marker_name,
-    pheno_type = c("pheno", "ET"), p_or_q = 0.05, verbose = FALSE){
+    allele_name = NULL, pheno_type = c("pheno", "norm_pheno", "ET"), p_or_q = 0.05, 
+    verbose = FALSE){
 
     query_genotype <- data_obj$query_genotype
     trait_cols <- categorical_pal(8)
@@ -7,7 +8,11 @@ plot_one_variant_effect <- function(data_obj, geno_obj, marker_name,
 
     if(pheno_type == "pheno"){
         pheno <- data_obj$pheno
-    }else{
+    }
+    if(pheno_type == "norm_pheno"){
+        pheno <- apply(data_obj$pheno, 2, rankZ)
+    }
+    if(pheno_type == "ET"){
         pheno <- data_obj$ET
     }
 
@@ -28,6 +33,15 @@ plot_one_variant_effect <- function(data_obj, geno_obj, marker_name,
 
     if(length(test.source.idx) == 0 && length(test.target.idx) == 0){
         return("No interactions found for this marker")
+    }
+
+    if(!is.null(allele_name)){
+        source.allele.idx <- sapply(allele_name, 
+            function(x) grep(paste0("_", x), var_int[test.source.idx,"Source"]))
+        test.source.idx <- test.source.idx[unlist(source.allele.idx)]
+        target.allele.idx <- sapply(allele_name, 
+            function(x) grep(paste0("_", x), var_int[test.target.idx,"Target"]))
+        test.target.idx <- test.target.idx[unlist(target.allele.idx)]
     }
         
     get_int <- function(phenoV, geno1, geno2){

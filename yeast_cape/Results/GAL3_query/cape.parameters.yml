@@ -49,4 +49,4 @@ min_per_genotype:
 pairscan_null_size:
  - 100000
 transform_to_phenospace:
- - false
+ - true

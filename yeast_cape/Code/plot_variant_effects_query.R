@@ -6,6 +6,17 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
     trait_cols <- categorical_pal(8)
     pheno_type <- pheno_type[1]
 
+    coord_label = paste0("Position (bp/", scale_coord, ")")
+    if(scale_coord == 1){
+        coord_label = "Position (bp)"
+    }
+    if(scale_coord == 1000){
+        coord_label = "Position (Kb)"
+    }
+    if(scale_coord == 1e6){
+        coord_label = "Position (Mb)"
+    }
+
     if(pheno_type == "pheno"){
         pheno <- data_obj$pheno
     }
@@ -132,11 +143,13 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
         plot.new()
         plot.window(xlim = xlim, ylim = ylim)
         for(p in 1:ncol(pheno)){
+            #plot effect with query as target
             points(source.ch.pos[[ch]], source.deviation[[ch]][,p], type = "h",
-            col = trait_cols[p])
+                col = trait_cols[p])
+            #add allele colors
             points(source.ch.pos[[ch]], source.deviation[[ch]][,p], type = "p",
-            col = trait_cols[as.numeric(source.allele[[ch]])], pch = 16,
-            cex = 0.5)
+                col = trait_cols[as.numeric(source.allele[[ch]])], pch = 16,
+                cex = 0.5)
         } 
         axis(1); axis(2)
         abline(h = 0)
@@ -154,15 +167,15 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
         par(mar = c(4,4,0,2))
         for(p in 1:ncol(pheno)){
             points(target.ch.pos[[ch]], target.deviation[[ch]][,p], type = "h",
-            col = trait_cols[p])
+                col = trait_cols[p])
             points(target.ch.pos[[ch]], target.deviation[[ch]][,p], type = "p",
-            col = trait_cols[as.numeric(target.allele[[ch]])], pch = 16,
-            cex = 0.5)
+                col = trait_cols[as.numeric(target.allele[[ch]])], pch = 16,
+                cex = 0.5)
         } 
         axis(1); axis(2)
         abline(h = 0)
         mtext("Deviation of Trait from Additive", side = 2, line = 2.5)
-        mtext(paste0("Position (bp/", scale_coord, ")"), , side = 1, line = 2.5)
+        mtext(coord_label, , side = 1, line = 2.5)
         mtext("Query as Source", side = 4)
 
         plot.new()

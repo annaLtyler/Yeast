@@ -62,6 +62,13 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
                 main.effect <- "incoherent"
             }
 
+            sign.flipped = FALSE
+            if(main.effect == "coherent"){
+                if(sign(actual.effect) != sign(source.effect)){
+                    sign.flipped = TRUE
+                }
+            }
+
             #is the actual trait closer to the reference
             #than predicted
             if(abs(actual.effect) < abs(add.pred)){
@@ -76,7 +83,7 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
 		
 		pheno.result <- c("main1" = source.effect, "main2" = target.effect, 
         "additive" = add.pred, "actual" = actual.effect, "main.effects" = main.effect, 
-        "effect" = int.effect)
+        "effect" = int.effect, "sign.flipped" = sign.flipped)
 		return(pheno.result)
     }
 
@@ -86,54 +93,88 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
     for(ch in u_chr){
         if(verbose){report.progress(ch, length(u_chr))}
         target.chr.locale <- which(target.chr == ch)
-        source.chr.locale <- which(source.chr == ch)
-
         target.markers <- var_int[target.chr.locale,"Target"]
+
+        source.chr.locale <- which(source.chr == ch)
         source.markers <- var_int[source.chr.locale,"Source"]
+
+        if(length(target.markers)){        
+            split.target <- strsplit(target.markers, "_")
+            target.marker.names <- sapply(split.target, function(x) x[1])
+            target.allele.names <- sapply(split.target, function(x) x[2])
+
+            target.geno <- sapply(1:length(target.marker.names), function(x) matched.geno[,target.allele.names[x], target.marker.names[x]])
+            colnames(target.geno) <- target.markers
+            target.int <- lapply(1:ncol(matched.pheno), function(y) t(apply(target.geno, 2, function(x) get_effect(matched.pheno[,y], matched.query, x))))
+            names(target.int) <- colnames(matched.pheno)
+            for(ph in 1:length(target.int)){
+                target.int[[ph]] <- cbind(target.int[[ph]], target.allele.names)
+            }
+            target.effects[[ch]] <- target.int
+        }
         
-        split.target <- strsplit(target.markers, "_")
-        target.marker.names <- sapply(split.target, function(x) x[1])
-        target.allele.names <- sapply(split.target, function(x) x[2])
+        if(length(source.markers) > 0){
+            split.source <- strsplit(source.markers, "_")
+            source.marker.names <- sapply(split.source, function(x) x[1])
+            source.allele.names <- sapply(split.source, function(x) x[2])
 
-        split.source <- strsplit(source.markers, "_")
-        source.marker.names <- sapply(split.source, function(x) x[1])
-        source.allele.names <- sapply(split.source, function(x) x[2])
+            source.geno <- sapply(1:length(source.marker.names), function(x) matched.geno[,source.allele.names[x], source.marker.names[x]])
+            colnames(source.geno) <- source.markers
+            source.int <- lapply(1:ncol(matched.pheno), function(y) t(apply(source.geno, 2, function(x) get_effect(matched.pheno[,y], x, matched.query))))
+            names(source.int) <- colnames(matched.pheno)
+            for(ph in 1:length(source.int)){
+                source.int[[ph]] <- cbind(source.int[[ph]], source.allele.names)
+            }
 
-        target.geno <- sapply(1:length(target.marker.names), function(x) matched.geno[,target.allele.names[x], target.marker.names[x]])
-        colnames(target.geno) <- target.markers
-        source.geno <- sapply(1:length(source.marker.names), function(x) matched.geno[,source.allele.names[x], source.marker.names[x]])
-        colnames(source.geno) <- source.markers
+            source.effects[[ch]] <- source.int
+        }
         
-        target.int <- lapply(1:ncol(matched.pheno), function(y) t(apply(target.geno, 2, function(x) get_effect(matched.pheno[,y], matched.query, x))))
-        source.int <- lapply(1:ncol(matched.pheno), function(y) t(apply(source.geno, 2, function(x) get_effect(matched.pheno[,y], x, matched.query))))
-        names(target.int) <- names(source.int) <- colnames(matched.pheno)
-
-        target.effects[[ch]] <- target.int
-        source.effects[[ch]] <- source.int
-
     }
 
     plot_motif_effects <- function(motif.table, query_position = c("Source", "Target"), 
         trait_name = ""){
 
-        all.num.effects <- apply(motif.table[,1:4], 2, as.numeric)
-        int.types <- motif.table[,5:6]
+        all.num.effects <- apply(motif.table[,c("main1", "main2", "additive", "actual")], 
+            2, as.numeric)
+        int.types <- motif.table[,c("main.effects", "effect", "sign.flipped")]
+        allele.col <- grep("allele.names", colnames(motif.table))
+        alleles <- as.numeric(motif.table[,allele.col])
 
-        type.idx <- apply(type.pairs, 1, function(x) intersect(which(int.types[,1] == x[1]), which(int.types[,2] == x[2])))
+        #get all combinations of coherent/incoherent and aggravating/alleviating
+        #do not include those with flipped signs
+        type.idx <- apply(type.sets, 1, 
+            function(x) Reduce("intersect", list(which(int.types[,1] == x[1]), 
+            which(int.types[,2] == x[2]), which(int.types[,3] == x[3]))))
+
         ylim <- c(min(all.num.effects), max(all.num.effects))
         plot.height <- ylim[2]-ylim[1]
+
         
         #dim(all.num.effects)
-        pdf(file.path(path, paste0("motif_effects_", query_position, "_", trait_name, ".pdf")))
-        par(mfrow = c(2,2))
-        for(it in 1:nrow(type.pairs)){
-            plot.new()
-            plot.window(xlim = c(1,4), ylim = ylim)
-            apply(all.num.effects[type.idx[[it]],], 1, function(x) points(x, type = "b", col = "gray"))    
-            axis(2)
-            text(x = 1:4, y = (ylim[1]-(plot.height*0)), labels = c("Main1", "Main2", "Additive", "Actual"))
-            mtext(paste(type.pairs[it,], collapse = " "), side = 3)
-            abline(h = 0)
+        pdf(file.path(path, paste0("motif_effects_", query_position, "_", trait_name, ".pdf")), 
+            width = 9, height = 6)
+        layout.mat <- matrix(c(3,1,4,2,6,5), byrow = FALSE, nrow = 2)
+        layout(layout.mat)
+        for(it in 1:nrow(type.sets)){
+            if(length(type.idx[[it]]) > 0){
+                plot.new()
+                plot.window(xlim = c(1,4), ylim = ylim)
+                null <- lapply(1:length(type.idx[[it]]), function(x) points(x = 1:4, 
+                    y = all.num.effects[type.idx[[it]][x],], type = "b", 
+                    col = trait_cols[alleles[type.idx[[it]]][x]]))
+                axis(2)
+                text(x = 1:4, y = (ylim[1]-(plot.height*0)), 
+                labels = c("Source", "Target", "Additive", "Actual"))
+                abline(h = 0)
+            }else{
+                plot.text("No motifs in this category")
+            }
+            if(type.sets[it,3] == "FALSE"){
+                mtext(paste(type.sets[it,1:2], collapse = " "), side = 3)
+            }else{
+                mtext(paste(c(type.sets[it,2], "sign flipped"), collapse = " "), side = 3)
+            }
+            
         }
         mtext(trait_name, side = 3, line = -1.5, outer = TRUE)
         dev.off()
@@ -142,21 +183,30 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
     #do interactions have similar or different effects across multiple conditions?
     all.target.effects <- lapply(1:ncol(pheno), function(y) Reduce("rbind", sapply(target.effects, function(x) x[[y]])))
     all.source.effects <- lapply(1:ncol(pheno), function(y) Reduce("rbind", sapply(source.effects, function(x) x[[y]])))
+    names(all.target.effects) <- names(all.source.effects) <- colnames(matched.pheno)
 
-    target.main <- lapply(all.target.effects, function(x) as.factor(x[,"main.effects"]))
-    names(target.main) <- colnames(matched.pheno)
-    target.main.counts <- table(target.main)
-    source.main <- lapply(all.source.effects, function(x) as.factor(x[,"main.effects"]))
-    names(source.main) <- colnames(matched.pheno)
-    source.main.counts <- table(source.main)
+    #target.main <- lapply(all.target.effects, function(x) as.factor(x[,"main.effects"]))
+    #names(target.main) <- colnames(matched.pheno)
+    #target.main.counts <- table(target.main)
+    #source.main <- lapply(all.source.effects, function(x) as.factor(x[,"main.effects"]))
+    #names(source.main) <- colnames(matched.pheno)
+    #source.main.counts <- table(source.main)
 
     main.types <- c("coherent", "incoherent")
     int.effect <- c("aggravating", "alleviating")
-    type.pairs <- rbind(cbind(rep(main.types, length(int.effect)), rep(int.effect, each = length(main.types))))
+    type.sets <- rbind(cbind(rep(main.types, length(int.effect)), 
+        rep(int.effect, each = length(main.types)), 
+        rep(FALSE, length(main.types)*length(int.effect))),
+        cbind(rep("coherent", length(int.effect)), int.effect, rep(TRUE, length(int.effect))))
     
     for(p in 1:length(all.source.effects)){
-        plot_motif_effects(all.target.effects[[p]], "Source", colnames(matched.pheno)[p])
-        plot_motif_effects(all.source.effects[[p]], "Target", colnames(matched.pheno)[p])
+        plot_motif_effects(motif.table = all.target.effects[[p]], 
+            query_position = "Source", trait_name = colnames(matched.pheno)[p])
+        plot_motif_effects(motif.table = all.source.effects[[p]], 
+            query_position = "Target", trait_name = colnames(matched.pheno)[p])
     }
 
+    result <- list("Query_as_Source" = all.target.effects, 
+        "Query_as_Target" = all.source.effects)
+    invisible(result)
 }

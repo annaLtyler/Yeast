@@ -28,11 +28,11 @@ remove_chr9 <- as.logical(args[2])
 test.markers <- as.logical(args[3])
 test.ind  <- as.logical(args[4])
 
-exp.name <- "GAL3_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
+#exp.name <- "GAL3_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
 #exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
 #exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
 #exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
-#exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
+exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
 
 if(is.na(delete_previous)){
   delete_previous <- FALSE
@@ -229,6 +229,12 @@ geno_obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
 pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 ```
 
+```{r var_inf, eval = FALSE}
+pdf(file.path(results.dir, "Variant_Influences.pdf"), width = 8, height = 6)
+plot_variant_influences_query(final_obj, geno_obj, p_or_q = 0.05)
+dev.off()
+```
+
 ## Null Distribution
 
 The following code plots null distributions of cape statistics.
@@ -324,9 +330,56 @@ whilc an alleviating interaction is one that results in a trait value
 that is less extreme than the reference genotype.
 
 ```{r motif_effects}
-plot_clinical_effects_query(final_obj, geno_obj, 
+clin.effects <- plot_clinical_effects_query(data_obj = final_obj, geno_obj, 
     pheno_type = "norm_pheno", p_or_q = 1e-6, 
     path = results.dir, verbose = FALSE)
+```
+
+
+## Examples of Flipped Sign {.tabset .tabset-fade .tabset-pills}
+
+Plots below show individual interactions that are interesting. 
+We will start with the interactions for which the trait is 
+affected in the opposite direction by the interaction than 
+the two main effects.
+
+```{r flipped_examples, results = "asis", fig.width = 8, fig.height = 4}
+
+for(i in 1:length(clin.effects)){
+
+  for(ph in 1:length(clin.effects[[i]])){
+    flipped.idx <- which(clin.effects[[i]][[ph]][,"sign.flipped"] == "TRUE")
+    if(length(flipped.idx) > 0){
+      cat("###", names(clin.effects)[i], "{.tabset .tabset-fade .tabset-pills}\n")
+      cat("####", names(clin.effects[[i]])[ph], "{.tabset .tabset-fade .tabset-pills}\n")
+
+      flipped.table <- clin.effects[[i]][[ph]][flipped.idx,]
+      flipped.allele <- sapply(strsplit(rownames(flipped.table), "_"), function(x) x[2])
+      flipped.chr <- substr(rownames(flipped.table), 2,3)
+      ind.examples <- unique(cbind(flipped.chr, flipped.allele))
+
+      for(f in 1:nrow(ind.examples)){
+        if(is.interactive){quartz(width = 8, height = 4)}
+        par(mfrow = c(1,2))
+        example.idx <- intersect(which(flipped.chr == ind.examples[f,1]), 
+          which(flipped.allele == ind.examples[f,2]))
+        example.table <- flipped.table[example.idx,,drop=FALSE]
+        max.example.idx <- which.max(abs(as.numeric(example.table[,"actual"])))
+        split.example <- strsplit(rownames(example.table)[max.example.idx], "_")
+        example.marker <- split.example[[1]][1]
+        example.allele <- split.example[[1]][2]
+        cat("#####", paste(example.marker, example.allele, sep = "_"), "\n")
+        plot_one_variant_effect(final_obj, geno_obj, 
+          marker_name = example.marker, allele_name = example.allele,
+          p_or_q = 1e-6, pheno_type = "norm_pheno")
+        cat("\n\n")
+      }
+    cat("\n\n")
+    cat("\n\n")
+    }
+  }
+}
+
 ```
 
 ```{r synthetic_viability, eval = FALSE}
