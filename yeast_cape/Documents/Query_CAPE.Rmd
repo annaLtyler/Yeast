@@ -63,7 +63,7 @@ for(i in 1:length(all.fun)){source(all.fun[i])}
 
 ```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
-needed.libraries <- c("pheatmap", "hexbin", "RColorBrewer", "gridExtra", "plotly", "ggplot2")
+needed.libraries <- c("pheatmap", "hexbin", "RColorBrewer", "gridExtra", "ggplot2")
 load_libraries(needed.libraries, personal.library = TRUE)
 load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
@@ -360,7 +360,8 @@ saveRDS(trait_deviation, trait.deviation.file)
 ```
 
 
-```{r plotly_figs}
+```{r plotly_figs, eval = FALSE}
+library(plotly)
 #generate data for plotly figures. We will plot
 #these in a separate document. 
 plotly.fig.file <- file.path(results.dir, "Plotly_variant_effects.RDS")
