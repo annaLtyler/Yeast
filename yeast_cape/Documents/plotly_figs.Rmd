@@ -1,0 +1,54 @@
+---
+title: "Query CAPE Output"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: no
+    toc_float: yes
+---
+
+```{r get_exp_name, warning = FALSE, error = FALSE, message = FALSE}
+library(here)
+library(plotly)
+
+exp.name = "GAL1_7_10_query"
+exp.name = "GAL3_query"
+```
+
+The following figures show the deviation from additivity when the 
+query locus, `r exp.name`, interacts with each marker in the genome.
+Only interactions that were significant in CAPE are shown. 
+
+Interactions for each chromosome are shown in a separate plot.
+Each plot is split into a top portion showing the interactions
+in which the query locus was the source of the interaction, and a
+bottom portion in which the query locus was the target of the 
+interaction.
+
+The dot of each lollipop is colored by the allele participating 
+in the interaction. The stem of each lollipop is colored by the
+trait that the interaction affected. The length of the lollipop
+indicates the amount that the trait deviated from the additive
+expectation when the query allele and the test allele were 
+found in the same individuals.
+
+By hovering with the mouse above the lollipops, you can see
+the names of genes that are within 5kb of each marker, along
+with the precise location of the marker.
+
+I haven't yet figured out how to fix the $y$ axes for these plots
+yet, so they are all on individual $y$ axes.
+
+```{r variant_effects, fig.width = 10, fig.height = 8}
+var_effects <- readRDS(here("Results", exp.name, "Plotly_variant_effects.RDS"))
+
+l <- htmltools::tagList()
+for (i in 1:length(var_effects)){ 
+  l[[i]] = as_widget(var_effects[[i]])
+}
+
+l
+```

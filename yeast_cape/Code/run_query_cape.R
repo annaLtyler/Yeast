@@ -161,7 +161,7 @@ run_query_cape <- function(pheno_obj, geno_obj, query_genotype,
   geno_obj <- combined_data_obj$geno_obj
   #str(geno_obj)  
 
-  data_obj <- remove_unused_markers(data_obj, geno_obj, verbose = verbose)
+  #data_obj <- remove_unused_markers(data_obj, geno_obj, verbose = verbose)
   
   #because the genotype object can be changed by the above step, 
   #save the final version. (or change the above step so it doesn't 

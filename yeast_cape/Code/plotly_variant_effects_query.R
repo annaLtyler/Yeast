@@ -1,9 +1,12 @@
-plot_variant_effects_query <- function(data_obj, geno_obj, 
+plotly_variant_effects_query <- function(data_obj, geno_obj, 
     pheno_type = c("pheno", "norm_pheno", "ET"), 
-    p_or_q = 0.05, scale_coord = 1, verbose = FALSE){
+    p_or_q = 0.05, scale_coord = 1, gene.table = NULL, 
+    gene.bp.window = 5000, verbose = FALSE){
 
     query_genotype <- data_obj$query_genotype
-    trait_cols <- categorical_pal(8)
+    allele_cols <- categorical_pal(8)
+    names(allele_cols) <- 1:8
+    pheno_cols <- c("#9ecae1", "#bdbdbd")
     pheno_type <- pheno_type[1]
 
     coord_label = paste0("Position (bp/", scale_coord, ")")
@@ -27,6 +30,9 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
         pheno <- data_obj$ET
     }
 
+    num.pheno <- ncol(pheno)
+    pheno.names <- colnames(pheno)
+    names(pheno_cols) <- pheno.names
     common.ind <- Reduce("intersect", list(rownames(pheno), rownames(geno_obj), rownames(query_genotype)))
     common.pheno.locale <- match(common.ind, rownames(pheno))
     common.geno.locale <- match(common.ind, rownames(geno_obj))
@@ -71,6 +77,20 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
         return(result)
     }
 
+    get_nearby_genes <- function(chr, pos, bp.window = 1000){
+        chr.locale <- which(as.numeric(gene.table[,1]) == chr)
+        chr.table <- gene.table[chr.locale,]
+        above.min <- which(as.numeric(chr.table[,"start"]) >= pos-bp.window)
+        below.max <- which(as.numeric(chr.table[,"stop"]) <= pos+bp.window)
+        gene.idx <- intersect(above.min, below.max)
+        window.genes <- chr.table[gene.idx,,drop=FALSE]
+        gene.names <- window.genes[,"feature"]
+        name.locale <- which(window.genes[,"gene"] != "")
+        if(length(name.locale) > 0){
+            gene.names[name.locale] <- window.genes[name.locale,"gene"]
+        }
+        return(gene.names)
+    }
 
     source.deviation <- target.deviation <- vector(mode = "list", length = length(u_chr))
     names(source.deviation) <- names(target.deviation) <- u_chr
@@ -80,6 +100,11 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
     
     source.allele <- target.allele <- vector(mode = "list", length = length(u_chr))
     names(source.allele) <- names(target.allele) <- u_chr
+
+    source.gene.names <- target.gene.names <- vector(mode = "list", length = length(u_chr))
+    names(source.gene.names) <- names(target.gene.names) <- u_chr
+
+    fig.list <- vector(mode = "list", length = length(u_chr))
 
     for(ch in u_chr){
         if(verbose){report.progress(ch, length(u_chr))}
@@ -103,6 +128,13 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
             colnames(target.effects) <- colnames(pheno)
             target.deviation[[ch]] <- target.effects
 
+            if(!is.null(gene.table)){
+                target.nearest.gene <- sapply(1:length(target.chr.locale), 
+                function(x) get_nearby_genes(ch, (target.ch.pos[[ch]][x]*scale_coord), 
+                gene.bp.window))
+                target.gene.names[[ch]] <- target.nearest.gene
+            }
+
         }
 
         if(length(source.chr.locale) > 0){
@@ -115,7 +147,9 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
 
             source.geno <- sapply(1:length(source.marker.names), function(x) matched.geno[,source.allele.names[x], source.marker.names[x],drop=FALSE])
             colnames(source.geno) <- source.markers    
-            source.int <- lapply(1:ncol(matched.pheno), function(y) t(apply(source.geno, 2, function(x) get_int(matched.pheno[,y], x, matched.query))))
+            source.int <- lapply(1:ncol(matched.pheno), 
+                function(y) t(apply(source.geno, 2, 
+                function(x) get_int(matched.pheno[,y], x, matched.query))))
 
             source.ch.pos[[ch]] <- source.pos[source.chr.locale]
 
@@ -126,7 +160,50 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
             colnames(source.effects) <- colnames(pheno)
             source.deviation[[ch]] <- source.effects
 
+            if(!is.null(gene.table)){
+                source.nearest.gene <- sapply(1:length(source.chr.locale), 
+                    function(x) get_nearby_genes(ch, (source.ch.pos[[ch]][x]*scale_coord), 
+                    gene.bp.window))
+                source.gene.names[[ch]] <- source.nearest.gene
+            }
+
         }
+    }
+
+    generate_fig <- function(plot.pos, plot.dev, plot.allele, plot.gene.names, plot.label,
+        xlim, ylim){
+        
+        if(length(plot.pos) == 0){
+            fig <- plot_ly(x = segment.region(xlim[1], xlim[2], 100), 
+            y = segment.region(ylim[1], ylim[2], 100), colors = allele_cols, 
+            mode = "markers", type = "scatter", visible = FALSE)
+
+        }else{
+            fig <- plot_ly() %>%
+            add_segments(x = plot.pos, y = plot.dev[,pheno.names[1]], 
+            xend = plot.pos, yend = 0, colors = allele_cols, 
+            name = pheno.names[1], color = I(pheno_cols[1])) %>%
+            add_markers(x = plot.pos, y = plot.dev[,pheno.names[1]], 
+                type = "scatter", color = ~plot.allele, mode = "markers",
+                text = plot.gene.names, size = 1.5)
+
+            for(ph in 2:num.pheno){
+                fig <- add_segments(fig, x = plot.pos, y = plot.dev[,pheno.names[ph]], 
+                    xend = plot.pos, yend = 0, name = pheno.names[ph], color = I(pheno_cols[2]))
+                fig <- add_trace(fig, type = "scatter", mode = "markers", 
+                    x = plot.pos, y = plot.dev[,pheno.names[ph]], size = 1.5,
+                    color = plot.allele, text = plot.gene.names, showlegend = FALSE)
+                }
+            }
+        
+        #add labels
+        fig <- layout(fig, title = plot.label, 
+            plot_bgcolor = "white", 
+            xaxis = list(title = coord_label), 
+            yaxis = list(title = 'Deviation of Trait from Additive'))
+        
+        return(fig)
+
     }
 
     #find ylim across all chromosomes
@@ -138,61 +215,58 @@ plot_variant_effects_query <- function(data_obj, geno_obj,
         #quartz(width = 10, height = 6)
         xlim <- c(1, max(c(source.ch.pos[[ch]], target.ch.pos[[ch]])))
 
-        layout.mat <- matrix(c(1,3,2,4), ncol = 2, byrow = FALSE)
-        layout(layout.mat, widths = c(1,0.3))
-        par(mar = c(2,4,2,2))
+        #create the scatter plot object with gene names as the hover text
+        source.x <- source.ch.pos[[ch]]
+        source.y <- source.deviation[[ch]]
+        source.allele.labels <- as.factor(source.allele[[ch]])
+        source.gene.labels <- sapply(source.gene.names[[ch]], function(x) paste(unlist(x), collapse = ", "))
 
-        plot.new()
-        plot.window(xlim = xlim, ylim = ylim)
-        for(p in 1:ncol(pheno)){
-            #plot effect with query as target
-            points(source.ch.pos[[ch]], source.deviation[[ch]][,p], type = "h",
-                col = trait_cols[p])
-            #add allele colors
-            points(source.ch.pos[[ch]], source.deviation[[ch]][,p], type = "p",
-                col = trait_cols[as.numeric(source.allele[[ch]])], pch = 16,
-                cex = 0.5)
+        source.fig <- generate_fig(plot.pos = source.x, plot.dev = source.y, 
+            plot.allele = source.allele.labels, 
+            plot.gene.names = source.gene.labels, plot.label = paste0("Chr", ch),
+            xlim, ylim)        
 
-        } 
-        axis(1); axis(2)
-        abline(h = 0)
-        mtext("Deviation of Trait from Additive", side = 2, line = 2.5)
-        mtext("Query as Target", side = 4)
+        #create the scatter plot object for the query as target with gene names as the hover text
+        target.x <- target.ch.pos[[ch]]
+        target.y <- target.deviation[[ch]]
+        target.allele.labels <- target.allele[[ch]]
+        target.gene.labels <- sapply(target.gene.names[[ch]], function(x) paste(unlist(x), collapse = ", "))
+
+        target.fig <- generate_fig(target.x, target.y, target.allele.labels, 
+            target.gene.labels, paste0("Chr", ch),
+            xlim, ylim)
         
-        plot.new()
-        plot.window(xlim = c(0,1), ylim = c(0,1))        
-        par(mar = c(0,0,0,0))
-        legend(0.5,0.5, col = trait_cols[1:ncol(pheno)], lty = 1, lwd = 2,
-            legend = colnames(pheno))
 
-        plot.new()
-        plot.window(xlim = xlim, ylim = ylim)
-        par(mar = c(4,4,0,2))
-        for(p in 1:ncol(pheno)){
-            points(target.ch.pos[[ch]], target.deviation[[ch]][,p], type = "h",
-                col = trait_cols[p])
-            points(target.ch.pos[[ch]], target.deviation[[ch]][,p], type = "p",
-                col = trait_cols[as.numeric(target.allele[[ch]])], pch = 16,
-                cex = 0.5)
+        annotations <- list(list( 
+            x = 0.5,  
+            y = 1.0,  
+            text = "Query as Source",  
+            xref = "paper",  
+            yref = "paper",  
+            xanchor = "center",  
+            yanchor = "top",  
+            showarrow = FALSE 
+        ),  
+        list( 
+            x = 0.5,  
+            y = 0.4,  
+            text = "Query as Target",  
+            xref = "paper",  
+            yref = "paper",  
+            xanchor = "center",  
+            yanchor = "top",  
+            showarrow = FALSE 
+        ))
 
-        } 
-        axis(1); axis(2)
-        abline(h = 0)
-        mtext("Deviation of Trait from Additive", side = 2, line = 2.5)
-        mtext(coord_label, , side = 1, line = 2.5)
-        mtext("Query as Source", side = 4)
+        full.fig <- subplot(source.fig, style(target.fig, showlegend = FALSE), 
+        nrows = 2, shareX = TRUE, shareY = TRUE, titleX = TRUE, titleY = TRUE) %>%
+        layout(annotations = annotations)
 
-        plot.new()
-        plot.window(xlim = c(0,1), ylim = c(0,1))        
-        par(mar = c(0,0,0,0))
-        legend(x = 0.5, y = 1, col = trait_cols, pch = 16,
-            legend = 1:8)
+        fig.list[[ch]] <- full.fig
+        
 
-        mtext(paste("Chr", ch), side = 3, outer = TRUE, line = -1)
     }
-
-    results <- list("deviation_with_query_as_source" = target.deviation,
-        "deviation_with_query_as_target" = source.deviation)
-    invisible(results)
+    
+    invisible(fig.list)
 
 }

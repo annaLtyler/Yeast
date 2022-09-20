@@ -28,11 +28,11 @@ remove_chr9 <- as.logical(args[2])
 test.markers <- as.logical(args[3])
 test.ind  <- as.logical(args[4])
 
-#exp.name <- "GAL3_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
+exp.name <- "GAL3_query"; roi <- c("GAL3" = "chr04_463411"); query.alleles <- c(1,3)
 #exp.name <- "GAL4_query"; roi <- c("GAL4" = "chr16_80216"); query.alleles <- 3  
 #exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
 #exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
-exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
+#exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
 
 if(is.na(delete_previous)){
   delete_previous <- FALSE
@@ -63,7 +63,7 @@ for(i in 1:length(all.fun)){source(all.fun[i])}
 
 ```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
 #load local version of cape code
-needed.libraries <- c("pheatmap", "hexbin", "RColorBrewer", "gridExtra")
+needed.libraries <- c("pheatmap", "hexbin", "RColorBrewer", "gridExtra", "plotly", "ggplot2")
 load_libraries(needed.libraries, personal.library = TRUE)
 load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
@@ -174,6 +174,102 @@ for(ph in 1:ncol(pheno_obj$pheno)){
   }
   dev.off()
 }
+
+#ph is the number or name of the phenotype you want to look at
+#chr is the chromosome, and position is the position in
+#base pairs to look at. The plots above are in kb, so this
+#number should be multiplied by 1000
+plot_one_var <- function(ph, chr, pos){
+  chr.locale <- which(pheno_obj$chromosome == chr)
+  chr.pos <- get.nearest.pt(pheno_obj$marker_location[chr.locale], pos)
+  marker.pos <- chr.locale[chr.pos]
+  allele.pheno <- lapply(1:ncol(geno_obj[,,marker.pos]), function(x) pheno_obj$pheno[which(geno_obj[,x,marker.pos] == 1),ph])
+  allele.var <- sapply(allele.pheno, mad)
+  var.order <- order(allele.var)
+  n <- sapply(allele.pheno[var.order], length)
+  stripchart(lapply(allele.pheno[var.order], function(x) round(x, 2)), 
+    method = "stack", vertical = TRUE, pch = 16, offset = 0.05,
+    col = categorical_pal(8)[var.order], main = paste(ph, "on Chr", chr, "at", pos/1000, "kb"),
+    group.names = paste(c(1:8)[var.order], "\n", n))
+  
+  abline(h = median(unlist(allele.pheno), na.rm = TRUE))
+
+}
+
+#color by a potentially interacting locus
+plot_two_var <- function(ph, chr1, pos1, chr2, pos2){
+  chr1.locale <- which(pheno_obj$chromosome == chr1)
+  chr1.pos <- get.nearest.pt(pheno_obj$marker_location[chr1.locale], pos1)
+  marker1.pos <- chr1.locale[chr1.pos]
+  
+  chr2.locale <- which(pheno_obj$chromosome == chr2)
+  chr2.pos <- get.nearest.pt(pheno_obj$marker_location[chr2.locale], pos2)
+  marker2.pos <- chr2.locale[chr2.pos]
+
+  marker1.allele <- lapply(1:ncol(geno_obj[,,marker1.pos]), function(x) which(geno_obj[,x,marker1.pos] == 1))
+  allele.pheno <- lapply(marker1.allele, function(x) pheno_obj$pheno[x,ph])
+  allele.var <- sapply(allele.pheno, mad)
+  var.order <- order(allele.var)
+  n <- sapply(allele.pheno[var.order], length)
+
+  #find the genotype at marker 2 for every individual with a particular marker1 genotype
+  marker2.idx <- lapply(marker1.allele, function(x) apply(geno_obj[x,,marker2.pos], 1, function(y) which(y == 1)))
+
+  list.group <- lapply(var.order, function(x) lapply(1:8, function(y) allele.pheno[[x]][which(marker2.idx[[x]] == y)]))
+  names(list.group) <- var.order
+  for(i in 1:length(list.group)){
+    names(list.group[[i]]) <- 1:length(list.group[[i]])
+  }
+
+  ylim = c(min(unlist(allele.pheno), na.rm = TRUE), max(unlist(allele.pheno), na.rm = TRUE))
+
+  plot.grouped.boxes(list.group, group.cols = categorical_pal(8), 
+    plot.grouping = "inner", print.vals = NA, legend.x = 56, 
+    legend.y = ylim[2], main = paste0(ph, " Chr", chr1, ":", pos1, " colored by Chr", chr2, ":", pos2))
+
+
+
+
+  #plot.new()
+  #plot.window(xlim = c(0, 9), ylim = ylim)  
+  #for(i in 1:length(allele.pheno)){
+  #  x <- segment.region(i-0.2, i+0.2, length(allele.pheno))
+  #  for(j in 1:length(x)){
+  #    j.locale <- which(marker2.idx[[i]] == j)
+  #    points(rep(x[j], length(j.locale)), allele.pheno[[var.order[i]]][j.locale], 
+  #      col = categorical_pal(8)[j], pch = 16, cex = 0.5)
+  #  }
+  #  text(x = mean(x), y = min(ylim), labels = c(1:8)[var.order[i]])
+  #}
+  #axis(2)  
+  #abline(h = median(unlist(allele.pheno), na.rm = TRUE))
+  #mtext(paste(ph, "Chr", chr1, pos1, "colored by", "Chr", chr2, pos2), side = 3)
+}
+
+
+#some of the splits in variance are main effect QTLs, particularly where
+#variance goes way down. 
+#Some of the dips in variance seem to be just dips in allele frequency
+
+plot_one_var(ph = "CaCl2", chr = 7, pos = 500*1000) #higher-variance alleles seem to be a bit bimodal
+plot_one_var(ph = "CdCl2", chr = 2, pos = 790*1000) #overall reduced variance: just a massive QTL
+plot_one_var(ph = "GAL", chr = 2, pos = 280*1000) #maybe some bimodality here too
+plot_one_var(ph = "GAL", chr = 4, pos = 490*1000) #The GAL3 QTL
+plot_one_var(ph = "HU", chr = 6, pos = 240*1000) #QTL, but maybe not variance QTL
+plot_one_var(ph = "HU", chr = 9, pos = 390*1000) #Not sure what to make of this one
+plot_one_var(ph = "HU", chr = 10, pos = 380*1000) #Dip in variance related to low n
+plot_one_var(ph = "HU", chr = 15, pos = 390*1000) #Variance difference, or QTL?
+plot_one_var(ph = "RAPA", chr = 3, pos = 200*1000) #bimodal sneaking in
+plot_one_var(ph = "RAPA", chr = 15, pos = 500*1000) #more smeared at high end
+plot_one_var(ph = "YPD", chr = 7, pos = 500*1000) #these look somewhat different
+
+#known epistasis between alleles 1/3 and allele 6
+plot_one_var(ph = "GAL", chr = 4, pos = 467*1000) #GAL3 position, main effect in 1/3 rescued by 6
+plot_one_var(ph = "GAL", chr = 2, pos = 271559) #GAL1/7/10 position, rescues 1/3 effect at GAL3 locus
+
+#look for two-way effects on the distribution
+plot_two_var(ph = "GAL", chr1 = 4, pos1 = 467000, chr2 = 2, pos2 = 271559)
+plot_two_var(ph = "GAL", chr1 = 4, pos1 = 467000, chr2 = 9, pos2 = 400000)
 ```
 
 
@@ -230,9 +326,11 @@ pairscan_obj <- readRDS(file.path(results.dir, "cross_pairscan.RDS"))
 ```
 
 ```{r var_inf, eval = FALSE}
+
 pdf(file.path(results.dir, "Variant_Influences.pdf"), width = 8, height = 6)
 plot_variant_influences_query(final_obj, geno_obj, p_or_q = 0.05)
 dev.off()
+
 ```
 
 ## Null Distribution
@@ -252,12 +350,28 @@ the expected trait for each interaction. The coordinates are in kb
 as specified by scale_coord.
 
 ```{r var_effects}
+
 trait.deviation.file <- file.path(results.dir, "Deviation_from_Additivity.RDS")
 pdf(file.path(results.dir, "Interaction.Effects.pdf"), width = 10, height = 6)
 trait_deviation <- plot_variant_effects_query(final_obj, geno_obj, 
   pheno_type = "norm_pheno", p_or_q = 1e-6, scale_coord = 1e3)
 dev.off()
 saveRDS(trait_deviation, trait.deviation.file)
+```
+
+
+```{r plotly_figs}
+#generate data for plotly figures. We will plot
+#these in a separate document. 
+plotly.fig.file <- file.path(results.dir, "Plotly_variant_effects.RDS")
+if(!file.exists(plotly.fig.file)){
+  gene.table <- read.csv(here("Data", "pgmap.csv"))
+  plotly_figs <- plotly_variant_effects_query(final_obj, geno_obj, 
+    pheno_type = "norm_pheno", p_or_q = 1e-6, scale_coord = 1e3,
+    gene.bp.window = 5000, gene.table = gene.table)
+
+  saveRDS(plotly_figs, plotly.fig.file)
+}
 ```
 
 The following histogram shows the distributions of 

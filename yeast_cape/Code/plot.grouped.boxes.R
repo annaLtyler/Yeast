@@ -1,24 +1,26 @@
 plot.grouped.boxes <- function(group.list, group.labels = names(group.list), 
 group.cols = c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3"),
-main = "", type = c("list", "matrix"), 
+main = "", type = c("list", "matrix"), plot.grouping = c("outer", "inner"),
 plot.type = c("box", "strip"), print.vals = c("mean", "median"), 
-text.cex = 0.7, label.srt = 0, legend.x = NULL, legend.y = NULL, 
-ylim = NULL, notch = FALSE){
+text.cex = 0.7, label.srt = 0, legend.x = NULL, legend.y = NULL, notch = FALSE){
+
+	oldPar <- par(no.readonly = TRUE)
+	on.exit(oldPar)
 
 	plot.type = plot.type[1]
 	print.vals <- print.vals[1]
 	type <- type[1]
+	plot.grouping = plot.grouping[1]
 
-	if(is.null(ylim)){
-		ymin <- min(unlist(group.list), na.rm = TRUE)*0.9
-		ymax <- max(unlist(group.list), na.rm = TRUE)*1.1
-	}else{
-		ymin <- ylim[1]
-		ymax <- ylim[2]
+	if(plot.grouping == "inner"){
+		new.list <- lapply(1:length(group.list[[1]]), function(x) lapply(group.list, function(y) y[[x]]))
+		names(new.list) <- names(group.list[[1]])
+		group.list <- new.list
 	}
 
+	ymin <- min(unlist(group.list), na.rm = TRUE)*0.9
+	ymax <- max(unlist(group.list), na.rm = TRUE)*1.1
 	xmin = 0
-
 
 	if(type == "list"){
 		xmax <- sum(unlist(lapply(group.list, length))) + 1
@@ -44,13 +46,17 @@ ylim = NULL, notch = FALSE){
 				}else{
 				data.vals <- group.list[[l]][,i]; label <- colnames(group.list[[l]])[i]
 				}
-						
-			if(plot.type == "box"){
-				boxplot(as.vector(data.vals), at = box.pos, add = TRUE, col = group.cols[l], 
-				axes = FALSE, main = "", notch = notch)
-			}else{
-				stripchart(as.vector(data.vals), at = box.pos, add = TRUE, col = group.cols[l], axes = FALSE, 
-				main = "", method = "jitter", vertical = TRUE, pch = 16)
+
+			if(length(data.vals) > 0){
+				if(plot.type == "box"){
+					boxplot(as.vector(data.vals), at = box.pos, add = TRUE, 
+						col = group.cols[l%%length(group.cols)], 
+						axes = FALSE, main = "", notch = notch)
+				}else{
+					stripchart(as.vector(data.vals), at = box.pos, add = TRUE, 
+						col = group.cols[l%%length(group.cols)], axes = FALSE, 
+						main = "", method = "jitter", vertical = TRUE, pch = 16)
+				}
 			}
 			mtext(main, side = 3, line = 0)
 
@@ -82,12 +88,16 @@ ylim = NULL, notch = FALSE){
 		text(x = mean(group.pos), y = (ymin - (plot.height*0.15)), labels = label, srt = label.srt)
 		par(xpd = FALSE)
 		} #end looping through group elements
+
 	axis(2)
+
+	par(xpd = NA)
 	if(is.null(legend.x) || is.null(legend.y)){
 		legend("topleft", fill = group.cols, legend = group.labels)
 	}else{
 		legend(legend.x, legend.y, fill = group.cols, legend = group.labels)
 	}
-	
+	par(xpd = TRUE)	
+
 	}
 
