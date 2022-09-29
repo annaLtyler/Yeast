@@ -191,3 +191,21 @@ multilod.plot(log10(scan1.result[,trait.order]), map, chr.name.y = 0.2,
 #pairs(scan1.result)
 ```
 
+```{r select_query_marker, eval = FALSE}
+trait.name = "FLZ"
+trait.idx <- which(colnames(singlescan_obj$singlescan_t_stats) == trait.name)
+trait.t <- singlescan_obj$singlescan_t_stats[,trait.idx,]
+trait.effect <- singlescan_obj$singlescan_effects[,trait.idx,]
+max.t.idx <- apply(trait.t, 2, function(x) which.max(x))
+trait.t[max.t.idx,]
+max.t <- sapply(1:length(max.t.idx), function(x) max(trait.t[max.t[x],]))
+max.effect.idx <- sapply(1:length(max.t.idx), function(x) which.max(abs(trait.effect[max.t[x],])))
+max.effect <- sapply(max.effect.idx, function(x) trait.effect[max.t[x],max.effect.idx[x]])
+max.allele <- which.max(max.t)
+max.locus <- max.t.idx[max.allele]
+effect.at.locus <- trait.effect[max.locus,]
+barplot(effect.at.locus, main = "Allele Effects at Locus with Maximum T Score")
+locus <- rownames(trait.effect)[max.locus]
+
+
+```

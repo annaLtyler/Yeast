@@ -2,7 +2,8 @@ plot.grouped.boxes <- function(group.list, group.labels = names(group.list),
 group.cols = c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3"),
 main = "", type = c("list", "matrix"), plot.grouping = c("outer", "inner"),
 plot.type = c("box", "strip"), print.vals = c("mean", "median"), 
-text.cex = 0.7, label.srt = 0, legend.x = NULL, legend.y = NULL, notch = FALSE){
+text.cex = 0.7, label.srt = 0, legend.x = NULL, legend.y = NULL, 
+notch = FALSE, ylim = ylim){
 
 	oldPar <- par(no.readonly = TRUE)
 	on.exit(oldPar)
@@ -51,7 +52,7 @@ text.cex = 0.7, label.srt = 0, legend.x = NULL, legend.y = NULL, notch = FALSE){
 				if(plot.type == "box"){
 					boxplot(as.vector(data.vals), at = box.pos, add = TRUE, 
 						col = group.cols[l%%length(group.cols)], 
-						axes = FALSE, main = "", notch = notch)
+						axes = FALSE, main = "", notch = notch, ylim = ylim)
 				}else{
 					stripchart(as.vector(data.vals), at = box.pos, add = TRUE, 
 						col = group.cols[l%%length(group.cols)], axes = FALSE, 

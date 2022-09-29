@@ -1,0 +1,141 @@
+---
+title: "Plotly output for motif effects"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: no
+    toc_float: yes
+---
+
+```{r get_exp_name, warning = FALSE, error = FALSE, message = FALSE}
+library(here)
+library(plotly)
+library(igraph)
+
+#exp.name = "GAL1_7_10_query"
+exp.name = "GAL3_query"
+```
+
+The following figures show the the phenotypic effects
+of interacting markers compared to the additive prediction.
+
+The points in the first two columns in each figure show the main effects
+of the interacting markers. the source of the interaction is always in 
+the first column, and the target is in the second. One of these is the 
+query marker, and the other is the test marker depending on whether the
+plot is showing the "Query as Source" interactions or the "Query as Target"
+interactions.
+
+The third column shows the additive prediction given the main effects. 
+The final column shows the actual trait value of the interacting pair. 
+Each interacting pair is connected by a line. The lines
+are colored based on the allele of the *test marker*, since the query marker
+is always the same. 
+
+Hovering over the marker points with the mouse will reveal
+where the markers are positioned in the genome, as well as genes
+that are within 5 kb of the marker.
+
+```{r near_gene_fun}
+get_gene_names <- function(chr, pos, window = 5000){
+  chr.locale <- which(pg_map[,1] == as.numeric(chr))
+  above.min <- which(pg_map[,"start"] >= pos-window)
+  below.max <- which(pg_map[,"stop"] <= pos+window)
+  gene.idx <- Reduce("intersect", list(chr.locale, above.min, below.max))
+  gene.name <- pg_map[gene.idx,"gene"]
+  empty.fields <- which(gene.name == "")
+  gene.name[empty.fields] <- pg_map[gene.idx[empty.fields],"feature"]
+  return(gene.name)
+}
+
+```
+
+```{r motif_effects}
+clin.effects <- readRDS(here("Results", exp.name, "Motif_Effects.Rds"))
+pg_map <- read.csv(here("Data", "pgmap.csv"))
+
+main.types <- c("coherent", "incoherent")
+int.effect <- c("aggravating", "alleviating")
+int.main.sets <- rbind(cbind(rep(main.types, length(int.effect)), 
+    rep(int.effect, each = length(main.types))))
+type.sets <- rbind(cbind(int.main.sets, rep("", nrow(int.main.sets))),
+                    cbind(int.main.sets, rep("flipped", nrow(int.main.sets))))
+type.labels <- apply(type.sets, 1, function(x) paste(x, collapse = "_"))
+
+
+l <- htmltools::tagList()
+i = 1
+for(dir in 1:length(clin.effects)){
+  for(ph in 1:length(clin.effects[[dir]])){
+    #ph.mat <- Reduce("rbind", lapply(1:length(clin.effects), function(x) clin.effects[[x]][[ph]]))
+    ph.mat <- clin.effects[[dir]][[ph]]
+    ph.mat[which(ph.mat[,"sign.flipped"] == "FALSE"),"sign.flipped"] <- ""
+    ph.mat[which(ph.mat[,"sign.flipped"] == "TRUE"),"sign.flipped"] <- "flipped"
+    ph.classes <- unlist(lapply(1:nrow(ph.mat), function(x) rep(paste(ph.mat[x,5:7], collapse = "_"), 4)))
+    xcat <- rep(c("Main1", "Main2", "Additive", "Actual"), nrow(ph.mat))
+    marker.label <- unlist(lapply(rownames(ph.mat), function(x) rep(x, 4)))
+    just.marker <- sapply(strsplit(gsub("X", "", marker.label), "_"), function(x) x[1])
+    marker.chr <- substr(just.marker, 1,2)
+    marker.pos <- as.numeric(sapply(just.marker, function(x) substr(x, 3, nchar(x))))
+    gene.list <- lapply(1:length(marker.chr), function(x) get_gene_names(marker.chr[x], marker.pos[x]))
+    geneV <- sapply(gene.list, function(x) paste(x, collapse = ", "))
+    marker.info <- paste0(paste0("Chr", marker.chr), "-", marker.pos, "\n", geneV)
+    ypos <- as.numeric(unlist(lapply(1:nrow(ph.mat), function(x) ph.mat[x,1:4])))
+    allele <- unlist(lapply(1:nrow(ph.mat), function(x) rep(ph.mat[x,8],4)))
+    subj <- unlist(lapply(1:nrow(ph.mat), function(x) rep(x, 4)))
+
+    df <- data.frame( "subject" = subj,
+        "marker_chr" = marker.chr,
+        "marker_pos" = marker.pos,
+        "marker_info" = marker.info,
+        "effect_type" = factor(xcat, levels = c("Main1", "Main2", "Additive", "Actual")),
+        "effect" = ypos,
+        "class" = factor(ph.classes, levels = type.labels),
+        "allele" = allele)
+
+    pl = qplot(effect_type, effect, data = df, color = I(categorical_pal(8)[as.numeric(allele)]), 
+      main = paste(names(clin.effects[[dir]][ph]), names(clin.effects)[dir])) + 
+      geom_line(aes(group = subject), color = categorical_pal(8)[as.numeric(allele)]) +
+      aes(x = effect_type, y = effect, text = marker_info) + 
+      facet_wrap(class~.)
+  
+    allele_colors <- categorical_pal(8)
+    names(allele_colors) <- 1:8
+    colScale <- scale_colour_manual(name = "allele",values = allele_colors)
+
+    pl = qplot(effect_type, effect, data = df, color = allele,
+      main = paste(names(clin.effects[[dir]][ph]), names(clin.effects)[dir])) + 
+      geom_line(aes(group = subject)) +
+      aes(x = effect_type, y = effect, text = marker_info) + 
+      facet_wrap(class~.)
+    pl <- pl + colScale
+    pl <- pl + geom_hline(aes(yintercept=0))
+    #pl
+
+    l[[i]] = as_widget(ggplotly(pl))
+    i = i + 1
+    
+  }
+} #end looping through phenotypes
+```
+
+
+```{r plot1, fig.width = 10, fig.height = 8}
+l[[1]]
+```
+
+```{r plot2, fig.width = 10, fig.height = 10}
+l[[2]]
+```
+
+
+```{r plot3, fig.width = 10, fig.height = 8}
+l[[3]]
+```
+
+```{r plot4, fig.width = 10, fig.height = 10}
+l[[4]]
+```

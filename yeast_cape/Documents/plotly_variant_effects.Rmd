@@ -14,7 +14,7 @@ output:
 library(here)
 library(plotly)
 
-exp.name = "GAL1_7_10_query"
+#exp.name = "GAL1_7_10_query"
 exp.name = "GAL3_query"
 ```
 
