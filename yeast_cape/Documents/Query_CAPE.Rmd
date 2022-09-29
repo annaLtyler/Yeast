@@ -292,12 +292,12 @@ for(i in 1:length(roi)){
     marker.idx[i] <- intersect(chr.locale, pos.locale)
 }
 
-gal.geno <- geno_obj[,,marker.idx]
+query.geno <- geno_obj[,,marker.idx]
 
 #use one of the introgressed alleles that we know is non-functional
-selected.alleles <- gal.geno[,query.alleles,drop=FALSE]
+selected.alleles <- query.geno[,query.alleles,drop=FALSE]
 query.allele <- matrix(rowSums(selected.alleles), ncol = 1)
-rownames(query.allele) <- rownames(gal.geno)
+rownames(query.allele) <- rownames(query.geno)
 colnames(query.allele) <- "query-allele"
 #hist(query.allele)
 ```
