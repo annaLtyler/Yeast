@@ -16,7 +16,8 @@ library(plotly)
 library(igraph)
 
 #exp.name = "GAL1_7_10_query"
-exp.name = "GAL3_query"
+#exp.name = "GAL3_query"
+exp.name = "FLZ_resistance_modifier"
 ```
 
 The following figures show the the phenotypic effects
@@ -110,9 +111,9 @@ for(dir in 1:length(clin.effects)){
       main = paste(names(clin.effects[[dir]][ph]), names(clin.effects)[dir])) + 
       geom_line(aes(group = subject)) +
       aes(x = effect_type, y = effect, text = marker_info) + 
-      facet_wrap(class~.)
-    pl <- pl + colScale
-    pl <- pl + geom_hline(aes(yintercept=0))
+      facet_wrap(class~.) +
+      colScale + 
+      geom_hline(aes(yintercept=0))
     #pl
 
     l[[i]] = as_widget(ggplotly(pl))
@@ -138,4 +139,144 @@ l[[3]]
 
 ```{r plot4, fig.width = 10, fig.height = 10}
 l[[4]]
+```
+
+
+```{r effects_across_pheno, eval = FALSE}
+#do markers have the same effects across phenotypes? Different effects?
+all.markers <- unique(unlist(lapply(clin.effects, 
+  function(x) unlist(lapply(x, function(y) rownames(y))))))
+split.markers <- strsplit(all.markers, "_")
+marker.allele <- as.numeric(sapply(split.markers, function(x) x[2]))
+marker.name <- sapply(split.markers, function(x) x[1])
+marker.chr <- as.numeric(substr(marker.name, 2, 3))
+marker.pos <- as.numeric(sapply(marker.name, function(x) substr(x, 4, nchar(x))))
+marker.label <- paste0("Chr", marker.chr, "-", marker.pos)
+gene.list <- lapply(1:length(marker.chr), function(x) get_gene_names(marker.chr[x], marker.pos[x]))
+geneV <- sapply(gene.list, function(x) paste(x, collapse = ", "))
+marker.info <- paste0(paste0("Chr", marker.chr), "-", marker.pos, "\n", geneV)
+
+get_marker_effects <- function(marker.name, clin.effects){
+  marker.effects <- lapply(clin.effects, function(x) lapply(x, function(y) y[which(rownames(y) == marker.name),]))
+  effect.table <- matrix(NA, nrow = 4, ncol = 8)
+  colnames(effect.table) <- colnames(clin.effects[[1]][[1]])
+  row.names <- rep(NA, length(4))
+  idx <- 1
+  for(i in 1:length(marker.effects)){
+    for(j in 1:length(marker.effects[[i]])){
+      row.names[idx] <- paste(names(marker.effects)[i], names(marker.effects[[i]])[j], sep = "_")
+      if(length(marker.effects[[i]][[j]] > 0)){
+        effect.table[idx,] <- marker.effects[[i]][[j]]
+      }
+    idx = idx + 1
+    }
+  }
+  rownames(effect.table) <- row.names
+  return(effect.table)
+}
+
+all.marker.effects <- lapply(all.markers, function(x) get_marker_effects(x, clin.effects))
+
+main.target.flz <- as.numeric(sapply(all.marker.effects, function(x) x[1,2]))
+main.source.flz <- as.numeric(sapply(all.marker.effects, function(x) x[3,1]))
+main.target.ypd <- as.numeric(sapply(all.marker.effects, function(x) x[2,2]))
+main.source.ypd <- as.numeric(sapply(all.marker.effects, function(x) x[4,1]))
+
+main.target.flz.add <- as.numeric(sapply(all.marker.effects, function(x) x[1,3]))
+main.source.flz.add <- as.numeric(sapply(all.marker.effects, function(x) x[3,3]))
+main.target.ypd.add <- as.numeric(sapply(all.marker.effects, function(x) x[2,3]))
+main.source.ypd.add <- as.numeric(sapply(all.marker.effects, function(x) x[4,3]))
+flz.add <- apply(cbind(main.target.flz.add, main.source.flz.add), 1, function(x) unique(x[which(!is.na(x))]))
+ypd.add <- apply(cbind(main.target.ypd.add, main.source.ypd.add), 1, function(x) unique(x[which(!is.na(x))]))
+#plot(cbind(flz.add, ypd.add))
+
+main.target.flz.act <- as.numeric(sapply(all.marker.effects, function(x) x[1,4]))
+main.source.flz.act <- as.numeric(sapply(all.marker.effects, function(x) x[3,4]))
+main.target.ypd.act <- as.numeric(sapply(all.marker.effects, function(x) x[2,4]))
+main.source.ypd.act <- as.numeric(sapply(all.marker.effects, function(x) x[4,4]))
+flz.act <- apply(cbind(main.target.flz.act, main.source.flz.act), 1, function(x) unique(x[which(!is.na(x))]))
+ypd.act <- apply(cbind(main.target.ypd.act, main.source.ypd.act), 1, function(x) unique(x[which(!is.na(x))]))
+#plot(cbind(flz.act, ypd.act))
+
+plot(flz.add, flz.act);abline(0,1)
+plot(ypd.add, ypd.act);abline(0,1)
+
+flz.diff <- abs(flz.act) - abs(flz.add) #positive values indicate aggravating epistasis
+ypd.diff <- abs(ypd.act) - abs(ypd.add) #positive values indicate aggravating epistasis
+
+#there is more aggravating epistasis in YPD?
+boxplot(list("FLZ" = flz.diff, "YPD" = ypd.diff));abline(h = 0)
+plot(flz.diff, ypd.diff);abline(0,1)
+
+int.target.flz.type <- sapply(all.marker.effects, function(x) paste(x[1,5:7], collapse = "_"))
+int.source.flz.type <- sapply(all.marker.effects, function(x) paste(x[3,5:7], collapse = "_"))
+int.target.ypd.type <- sapply(all.marker.effects, function(x) paste(x[2,5:7], collapse = "_"))
+int.source.ypd.type <- sapply(all.marker.effects, function(x) paste(x[4,5:7], collapse = "_"))
+
+flz.type <- apply(cbind(int.target.flz.type, int.source.flz.type), 1, function(x) unique(x[which(x != "NA_NA_NA")]))
+ypd.type <- apply(cbind(int.target.ypd.type, int.source.ypd.type), 1, function(x) unique(x[which(x != "NA_NA_NA")]))
+
+any.main.flz <- apply(cbind(main.target.flz, main.source.flz), 1, function(x) unique(x[which(!is.na(x))]))
+any.main.ypd <- apply(cbind(main.target.ypd, main.source.ypd), 1, function(x) unique(x[which(!is.na(x))]))
+
+all.main <- cbind(any.main.flz, any.main.ypd)
+colnames(all.main) <- c("FLZ", "YPD")
+rownames(all.main) <- all.markers
+
+main.df <- data.frame("marker_label" = marker.info, "FLZ" = all.main[,1], 
+  "YPD" = all.main[,2], "allele" = as.factor(marker.allele), 
+  "FLZ_add" = flz.add, "FLZ_act" = flz.act, "FLZ_diff" = flz.diff, 
+  "YPD_add" = ypd.add, "YPD_act" = ypd.act, "YPD_diff" = ypd.diff, 
+  "FLZ_type" = flz.type, "YPD_type" = ypd.type)
+
+main.pl <- qplot(FLZ, YPD, data = main.df, color = allele, main = "Main Effects in Each Trait")+ 
+  colScale + 
+  geom_hline(aes(yintercept=0)) +
+  geom_vline(aes(xintercept=0)) +
+  aes(x = FLZ, y = YPD, text = marker_label) +
+  annotate("text", x = 0.52, y = 0.35, label = "Improved\nGrowth\nOverall", adj = 1) +
+  annotate("text", x = -0.35, y = -0.4, label = "Reduced Growth\nOverall", adj = 0) +
+  annotate("text", x = 0.52, y = -0.4, label = "Drug resistance at\nexpense of overall growth", adj = 1) + 
+  annotate("text", x = -0.35, y = 0.38, label = "Drug susceptibility", adj = 0)
+
+main.pl  
+ggplotly(main.pl)
+
+act.pl <- qplot(FLZ_act, YPD_act, data = main.df, color = allele, main = "Actual Growth for Interaction") +
+  colScale + 
+  geom_hline(aes(yintercept=0)) +
+  geom_vline(aes(xintercept=0)) +
+  aes(x = FLZ_act, y = YPD_act, text = marker_label)
+act.pl
+ggplotly(act.pl)
+
+
+int.pl <- qplot(FLZ_diff, YPD_diff, data = main.df, color = allele, main = "Degree of Aggravation/Alleviation") + 
+  colScale + 
+  geom_hline(aes(yintercept=0)) +
+  geom_vline(aes(xintercept=0)) +
+  aes(x = FLZ_diff, y = YPD_diff, text = marker_label)
+  
+ggplotly(int.pl)
+
+
+flz.idx <- grep("FLZ", colnames(main.df))
+ypd.idx <- grep("YPD", colnames(main.df))
+
+main.df[1,flz.idx]
+main.df[1,ypd.idx]
+
+ylim <- c(min((main.df[,c(flz.idx[1:4], ypd.idx[1:4])])), max((main.df[,c(flz.idx[1:4], ypd.idx[1:4])])))
+
+pdf("~/Desktop/test.pdf", width = 9, height = 9)
+par(mfrow = c(3,3))
+for(i in 1:nrow(main.df)){
+  plot.new()
+  plot.window(xlim = c(1,2.5), ylim = ylim)
+  points(c(1,2), main.df[i,flz.idx[2:3]], type = "h", lwd = 3)
+  points(c(1.1, 2.1), main.df[i,ypd.idx[2:3]], type = "h", col = "red", lwd = 3)
+  abline(h = 0)
+  axis(1);axis(2)
+}
+dev.off()
 ```

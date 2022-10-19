@@ -15,7 +15,24 @@ library(here)
 library(plotly)
 
 #exp.name = "GAL1_7_10_query"
-exp.name = "GAL3_query"
+#exp.name = "GAL3_query"
+exp.name = "FLZ_resistance_modifier"
+
+```
+
+
+```{r load_code}
+library(here)
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+```
+
+
+```{r load_cape, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+#load local version of cape code
+needed.libraries <- c("pheatmap", "hexbin", "RColorBrewer", "gridExtra", "ggplot2")
+load_libraries(needed.libraries, personal.library = TRUE)
+load_latest_cape(here("Code", "cape"), personal.library = TRUE)
 ```
 
 The following figures show the deviation from additivity when the 
@@ -42,13 +59,42 @@ with the precise location of the marker.
 I haven't yet figured out how to fix the $y$ axes for these plots
 yet, so they are all on individual $y$ axes.
 
-```{r variant_effects, fig.width = 10, fig.height = 8}
-var_effects <- readRDS(here("Results", exp.name, "Plotly_variant_effects.RDS"))
+```{r get_variant_effects, fig.width = 10, fig.height = 8}
+results.dir <- here("Results", exp.name)
+data.obj <- readRDS(file.path(results.dir, "cross.RDS"))
+geno.obj <- readRDS(file.path(results.dir, "cross_geno.RDS"))
+
+#generate data for plotly figures. We will plot
+#these in a separate document. 
+plotly.fig.file <- file.path(results.dir, "Plotly_variant_effects.RDS")
+if(!file.exists(plotly.fig.file)){
+  gene.table <- read.csv(here("Data", "pgmap.csv"))
+  plotly_figs <- plotly_variant_effects_query(data.obj, geno.obj, 
+    pheno_type = "norm_pheno", p_or_q = 1e-6, scale_coord = 1e3,
+    gene.bp.window = 5000, gene.table = gene.table)
+}
+```
+
+```{r plot_var_effects}
 
 l <- htmltools::tagList()
-for (i in 1:length(var_effects)){ 
-  l[[i]] = as_widget(var_effects[[i]])
+for (i in 1:length(plotly_figs)){ 
+  l[[i]] = as_widget(plotly_figs[[i]])
 }
 
 l
 ```
+
+```{r plot_examples, eval = FALSE}
+chr = 15; pos = 244798; allele = 5
+
+example.marker <- "X15252983"; example.allele = 5
+example.marker <- "X15244798"; example.allele = 8
+
+par(mfrow = c(1,2))
+plot_one_variant_effect(data.obj, geno.obj, 
+          marker_name = example.marker, allele_name = example.allele,
+          p_or_q = 0.05, pheno_type = "norm_pheno")
+
+```
+

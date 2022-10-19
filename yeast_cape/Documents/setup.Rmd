@@ -192,6 +192,8 @@ multilod.plot(log10(scan1.result[,trait.order]), map, chr.name.y = 0.2,
 ```
 
 ```{r select_query_marker, eval = FALSE}
+#use this code to identify a marker and alleles to put into Query_CAOE.Rmd
+
 trait.name = "FLZ"
 trait.idx <- which(colnames(singlescan_obj$singlescan_t_stats) == trait.name)
 trait.t <- singlescan_obj$singlescan_t_stats[,trait.idx,]
@@ -206,6 +208,5 @@ max.locus <- max.t.idx[max.allele]
 effect.at.locus <- trait.effect[max.locus,]
 barplot(effect.at.locus, main = "Allele Effects at Locus with Maximum T Score")
 locus <- rownames(trait.effect)[max.locus]
-
 
 ```

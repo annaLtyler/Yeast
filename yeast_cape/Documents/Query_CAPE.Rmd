@@ -356,22 +356,6 @@ dev.off()
 saveRDS(trait_deviation, trait.deviation.file)
 ```
 
-
-```{r plotly_figs, eval = FALSE}
-library(plotly)
-#generate data for plotly figures. We will plot
-#these in a separate document. 
-plotly.fig.file <- file.path(results.dir, "Plotly_variant_effects.RDS")
-if(!file.exists(plotly.fig.file)){
-  gene.table <- read.csv(here("Data", "pgmap.csv"))
-  plotly_figs <- plotly_variant_effects_query(final_obj, geno_obj, 
-    pheno_type = "norm_pheno", p_or_q = 1e-6, scale_coord = 1e3,
-    gene.bp.window = 5000, gene.table = gene.table)
-
-  saveRDS(plotly_figs, plotly.fig.file)
-}
-```
-
 The following histogram shows the distributions of 
 interaction effects.
 
