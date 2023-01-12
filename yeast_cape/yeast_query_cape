@@ -14,4 +14,4 @@ cd $SLURM_SUBMIT_DIR
 
 module load singularity
 
-singularity exec /projects/carter-lab/atyler/Containers/islet_cape.sif R -e 'rmarkdown::render(here::here("Documents", "Query_CAPE.Rmd"))' --args "$delete_previous" "$remove_chr9" "$test_markers" "$test_ind"
+singularity exec /projects/carter-lab/atyler/Containers/R.sif R -e 'rmarkdown::render(here::here("Documents", "Query_CAPE.Rmd"))' --args "$delete_previous" "$remove_chr9" "$test_markers" "$test_ind"
