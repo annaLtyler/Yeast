@@ -90,8 +90,18 @@ chr = 15; pos = 244798; allele = 5
 
 example.marker <- "X15252983"; example.allele = 5
 example.marker <- "X15244798"; example.allele = 8
+example.marker <- "X15406136"; example.allele = 6
+example.marker <- "X0166606"; example.allele = 2
+example.marker <- "X15686960"; example.allele = 3
+example.marker <- "X13330408"; example.allele = 6
+example.marker <- "X15252983"; example.allele = 5
+example.marker <- "X15244798"; example.allele = 8
+example.marker <- "X15238735"; example.allele = 3
+example.marker <- "X10387890"; example.allele = 8
+example.marker <- "X10383815"; example.allele = 3
+example.marker <- "X07475101"; example.allele = 3
 
-par(mfrow = c(1,2))
+par(mfrow = c(2,2))
 plot_one_variant_effect(data.obj, geno.obj, 
           marker_name = example.marker, allele_name = example.allele,
           p_or_q = 0.05, pheno_type = "norm_pheno")

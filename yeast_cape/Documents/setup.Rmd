@@ -130,11 +130,92 @@ if(!file.exists(singlescan_obj_file)){
 }
 ```
 
-## Singlescan Effects {.tabset .tabset-fade .tabset-pills}
+
+## Screen for interesting markers {.tabset .tabset-fade .tabset-pills}
+
+We want to screen for individual markers that have large phenotypic
+effects. We will use these markers as query alleles in query_cape.
+Here we test all markers against the strain mean.
 
 The following plots show the effect sizes from the single scans for 
 each trait. This will help us identify pleiotropy for selection of 
 trait combinations.
+
+```{r singlescan}
+get_model_effects <- function(y, x){
+  model <- lm(y~x)
+  return(coef(model))
+}
+
+all.allele.effects.file <- here("Results", "General", "allele.effects.RDS")
+
+if(!file.exists(all.allele.effects.file)){
+  all.allele.effects <- vector(mode = "list", length = ncol(pheno_obj$pheno))
+  names(all.allele.effects) <- colnames(pheno_obj$pheno)
+  for(ph in 2:ncol(pheno_obj$pheno)){
+    print(colnames(pheno_obj$pheno)[ph])
+    allele.effects <- matrix(NA, nrow = ncol(geno_obj), ncol = dim(geno_obj)[[3]])
+    for(a in 1:ncol(geno_obj)){
+      print(a)
+      allele.mat <- geno_obj[,a,]
+      effects <- apply(allele.mat, 2, function(x) get_model_effects(pheno_obj$pheno[,ph], x))
+      allele.effects[a,] <- effects[2,]
+    }
+    all.allele.effects[[ph]] <- allele.effects
+  }
+  saveRDS(all.allele.effects, all.allele.effects.file)
+}else{
+  all.allele.effects <- readRDS(all.allele.effects.file)
+}
+
+```
+
+```{r plot_effects, results = "asis", fig.width = 10, fig.height = 6}
+col <- categorical_pal(8)
+u_chr <- unique(pheno_obj$chromosome)
+chr_idx <- lapply(u_chr, function(x) which(pheno_obj$chromosome == x))
+pos <- lapply(chr_idx, function(x) pheno_obj$marker_location[x])
+
+#pdf("~/Desktop/yeast.pdf", width = 10, height = 6)
+for(ph in 1:length(all.allele.effects)){
+  cat("###", colnames(pheno_obj$pheno)[ph], "\n")
+  for(ch in 1:length(u_chr)){
+    
+    layout.mat <- matrix(c(1:2), ncol = 2, byrow = TRUE)
+    layout(layout.mat, widths = c(1,0.2))
+
+    ylim <- c(min(all.allele.effects[[ph]][,chr_idx[[ch]]]), max(all.allele.effects[[ph]][,chr_idx[[ch]]]))
+    xlim = c(min(pos[[ch]]), max(pos[[ch]]))
+ 
+    par(mar = c(4,4,4,0))
+    plot.new()
+    plot.window(xlim = xlim, ylim = ylim)
+    for(a in 1:nrow(all.allele.effects[[ph]])){
+      points(x = pos[[ch]], y = all.allele.effects[[ph]][a,chr_idx[[ch]]],
+      col = col[a], type = "l", lwd = 3)
+    }
+  axis(1);axis(2)
+  mtext(paste("Position on Chr", ch), side = 1, line = 2.5)
+  mtext("t statistic", side = 2, line = 2.5)
+  mtext(paste("Chr", ch, names(all.allele.effects)[ph]), side = 3, line = 2.5, font = 2, cex = 1.5)
+  abline(h = 0)
+
+  #legend
+  par(mar = c(4,0,4,1))
+  plot.new()
+  plot.window(xlim = c(0,1), ylim = c(0,1))
+  legend(x = 0, y = 1, lty = 1, col = col, legend = 1:8,
+      lwd = 3)
+
+  }
+cat("\n\n")
+}
+#dev.off()
+```
+
+## CAPE singlescan
+
+These plots show the singlescans relative to allele 5
 
 ```{r plot_singlescan, fig.width = 10, fig.height = 5, results = "asis"}
 par(mfrow = c(2,1))
@@ -192,21 +273,26 @@ multilod.plot(log10(scan1.result[,trait.order]), map, chr.name.y = 0.2,
 ```
 
 ```{r select_query_marker, eval = FALSE}
-#use this code to identify a marker and alleles to put into Query_CAOE.Rmd
+#use this code to identify a marker and alleles to put into Query_CAPE.Rmd
 
 trait.name = "FLZ"
-trait.idx <- which(colnames(singlescan_obj$singlescan_t_stats) == trait.name)
-trait.t <- singlescan_obj$singlescan_t_stats[,trait.idx,]
-trait.effect <- singlescan_obj$singlescan_effects[,trait.idx,]
-max.t.idx <- apply(trait.t, 2, function(x) which.max(x))
-trait.t[max.t.idx,]
-max.t <- sapply(1:length(max.t.idx), function(x) max(trait.t[max.t[x],]))
-max.effect.idx <- sapply(1:length(max.t.idx), function(x) which.max(abs(trait.effect[max.t[x],])))
-max.effect <- sapply(max.effect.idx, function(x) trait.effect[max.t[x],max.effect.idx[x]])
-max.allele <- which.max(max.t)
-max.locus <- max.t.idx[max.allele]
-effect.at.locus <- trait.effect[max.locus,]
-barplot(effect.at.locus, main = "Allele Effects at Locus with Maximum T Score")
-locus <- rownames(trait.effect)[max.locus]
+trait.idx <- which(colnames(pheno_obj$pheno) == trait.name)
+trait.effects <- all.allele.effects[[trait.idx]]
+effect.max.pos <- sapply(1:length(chr_idx), function(x) apply(trait.effects[,chr_idx[[x]]], 1, function(y) pos[[x]][which.max(y)]))
+effect.min.pos <- sapply(1:length(chr_idx), function(x) apply(trait.effects[,chr_idx[[x]]], 1, function(y) pos[[x]][which.min(y)]))
+rownames(effect.max.pos) <- rownames(effect.min.pos) <- 1:8
+colnames(effect.max.pos) <- colnames(effect.min.pos) <- paste0("Chr", 1:ncol(effect.min.pos))
+
+#use the figures and the charts to pick the position of 
+#the allele with the minimum or maximum effect.
+#For example, strain 2 has a large susceptibility allele
+#on Chr 1 as shown in the plots above. The position of this
+#allele is in effect.min.pos row 2, column 1 (36048)
+#Use this strain and position information to run a query
+#pick a neutral reference allele (one other than the 
+#query allele) to put into the cape.parameters file
+#The default is allele 5
+
+
 
 ```

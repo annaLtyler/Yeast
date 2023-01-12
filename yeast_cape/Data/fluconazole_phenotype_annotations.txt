@@ -1,0 +1,951 @@
+!
+!Date: 01/12/2023
+!From: Saccharomyces Genome Database (SGD) 
+!URL: http://www.yeastgenome.org/ 
+!Contact Email: sgd-helpdesk@lists.stanford.edu 
+!Funding: NHGRI at US NIH, grant number 5-U41-HG001315 
+!
+
+Gene	Gene Systematic Name	Phenotype	Experiment Type	Experiment Type Category	Mutant Information	Strain Background	Chemical	Details	Reference
+PDR5	YOR153W	resistance to chemicals: absent 	classical genetics 	classical genetics	reduction of function Allele: pdr5-S1230L	S288C	20 μM fluconazole		Chen Z, et al. (2014) PMID:24333836
+PDR5	YOR153W	resistance to chemicals: absent 	classical genetics 	classical genetics	reduction of function Allele: pdr5-C793F	S288C	20 μM fluconazole		Chen Z, et al. (2014) PMID:24333836
+YAP1	YML007W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: yap1-Δ	Other	5 ug/disk CTBT, 20 ug/ml fluconazole		Cernicka J, et al. (2007) PMID:17204400
+DAP1	YPL170W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: dap1-Δ	W303	1 mg/ml fluconazole		Hand RA, et al. (2003) PMID:12684380
+FLR1	YBR008C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: flr1-Δ	W303	9 mg/L fluconazole		Brôco N, et al. (1999) PMID:10572257
+UPC2	YDR213W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: upc2-Δ	S288C	  fluconazole		Marie C, et al. (2008) PMID:18675371
+ECM22	YLR228C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: ecm22-Δ	S288C	  fluconazole		Marie C, et al. (2008) PMID:18675371
+UPC2	YDR213W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: upc2-Δ	W303	  fluconazole		Marie C, et al. (2008) PMID:18675371
+ECM22	YLR228C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: ecm22-Δ	W303	  fluconazole		Marie C, et al. (2008) PMID:18675371
+CRD1	YDL142C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: crd1-Δ	S288C	MIC 12 ug/ml  fluconazole		Sarinová M, et al. (2007) PMID:17702459
+SPT20	YOL148C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: spt20-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SND3	YBR106W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: snd3-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+ISC1	YER019W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: isc1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPH2	YKL119C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vph2-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YPK1	YKL126W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ypk1-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SHE4	YOR035C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: she4-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YKL118W	YKL118W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ykl118w-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+GET2	YER083C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: get2-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+NCL1	YBL024W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ncl1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SAC6	YDR129C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sac6-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VMA11	YPL234C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vma11-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+ERG4	YGL012W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: erg4-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YGL024W	YGL024W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ygl024w-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YDJ1	YNL064C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ydj1-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+PDR5	YOR153W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pdr5-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPS51	YKR020W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps51-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+NDE1	YMR145C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: nde1-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+URE2	YNL229C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ure2-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+GAL11	YOL051W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: gal11-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+UME1	YPL139C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ume1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NEW1	YPL226W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: new1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CLN2	YPL256C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cln2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BEM2	YER155C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bem2-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPS29	YHR012W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps29-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+GPH1	YPR160W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: gph1-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPS1	YKR001C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+DRS2	YAL026C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: drs2-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+STP22	YCL008C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: stp22-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+CDC10	YCR002C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cdc10-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YDL118W	YDL118W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ydl118w-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+MRPL28	YDR462W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mrpl28-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+GRR1	YJR090C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: grr1-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPS25	YJR102C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps25-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPS36	YLR417W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps36-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+KEX2	YNL238W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: kex2-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YOL050C	YOL050C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: yol050c-Δ	S288C	15 ug/ml fluconazole	Details: strong sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+TPS1	YBR126C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tps1-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+FEN2	YCR028C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: fen2-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RPN4	YDL020C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rpn4-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SPT3	YDR392W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: spt3-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+NUT1	YGL151W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: nut1-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SPT4	YGR063C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: spt4-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RIM101	YHL027W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim101-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YHR045W	YHR045W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: yhr045w-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+EMP46	YLR080W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: emp46-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+PDR16	YNL231C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pdr16-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YNL235C	YNL235C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ynl235c-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RIM21	YNL294C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim21-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+DAP1	YPL170W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: dap1-Δ	S288C	15 ug/ml fluconazole	Details: moderate sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SLA1	YBL007C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sla1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+BSD2	YBR290W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bsd2-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+PAT1	YCR077C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pat1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+BRE1	YDL074C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bre1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SUM1	YDR310C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sum1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RVS167	YDR388W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rvs167-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YDR442W	YDR442W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ydr442w-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPS52	YDR484W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps52-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+NOP16	YER002W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: nop16-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YGL072C	YGL072C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ygl072c-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SIT4	YDL047W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: sit4-Δ	S288C	40 ug/ml fluconazole		Miranda MN, et al. (2010) PMID:20608983
+SAP155	YFR040W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: sap155-Δ	S288C	40 ug/ml fluconazole		Miranda MN, et al. (2010) PMID:20608983
+PDR5	YOR153W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: pdr5-Δ	S288C	20 ug/ml fluconazole		Miranda MN, et al. (2010) PMID:20608983
+AZR1	YGR224W	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: azr1-Δ	W303	9 ug/ml fluconazole		Tenreiro S, et al. (2000) PMID:11113970
+VAM7	YGL212W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vam7-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+OCA5	YHL029C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: oca5-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SLT2	YHR030C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: slt2-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+EMC5	YIL027C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: emc5-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RAV1	YJR033C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rav1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+ARV1	YLR242C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: arv1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VID22	YLR373C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vid22-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+YLR374C	YLR374C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ylr374c-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+ERG5	YMR015C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: erg5-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RIM9	YMR063W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim9-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+PKR1	YMR123W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pkr1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RIM13	YMR154C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim13-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+HSC82	YMR186W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hsc82-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+HDA1	YNL021W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hda1-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VPS21	YOR089C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps21-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+IRC14	YOR135C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: irc14-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+RIM20	YOR275C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim20-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SNC2	YOR327C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: snc2-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+VMA13	YPR036W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vma13-Δ	S288C	15 ug/ml fluconazole	Details: weak sensitivity 	Parsons AB, et al. (2004) PMID:14661025
+SWC3	YAL011W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: swc3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CNE1	YAL058W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cne1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BUD14	YAR014C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bud14-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HIR1	YBL008W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hir1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NCL1	YBL024W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ncl1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PSY4	YBL046W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: psy4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HMT1	YBR034C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hmt1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MUM2	YBR057C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mum2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NPL4	YBR170C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: npl4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TDP1	YBR223C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tdp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MTC4	YBR255W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mtc4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BUD3	YCL014W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bud3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PER1	YCR044C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: per1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RPN4	YDL020C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rpn4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PPH21	YDL134C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pph21-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PPH3	YDR075W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pph3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD55	YDR076W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rad55-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SSD1	YDR293C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ssd1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MSN5	YDR335W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: msn5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+EAF1	YDR359C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: eaf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MUS81	YDR386W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mus81-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LRS4	YDR439W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: lrs4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NPR2	YEL062W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: npr2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CAJ1	YER048C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: caj1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BEM2	YER155C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bem2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CHD1	YER164W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: chd1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BMH1	YER177W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bmh1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBP6	YFR010W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ubp6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HXK1	YFR053C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hxk1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CWH41	YGL027C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cwh41-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CGR1	YGL029W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cgr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PMR1	YGL167C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pmr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTG2	YGL252C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rtg2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SLX9	YGR081C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: slx9-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+THP2	YHR167W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: thp2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ICE2	YIL090W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ice2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PEP8	YJL053W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pep8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HAL5	YJL165C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hal5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAV1	YJR033C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rav1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BFA1	YJR053W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bfa1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+EAF6	YJR082C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: eaf6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+YJR084W	YJR084W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: yjr084w-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HIR3	YJR140C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hir3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HSL1	YKL101W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hsl1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DBR1	YKL149C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: dbr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TOF2	YKR010C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tof2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBI4	YLL039C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ubi4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HOG1	YLR113W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hog1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CPR6	YLR216C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cpr6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PSY3	YLR376C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: psy3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PSP2	YML017W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: psp2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+USA1	YML029W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: usa1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+YMD8	YML038C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ymd8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+FAR3	YMR052W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: far3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BUB2	YMR055C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bub2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HLJ1	YMR161W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hlj1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ESC1	YMR219W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: esc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SIW14	YNL032W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: siw14-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CAF40	YNL288W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: caf40-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RIM21	YNL294C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim21-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HRD1	YOL013C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hrd1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PSK2	YOL045W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: psk2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ASE1	YOR058C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ase1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RIM20	YOR275C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim20-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PDR16	YNL231C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: pdr16-Δ	SEY6210	  fluconazole	Details: gradient plate assay 	Gulshan K, et al. (2010) PMID:20016005
+YGL081W	YGL081W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ygl081w-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ITC1	YGL133W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: itc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HOS2	YGL194C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hos2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ASK10	YGR097W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ask10-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+YGR237C	YGR237C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ygr237c-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+STE20	YHL007C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ste20-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SLT2	YHR030C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: slt2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+EMC5	YIL027C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: emc5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RRD1	YIL153W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rrd1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BCK1	YJL095W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bck1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PTK2	YJR059W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ptk2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MLP1	YKR095W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mlp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CLB4	YLR210W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: clb4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VAC14	YLR386W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vac14-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SRC1	YML034W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: src1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GSF2	YML048W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: gsf2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CMP2	YML057W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cmp2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PKR1	YMR123W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pkr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+INP52	YNL106C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: inp52-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+FPR1	YNL135C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: fpr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NPR1	YNL183C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: npr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MID1	YNL291C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mid1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BRE5	YNR051C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bre5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MKK1	YOR231W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mkk1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TPS1	YBR126C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tps1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GET3	YDL100C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: get3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ARF1	YDL192W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: arf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+WHI4	YDL224C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: whi4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBC13	YDR092W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ubc13-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TRS85	YDR108W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: trs85-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GGA1	YDR358W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: gga1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SEM1	YDR363W-A	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sem1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PKH1	YDR490C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pkh1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBP3	YER151C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ubp3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NNF2	YGR089W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: nnf2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+YTA7	YGR270W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: yta7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ELM1	YKL048C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: elm1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RIC1	YLR039C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ric1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SPT8	YLR055C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: spt8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ACE2	YLR131C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ace2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RSA3	YLR221C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rsa3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VRP1	YLR337C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vrp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+AGP1	YCL025C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: agp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HBT1	YDL223C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hbt1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BMH2	YDR099W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bmh2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RVS167	YDR388W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rvs167-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PUF6	YDR496C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: puf6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SPF1	YEL031W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: spf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+IOC3	YFR013W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ioc3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DST1	YGL043W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: dst1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NUT1	YGL151W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: nut1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SRB2	YHR041C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: srb2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ARP1	YHR129C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: arp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+REC104	YHR157W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rec104-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+INP51	YIL002C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: inp51-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+AGE2	YIL044C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: age2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SGN1	YIR001C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sgn1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LSM1	YJL124C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: lsm1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MNN11	YJL183W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mnn11-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CAP1	YKL007W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cap1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PAN3	YKL025C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pan3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NUP100	YKL068W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: nup100-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SPA2	YLL021W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: spa2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ARC18	YLR370C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: arc18-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SLA1	YBL007C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sla1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+EDE1	YBL047C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ede1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBP14	YBR058C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ubp14-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RDH54	YBR073W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rdh54-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SWC5	YBR231C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: swc5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ERG5	YMR015C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: erg5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RCO1	YMR075W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rco1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TOF1	YNL273W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tof1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VPS27	YNR006W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vps27-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TOP1	YOL006C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: top1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TLG2	YOL018C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tlg2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+WHI2	YOR043W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: whi2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GYP1	YOR070C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: gyp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VAM3	YOR106W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: vam3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+INP53	YOR109W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: inp53-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD1	YPL022W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rad1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SRO7	YPR032W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sro7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UFD2	YDL190C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ufd2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MAK10	YEL053C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: mak10-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD4	YER162C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rad4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+OST5	YGL226C-A	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ost5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PEX1	YKL197C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pex1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MYO5	YMR109W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: myo5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TRF5	YNL299W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: trf5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+STB1	YNL309W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: stb1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+KRE1	YNL322C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: kre1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LEM3	YNL323W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: lem3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CSE2	YNR010W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cse2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+FPK1	YNR047W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: fpk1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+APM4	YOL062C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: apm4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTS1	YOR014W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rts1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GAC1	YOR178C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: gac1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HHO1	YPL127C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hho1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+YPL150W	YPL150W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ypl150w-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RXT3	YDL076C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rxt3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SNF3	YDL194W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: snf3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MSH6	YDR097C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: msh6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SWI5	YDR146C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: swi5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RIM101	YHL027W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: rim101-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+KNS1	YLL019C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: kns1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BUD8	YLR353W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: bud8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MSC1	YML128C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: msc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SKO1	YNL167C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: sko1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CAF120	YNL278W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: caf120-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DPB3	YBR278W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: dpb3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SRB8	YCR081W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: srb8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CLB3	YDL155W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: clb3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CLB1	YGR108W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: clb1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TRS65	YGR166W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: trs65-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CAP2	YIL034C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: cap2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+OPI3	YJR073C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: opi3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TSA1	YML028W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tsa1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+KAR5	YMR065W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: kar5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HST1	YOL068C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hst1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TSR3	YOR006C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: tsr3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ELP3	YPL086C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: elp3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PAC1	YOR269W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: pac1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SNC2	YOR327C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: snc2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+APL5	YPL195W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: apl5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HHT1	YBR010W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hht1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ATO3	YDR384C	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: ato3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HXK2	YGL253W	resistance to chemicals: decreased 	systematic mutation set	large-scale survey	null Allele: hxk2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+YDJ1	YNL064C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: ydj1-Δ	S288C	5 ug/ml fluconazole		Gillies AT, et al. (2012) PMID:22851130
+SWA2	YDR320C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: swa2-Δ	S288C	5 ug/ml fluconazole		Gillies AT, et al. (2012) PMID:22851130
+ZUO1	YGR285C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: zuo1-Δ	S288C	5 ug/ml fluconazole		Gillies AT, et al. (2012) PMID:22851130
+JJJ1	YNL227C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: jjj1-Δ	S288C	5 ug/ml fluconazole		Gillies AT, et al. (2012) PMID:22851130
+JJJ2	YJL162C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: jjj2-Δ	S288C	5 ug/ml fluconazole		Gillies AT, et al. (2012) PMID:22851130
+RIM13	YMR154C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: rim13-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+ELA1	YNL230C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: ela1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+ELA1	YNL230C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: ela1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+PDR16	YNL231C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: pdr16-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+PDR16	YNL231C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: pdr16-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YNL235C	YNL235C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: ynl235c-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+SIN4	YNL236W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: sin4-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+RIM21	YNL294C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: rim21-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+MFA1	YDR461W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: mfa1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YDR467C	YDR467C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: ydr467c-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+HXT12	YIL170W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: hxt12-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+HXT12	YIL170W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: hxt12-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+FPK1	YNR047W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: fpk1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+MED7	YOL135C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: med7-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+ISD11	YER048W-A	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: isd11-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+BMH1	YER177W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: bmh1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+ACT1	YFL039C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: act1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+UTR1	YJR049C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: utr1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+PDR1	YGL013C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: pdr1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+IRS4	YKR019C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: irs4-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+PTR2	YKR093W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: ptr2-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YOR131C	YOR131C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: yor131c-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+PDR5	YOR153W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: pdr5-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+MED4	YOR174W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: med4-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+RIM20	YOR275C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: rim20-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YOR325W	YOR325W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: yor325w-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YOR331C	YOR331C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: yor331c-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+VMA4	YOR332W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: vma4-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YOR345C	YOR345C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: yor345c-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+VTS1	YOR359W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: vts1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YOR366W	YOR366W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: yor366w-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YOR366W	YOR366W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: yor366w-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YOR379C	YOR379C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: yor379c-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YPP1	YGR198W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: ypp1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+EMP46	YLR080W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: emp46-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+ISU1	YPL135W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: isu1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+SET6	YPL165C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: set6-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+DAP1	YPL170W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: dap1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+QCR10	YHR001W-A	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: qcr10-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+ERG11	YHR007C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: erg11-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+NCP1	YHR042W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: ncp1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YHR045W	YHR045W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: yhr045w-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+AGC1	YPR021C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: agc1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+IRE1	YHR079C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: ire1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+HMG1	YML075C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: hmg1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+COQ1	YBR003W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: coq1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+ETR1	YBR026C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: etr1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+NFS1	YCL017C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: nfs1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+TPO3	YPR156C	resistance to chemicals: decreased 	classical genetics	classical genetics	null Allele: tpo3-Δ	S288C	75 mg/L fluconazole		Costa C, et al. (2014) PMID:24576949
+NRP1	YDL167C	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: nrp1-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+TAF12	YDR145W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: taf12-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+KGD2	YDR148C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: kgd2-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+UPC2	YDR213W	resistance to chemicals: decreased 	heterozygous diploid, systematic mutation set	large-scale survey	null Allele: upc2-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+UPC2	YDR213W	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: upc2-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+YDR271C	YDR271C	resistance to chemicals: decreased 	homozygous diploid, systematic mutation set	large-scale survey	null Allele: ydr271c-Δ	S288C	  fluconazole		Hoepfner D, et al. (2014) PMID:24360837
+BRR6	YGL247W	resistance to chemicals: decreased 	classical genetics	classical genetics	conditional Allele: brr6-1 R110K	Other	25 ug/ml fluconazole	Temperature: permissive temperature, 30 °C 	Lone MA, et al. (2015) PMID:26432634
+ERG11	YHR007C	resistance to chemicals: decreased 	classical genetics	classical genetics	repressible	S288C	63.1 uM fluconazole		Smith JD, et al. (2016) PMID:26956608
+BRL1	YHR036W	resistance to chemicals: decreased 	classical genetics	classical genetics	conditional Allele: brl1-1	Other	25 ug/ml fluconazole	Temperature: permissive temperature, 30 °C Details: similar results with brl1-2 	Lone MA, et al. (2015) PMID:26432634
+WSC2	YNL283C	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: wsc2-Δ	S288C	100 μM fluconazole		Vélez-Segarra V, et al. (2020) PMID:32641451
+GTT1	YIR038C	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: gtt1-Δ	S288C	100 μM fluconazole		Vélez-Segarra V, et al. (2020) PMID:32641451
+MSA1	YOR066W	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: msa1-Δ	S288C	100 μM fluconazole		Vélez-Segarra V, et al. (2020) PMID:32641451
+WSC3	YOL105C	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: wsc3-Δ	S288C	100 μM fluconazole		Vélez-Segarra V, et al. (2020) PMID:32641451
+BMH1	YER177W	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: bmh1-Δ	S288C	100 μM fluconazole		Vélez-Segarra V, et al. (2020) PMID:32641451
+ARV1	YLR242C	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: arv1-Δ	W303	0.12 μg/ml fluconazole	Details: hypersusceptible 	Villasmil ML, et al. (2020) PMID:32678853
+ARV1	YLR242C	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: arv1-ΔAhd N-terminal truncation; Arv1 homology domain deleted	W303	0.07 μg/ml fluconazole	Details: hypersusceptible 	Villasmil ML, et al. (2020) PMID:32678853
+ARV1	YLR242C	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: arv1-Ahd C-terminal truncation; contains the Arv1 homology domain	W303	0.08 μg/ml fluconazole	Details: hypersusceptible 	Villasmil ML, et al. (2020) PMID:32678853
+ARV1	YLR242C	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: arv1-L13A Arv1 homology domain mutated	W303	0.13 μg/ml fluconazole	Details: hypersusceptible 	Villasmil ML, et al. (2020) PMID:32678853
+ARV1	YLR242C	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: arv1-C27A zinc binding domain mutated	W303	0.15 μg/ml fluconazole	Details: hypersusceptible 	Villasmil ML, et al. (2020) PMID:32678853
+ARV1	YLR242C	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: arv1-I47A Arv1 homology domain mutated	W303	0.09 μg/ml fluconazole	Details: hypersusceptible 	Villasmil ML, et al. (2020) PMID:32678853
+ARV1	YLR242C	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: arv1-N63Q Arv1 homology domain mutated	W303	0.41 μg/ml fluconazole	Details: hypersusceptible 	Villasmil ML, et al. (2020) PMID:32678853
+NCP1	YHR042W	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: ncp1-(cpr1)-Δ1::LEU2	Other	16 μg/ml fluconazole		Daum G, et al. (1999) PMID:10341423
+PDR5	YOR153W	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: pdr5-C199A mutation in highly conserved residue within Walker A sequence motif	Other	1.5 μg/mL fluconazole	Media: YPD 	Ernst R, et al. (2008) PMID:18356296
+PDR5	YOR153W	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: pdr5-K911A mutation in highly conserved residue within Walker A sequence motif	Other	1.5 μg/mL fluconazole	Media: YPD 	Ernst R, et al. (2008) PMID:18356296
+PDR5	YOR153W	resistance to chemicals: decreased 	classical genetics 	classical genetics	reduction of function Allele: pdr5-E1036Q catalytic carboxylate	Other	1.5 μg/mL fluconazole		Ernst R, et al. (2008) PMID:18356296
+SPC72	YAL047C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SWH1	YAR042W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SMP1	YBR182C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PGI1	YBR196C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+DUR12	YBR208C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SPO23	YBR250W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BIK1	YCL029C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SSK22	YCR073C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RBS1	YDL189W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CDC13	YDL220C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+STN1	YDR082W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GIS1	YDR096W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MRX16	YDR132C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+IVY1	YDR229W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RSC3	YDR303C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PFU1	YDR306C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SUM1	YDR310C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+IRC3	YDR332W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HEH2	YDR458C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GCN4	YEL009C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BIM1	YER016W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BOI2	YER114C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RSP5	YER125W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RPH1	YER169W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+WWM1	YFL010C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TUB2	YFL037W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CDH1	YGL003C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TIF4632	YGL049C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HUL5	YGL141W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SPT6	YGR116W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CBF2	YGR140W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+STE20	YHL007C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+INM1	YHR046C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SMF2	YHR050W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NAM8	YHR086W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SFB3	YHR098C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+DMA1	YHR115C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NDT80	YHR124W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YCK1	YHR135C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SKG6	YHR149C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SKN7	YHR206W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ULP2	YIL031W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PRK1	YIL095W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SLM1	YIL105C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FKH1	YIL131C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VHS2	YIL135C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MHP1	YJL042W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SRS2	YJL092W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MRS3	YJL133W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PTK2	YJR059W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ACF4	YJR083C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GRR1	YJR090C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SPT23	YKL020C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RRN3	YKL125W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TPK3	YKL166C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MNN4	YKL201C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FRE2	YKL220C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PAP1	YKR002W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ESL2	YKR096W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BAS1	YKR099W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SSK1	YLR006C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TIS11	YLR136C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ACS2	YLR153C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+UCC1	YLR224W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ECM22	YLR228C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CSC1	YLR241W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CQD2	YLR253W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SPO77	YLR341W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KAP95	YLR347C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PPZ1	YML016C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YOX1	YML027W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NDC1	YML031W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TDA9	YML081W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CDC5	YMR001C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HOF1	YMR032W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MOT3	YMR070W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SKY1	YMR216C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ARK1	YNL020C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VAC7	YNL054W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FKH2	YNL068C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KAR1	YNL188W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RAP1	YNL216W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SQS1	YNL224C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BNI4	YNL233W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YIF1	YNL263C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BOR1	YNL275W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CLA4	YNL298W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SKP2	YNL311C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TOP1	YOL006C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CSI2	YOL007C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HRD1	YOL013C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MSN1	YOL116W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TRM11	YOL124C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SLG1	YOR008C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CIN5	YOR028C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+AZF1	YOR113W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RGA1	YOR127W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NFI1	YOR156C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NOC2	YOR206W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+STE4	YOR212W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MYO2	YOR326W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SCD5	YOR329C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VTS1	YOR359W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PDE2	YOR360C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PRT1	YOR361C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ECM23	YPL021W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RLM1	YPL089C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BEM3	YPL115C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TBF1	YPL128C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GIP3	YPL137C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KIP2	YPL155C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MRN1	YPL184C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BBP1	YPL255W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HAA1	YPR008W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FHL1	YPR104C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CLB2	YPR119W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ICS2	YBR157C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PPZ2	YDR436W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KAP123	YER110C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KIP3	YGL216W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YHR131C	YHR131C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SET4	YJL105W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HAP4	YKL109W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ALY1	YKR021W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+UBP11	YKR098C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FRE1	YLR214W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+STP3	YLR375W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KIP1	YBL063W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SLI15	YBR156C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+STE5	YDR103W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+URC2	YDR520C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+LSB3	YFR024C-A	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HSF1	YGL073W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+XRN1	YGL173C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MGA1	YGR249W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RTT101	YJL047C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+IKS1	YJL057C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+UBP12	YJL197W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NMD5	YJR132W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SFI1	YLL003W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SED5	YLR026C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MNL2	YLR057W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YML082W	YML082W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SPT21	YMR179W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RHO2	YNL090W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SOL1	YNR034W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TEA1	YOR337W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CLN3	YAL040C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YBL029W	YBL029W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+AMN1	YBR158W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SMY2	YBR172C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YPC1	YBR183W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PBP2	YBR233W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+UBX7	YBR273C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CHA1	YCL064C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SYP1	YCR030C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SNT1	YCR033W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RPN4	YDL020C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ASM4	YDL088C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CLB3	YDL155W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YDR124W	YDR124W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SWI5	YDR146C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NUP42	YDR192C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+UPC2	YDR213W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VHS1	YDR247W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SSD1	YDR293C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PEP7	YDR323C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PAL1	YDR348C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SPC110	YDR356W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PSP1	YDR505C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SLF1	YDR515W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GIP2	YER054C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PCL6	YER059W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BCK2	YER167W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+AFT1	YGL071W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SUT1	YGL162W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CLB6	YGR109C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CRM1	YGR218W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YTA7	YGR270W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TDA11	YHR159W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SGN1	YIR001C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CDC6	YJL194W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PHD1	YKL043W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BUD2	YKL092C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MCD4	YKL165C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HEL1	YKR017C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PPR1	YLR014C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MDL1	YLR188W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BDF1	YLR399C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CAT8	YMR280C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VPS27	YNR006W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NDJ1	YOL104C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HRP1	YOL123W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NDD1	YOR372C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FRE3	YOR381W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ULP1	YPL020C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TRM44	YPL030W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SUR1	YPL057C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MUK1	YPL070W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SYH1	YPL105C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FRK1	YPL141C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TPK2	YPL203W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GAL4	YPL248C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VIK1	YPL253C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CLB5	YPR120C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SEO1	YAL067C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MST28	YAR033W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TOD6	YBL054W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FAT1	YBR041W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TAT1	YBR069C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RDH54	YBR073W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PTC4	YBR125C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MSI1	YBR195C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YBR238C	YBR238C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PCA1	YBR295W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+LEU2	YCL018W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PEX34	YCL056C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PHO87	YCR037C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ABP1	YCR088W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YDL012C	YDL012C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RTK1	YDL025C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MBP1	YDL056W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ACK1	YDL203C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PRR2	YDL214C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+REG1	YDR028C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GRX3	YDR098C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YDR131C	YDR131C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+STB3	YDR169C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+COQ4	YDR204W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ADR1	YDR216W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SBE2	YDR351W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GNP1	YDR508C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GTA1	YEL043W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YND1	YER005W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ILV1	YER086W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+AVT6	YER119C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YCK3	YER123W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+COM2	YER130C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+UBP3	YER151C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GRX4	YER174C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CDC4	YFL009W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BUD27	YFL023W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KAP122	YGL016W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+DBP3	YGL078C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+LSG1	YGL099W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GPI10	YGL142C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PMR1	YGL167C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SDT1	YGL224C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YGR017W	YGR017W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ART5	YGR068C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ASK10	YGR097W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CHO2	YGR157W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TIF4631	YGR162W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BIO2	YGR286C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MIP6	YHR015W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+IRE1	YHR079C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CDC12	YHR107C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+NEO1	YIL048W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YIL055C	YIL055C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SEC28	YIL076W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YIL089W	YIL089W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SLN1	YIL147C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MPH1	YIR002C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MGA2	YIR033W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SAP185	YJL098W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GSM1	YJL103C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ECM25	YJL201W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YJL206C	YJL206C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MHO1	YJR008W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+GEF1	YJR040W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MNR2	YKL064W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PAM17	YKR065C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+DRE2	YKR071C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FRE6	YLL051C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YLR001C	YLR001C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+FRE8	YLR047C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YLR152C	YLR152C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YLR177W	YLR177W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SKG3	YLR187W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CCC1	YLR220W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+THI7	YLR237W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ITT1	YML068W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+DAT1	YML113W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ANY1	YMR010W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SEG1	YMR086W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ZDS1	YMR273C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ATR2	YMR279C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SLM2	YNL047C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MSG5	YNL053W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MLF3	YNL074C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+INP52	YNL106C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RHO5	YNL180C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CHS1	YNL192W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+URE2	YNL229C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KEX2	YNL238W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ORC5	YNL261W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+MRPL10	YNL284C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+PUS4	YNL292W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ROD1	YOR018W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ALG8	YOR067C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TGL5	YOR081C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VPS21	YOR089C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+INP53	YOR109W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CEX1	YOR112W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+AFI1	YOR129C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+VPH1	YOR270C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SLY41	YOR307C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+LDB19	YOR322C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YOR338W	YOR338W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BRO1	YPL084W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+DBP1	YPL119C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KAP120	YPL125W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KES1	YPL145C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+RAD53	YPL153C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+AFT2	YPL202C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CLN2	YPL256C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KEL3	YPL263C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+KAR9	YPL269W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+CSR2	YPR030W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ROX1	YPR065W	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+HOS1	YPR068C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SEC23	YPR181C	resistance to chemicals: decreased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: exacerbates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+BSC2	YDR275W	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: bsc2-Δ	S288C	15 µg/ml fluconazole		Huang Z, et al. (2021) PMID:34482605
+SET1	YHR119W	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: set1-Δ	S288C	12 μg/mL fluconazole		Serratore ND, et al. (2018) PMID:29263028
+ERG5	YMR015C	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: erg5-Δ	S288C	12 μg/mL fluconazole		Serratore ND, et al. (2018) PMID:29263028
+AMN1	YBR158W	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: amn1-Δ	Sigma1278b	50 - 150 μg/ml fluconazole	Details: null mutant is sensitized to fluconazole; exponential growth rate is unaffected but the null mutant has declining carrying capacity (stationary phase absorbance value) indicative of cell death 	Guinn L, et al. (2022) PMID:35361876
+RTT106	YNL206C	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: rtt106-Δ	S288C	130 μM fluconazole		Nikolov VN, et al. (2022) PMID:35413952
+PDR5	YOR153W	resistance to chemicals: decreased 	classical genetics 	classical genetics	null Allele: pdr5-Δ	S288C	130 μM fluconazole		Nikolov VN, et al. (2022) PMID:35413952
+YAP1	YML007W	resistance to chemicals: increased 	classical genetics	classical genetics	overexpression	Other	50 ug/ml fluconazole		Alarco AM, et al. (1997) PMID:9235926
+ERG3	YLR056W	resistance to chemicals: increased 	classical genetics	classical genetics	null Allele: erg3-Δ	S288C	  fluconazole		Paluszynski JP, et al. (2008) PMID:18832321
+PGS1	YCL004W	resistance to chemicals: increased 	classical genetics	classical genetics	null Allele: pgs1-Δ	Other	MIC >15 ug/ml  fluconazole		Sarinová M, et al. (2007) PMID:17702459
+SWH1	YAR042W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: swh1-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+RTC2	YBR147W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtc2-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+ERG28	YER044C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: erg28-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+SCS2	YER120W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: scs2-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+UPA1	YGR283C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ygr283c-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+ERG3	YLR056W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: erg3-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+YLR407W	YLR407W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ylr407w-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+ERG6	YML008C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: erg6-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+SML1	YML058W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sml1-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+YMR099C	YMR099C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ymr099c-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+LAF1	YMR102C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: laf1-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+CKA2	YOR061W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cka2-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+LCL1	YPL056C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: lcl1-Δ	S288C	64 ug/ml fluconazole		Anderson JB, et al. (2003) PMID:12702675
+SAS3	YBL052C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sas3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NUP170	YBL079W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nup170-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TRM7	YBR061C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: trm7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+IML3	YBR107C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: iml3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MUD1	YBR119W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mud1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+AIM4	YBR194W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: aim4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MSI1	YBR195C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: msi1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BEM1	YBR200W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: bem1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SGF29	YCL010C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sgf29-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+STE50	YCL032W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ste50-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SLM3	YDL033C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: slm3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PHO84	YML123C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pho84-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+FAR8	YMR029C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: far8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CCS1	YMR038C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ccs1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SAM37	YMR060C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sam37-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LAF1	YMR102C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: laf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LDO16	YMR148W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ldo16-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBP8	YMR223W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ubp8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HHT2	YNL031C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hht2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TPM1	YNL079C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: tpm1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PHO23	YNL097C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pho23-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GCR2	YNL199C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: gcr2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GIS2	YNL255C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: gis2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SIN3	YOL004W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sin3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NOP12	YOL041C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nop12-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RRP6	YOR001W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rrp6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SLG1	YOR008C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: slg1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BUD21	YOR078W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: bud21-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ARP8	YOR141C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: arp8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SLY41	YOR307C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sly41-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SNU66	YOR308C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: snu66-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CIN1	YOR349W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cin1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RMI1	YPL024W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rmi1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SUR1	YPL057C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sur1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TGS1	YPL157W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: tgs1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BEM4	YPL161C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: bem4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NIP100	YPL174C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nip100-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DDC1	YPL194W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ddc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SCD6	YPR129W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: scd6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MSS18	YPR134W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mss18-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MMS1	YPR164W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mms1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+YBL086C	YBL086C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ybl086c-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SEC66	YBR171W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sec66-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MRC1	YCL061C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mrc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ELO2	YCR034W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: elo2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ASM4	YDL088C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: asm4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LHP1	YDL051W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: lhp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MBP1	YDL056W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mbp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PTP1	YDL230W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ptp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RPA14	YDR156W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rpa14-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HSP42	YDR171W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hsp42-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HST4	YDR191W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hst4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SIR4	YDR227W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sir4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CHL4	YDR254W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: chl4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SUR2	YDR297W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sur2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+IRC3	YDR332W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: irc3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SIZ1	YDR409W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: siz1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SDC1	YDR469W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sdc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SNF1	YDR477W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: snf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PSP1	YDR505C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: psp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GIM4	YEL003W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: gim4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BIM1	YER016W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: bim1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PTP3	YER075C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ptp3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+IES5	YER092W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ies5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD24	YER173W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rad24-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DEG1	YFL001W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: deg1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PIH1	YHR034C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pih1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+IRE1	YHR079C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ire1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SKN7	YHR206W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: skn7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HOS4	YIL112W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hos4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TPM2	YIL138C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: tpm2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+REV7	YIL139C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rev7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MAD3	YJL013C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mad3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CHS6	YJL099W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: chs6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MOG1	YJR074W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mog1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MDM35	YKL053C-A	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mdm35-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LHS1	YKL073W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: lhs1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DOA1	YKL213C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: doa1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SRP40	YKR092C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: srp40-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTT109	YLL002W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtt109-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MMR1	YLR190W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mmr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SEC22	YLR268W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sec22-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NUP2	YLR335W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nup2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ELO3	YLR372W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: elo3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VID22	YLR373C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: vid22-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CTF3	YLR381W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ctf3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SKI2	YLR398C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ski2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CDC73	YLR418C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cdc73-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MFT1	YML062C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mft1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+COG8	YML071C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cog8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TCB3	YML072C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: tcb3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NAM7	YMR080C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nam7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MUB1	YMR100W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mub1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+COG5	YNL051W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cog5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+EOS1	YNL080C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: eos1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTG1	YOL067C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtg1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BUB3	YOR026W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: bub3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LEO1	YOR123C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: leo1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RLF2	YPR018W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rlf2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MAK3	YPR051W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mak3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PEF1	YGR058W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pef1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ENV11	YGR071C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: env11-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PCT1	YGR202C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pct1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SER2	YGR208W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ser2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+OPI1	YHL020C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: opi1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+THR1	YHR025W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: thr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SSF1	YHR066W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ssf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NMD2	YHR077C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nmd2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+KSP1	YHR082C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ksp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTT107	YHR154W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtt107-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RPN10	YHR200W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rpn10-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+APQ12	YIL040W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: apq12-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ENT5	YDR153C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ent5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MCM21	YDR318W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mcm21-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ESC2	YDR363W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: esc2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBC8	YEL012W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ubc8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTR1	YER139C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DBP3	YGL078C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: dbp3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GUP1	YGL084C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: gup1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BUD13	YGL174W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: bud13-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PRE9	YGR135W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pre9-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+AZR1	YGR224W	resistance to chemicals: increased 	classical genetics	classical genetics	overexpression	W303	9 ug/ml fluconazole		Tenreiro S, et al. (2000) PMID:11113970
+RGI1	YER067W	resistance to chemicals: increased 	classical genetics	classical genetics	null Allele: rgi1-Δ	S288C	16 ug/ml fluconazole		Domitrovic T, et al. (2010) PMID:20567505
+SAP185	YJL098W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sap185-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MCM22	YJR135C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mcm22-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MRT4	YKL009W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mrt4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD27	YKL113C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rad27-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TGL1	YKL140W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: tgl1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ELF1	YKL160W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: elf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MSA2	YKR077W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: msa2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LDB18	YLL049W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ldb18-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SSK1	YLR006C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ssk1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CKI1	YLR133W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cki1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ENT2	YLR206W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ent2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+MMS22	YLR320W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: mms22-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CTK3	YML112W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ctk3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTG3	YBL103C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtg3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CSG2	YBR036C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: csg2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HSM3	YBR272C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hsm3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBX7	YBR273C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ubx7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SSH1	YBR283C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ssh1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PMT1	YDL095W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pmt1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PAC2	YER007W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pac2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SCS2	YER120W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: scs2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PDA1	YER178W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pda1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SAP155	YFR040W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sap155-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GET1	YGL020C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: get1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+XRN1	YGL173C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: xrn1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SAE2	YGL175C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sae2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+AIR1	YIL079C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: air1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VPS53	YJL029C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: vps53-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTT101	YJL047C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtt101-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+STE24	YJR117W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ste24-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CTK1	YKL139W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ctk1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VIP1	YLR410W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: vip1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ERG6	YML008C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: erg6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PPZ1	YML016C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ppz1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD52	YML032C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rad52-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NUP188	YML103C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nup188-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+AVO2	YMR068W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: avo2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ERG2	YMR202W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: erg2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SCJ1	YMR214W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: scj1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PUB1	YNL016W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pub1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CRZ1	YNL027W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: crz1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LSM7	YNL147W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: lsm7-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PHO80	YOL001W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pho80-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ALG6	YOR002W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: alg6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CKA2	YOR061W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cka2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VPS21	YOR089C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: vps21-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ISW2	YOR304W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: isw2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HAP5	YOR358W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hap5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CHL1	YPL008W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: chl1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ARL3	YPL051W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: arl3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+NHP6A	YPR052C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: nhp6a-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ERG11	YHR007C	resistance to chemicals: increased 	classical genetics	classical genetics	overexpression	S288C	100 ug/ml doxycycline, 20 ug/ml fluconazole	Details: resistant to the synergistic effects of doxycyline and fluconazole 	Fiori A and Van Dijck P (2012) PMID:22564841
+RAD57	YDR004W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rad57-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+VAC8	YEL013W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: vac8-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+GDA1	YEL042W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: gda1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DOT6	YER088C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: dot6-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BCK2	YER167W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: bck2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DAL81	YIR023W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: dal81-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+POL32	YJR043C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pol32-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HOC1	YJR075W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hoc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PHO86	YJL117W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pho86-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SPT21	YMR179W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: spt21-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RTT106	YNL206C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rtt106-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+IES2	YNL215W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ies2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CSM3	YMR048W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: csm3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAS2	YNL098C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ras2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ALP1	YNL270C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: alp1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD17	YOR368W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rad17-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SGF11	YPL047W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sgf11-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RIF1	YBR275C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rif1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DCC1	YCL016C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: dcc1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HCM1	YCR065W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hcm1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+DPB4	YDR121W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: dpb4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TIF4632	YGL049C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: tif4632-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+LCB3	YJL134W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: lcb3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RPS4A	YJR145C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rps4a-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBR2	YLR024C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ubr2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SIC1	YLR079W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sic1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PMS1	YNL082W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: pms1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CLA4	YNL298W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: cla4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BRR1	YPR057W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: brr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CLB5	YPR120C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: clb5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SWI4	YER111C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: swi4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+OAF1	YAL051W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: oaf1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RGD1	YBR260C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rgd1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SRO9	YCL037C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: sro9-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+FAB1	YFR019W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: fab1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+UBR1	YGR184C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ubr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+SRS2	YJL092W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: srs2-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD26	YJR035W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rad26-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+RAD5	YLR032W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: rad5-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ERG3	YLR056W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: erg3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+HCR1	YLR192C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: hcr1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+EST1	YLR233C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: est1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ERV25	YML012W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: erv25-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+PSH1	YOL054W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: psh1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+IES4	YOR189W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ies4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+TCO89	YPL180W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: tco89-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+CTF4	YPR135W	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: ctf4-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+KAR3	YPR141C	resistance to chemicals: increased 	systematic mutation set	large-scale survey	null Allele: kar3-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+ERG25	YGR060W	resistance to chemicals: increased 	classical genetics	classical genetics	repressible	S288C	63.1 uM fluconazole		Smith JD, et al. (2016) PMID:26956608
+ERG3	YLR056W	resistance to chemicals: increased 	classical genetics	classical genetics	repressible	S288C	63.1 uM fluconazole		Smith JD, et al. (2016) PMID:26956608
+YJL132W	YJL132W	resistance to chemicals: increased 	classical genetics 	classical genetics	null Allele: yjl132w-Δ	S288C	16 μg/ml fluconazole		Daum G, et al. (1999) PMID:10341423
+MGE1	YOR232W	resistance to chemicals: increased 	classical genetics 	classical genetics	overexpression	S288C	20 μg/mL fluconazole		Demuyser L, et al. (2017) PMID:28720726
+YDR249C	YDR249C	resistance to chemicals: increased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: abrogates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+ERG11	YHR007C	resistance to chemicals: increased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: abrogates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+YML018C	YML018C	resistance to chemicals: increased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: abrogates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+SKS1	YPL026C	resistance to chemicals: increased 	systematic mutation set 	large-scale survey	overexpression	S288C	0.2 mM fluconazole	Details: abrogates toxicity 	Chakrabortee S, et al. (2016) PMID:27693355
+TEL1	YBL088C	resistance to chemicals: increased 	systematic mutation set 	large-scale survey	null Allele: tel1-Δ	S288C	100 uM fluconazole		Kapitzky L, et al. (2010) PMID:21179023
+BSC2	YDR275W	resistance to chemicals: increased 	classical genetics 	classical genetics	overexpression	S288C	15 µg/ml fluconazole		Huang Z, et al. (2021) PMID:34482605
+IRC23	YOR044W	resistance to chemicals: increased 	classical genetics 	classical genetics	overexpression	S288C	15 µg/ml fluconazole		Huang Z, et al. (2021) PMID:34482605
+SET4	YJL105W	resistance to chemicals: increased 	classical genetics 	classical genetics	null Allele: set4-Δ	S288C	12 μg/mL fluconazole		Serratore ND, et al. (2018) PMID:29263028
+CAB1	YDR531W	resistance to chemicals: increased 	classical genetics 	classical genetics	conditional Allele: cab1-G351S G351S; enzyme catalysis reduced by >90%	Other	10 μg/ml fluconazole	Temperature: permissive temperature, 30 °C Details: growth unaffected when compared to wt which is about 30X more susceptible 	Chiu JE, et al. (2019) PMID:31409644

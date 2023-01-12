@@ -33,7 +33,8 @@ test.ind  <- as.logical(args[4])
 #exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
 #exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
 #exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
-exp.name <- "FLZ_resistance_modifier"; roi = c("chr15" = "chr15_234651"); query.alleles = 3
+#exp.name <- "FLZ_resistance_modifier"; roi = c("chr15" = "chr15_234651"); query.alleles = 5
+exp.name <- "FLZ_susceptibility_modifier"; roi = c("chr1" = "chr1_36048"); query.alleles = 2
 
 if(is.na(delete_previous)){
   delete_previous <- FALSE
@@ -132,7 +133,7 @@ geno_obj <- geno
 ```{r variance, eval = FALSE}
 #look for separation of trait variance in individuals
 #with each allele at each locus. Does separation indicate
-#the presence of epistasi? Main effects?
+#the presence of epistasis? Main effects?
 
 mad <- function(v){
   mean.v <- mean(v, na.rm = TRUE)
@@ -441,7 +442,7 @@ affected in the opposite direction by the interaction than
 the two main effects.
 
 ```{r flipped_examples, results = "asis", fig.width = 8, fig.height = 4}
-
+stop()
 for(i in 1:length(clin.effects)){
 
   for(ph in 1:length(clin.effects[[i]])){
@@ -478,6 +479,138 @@ for(i in 1:length(clin.effects)){
 }
 
 ```
+
+## Trait-Specific interactions
+
+```{r}
+int.traits <- c("FLZ")
+```
+
+The following code generates interaction plots
+for markers that have a significant effect in
+`r paste(int.traits, collapse = ", ")`, but 
+not in the remaining traits.
+
+It creates a pdf in the results directory called
+"Trait.Specific.Interactions.pdf"
+
+```{r plot_int}
+#This function plots an interaction directly from the
+#stat table so we don't have to go through plot_one_variant_effect,
+#which recalculates all the effects and thus is quite slow.
+allele.cols <- categorical_pal(8)
+plot_int_from_stats <- function(table.row, 
+  bar.labels = c("main1", "main2", "additive", "actual"), main = ""){
+  effect.idx <- match(c("main1", "main2", "additive", "actual"), names(table.row))
+  se.idx <- match(c("main1.se", "main2.se", "additive.se", "actual.se"), names(table.row))
+  allele.idx <- grep("allele", names(table.row))
+  all.effects <- as.numeric(table.row[effect.idx])
+  all.se <- as.numeric(table.row[se.idx])
+  plot.min <- min(all.effects - all.se)
+  if(plot.min > 0){plot.min <- 0}
+  plot.max <- max(all.effects + all.se)
+  a <- barplot(all.effects, col = allele.cols[as.numeric(table.row[allele.idx])], 
+    ylim = c(plot.min, plot.max), main = main, names = bar.labels, cex.names = 0.7)
+  segments(x0 = a[,1], y0 = all.effects-all.se, y1 = all.effects+all.se)
+  segments(x0 = a[,1]-0.2, x1 = a[,1]+0.2, y0 = all.effects-all.se)
+  segments(x0 = a[,1]-0.2, x1 = a[,1]+0.2, y0 = all.effects+all.se)
+
+}
+
+
+```
+
+```{r trait_spec, results = "asis", fig.width = 8, fig.height = 4}
+pdf(file.path(results.dir, "Trait.Specific.Interactions.pdf"), width = 8, height = 4)
+par(mfrow = c(1,2))
+for(i in 1:length(clin.effects)){
+  interesting.int <- vector(mode = "list", length = length(clin.effects[[i]]))
+  names(interesting.int) <- names(clin.effects[[i]])
+  for(ph in 1:length(clin.effects[[i]])){
+      add.min <- as.numeric(clin.effects[[i]][[ph]][,"additive"]) - as.numeric(clin.effects[[i]][[ph]][,"additive.se"])
+      add.max <- as.numeric(clin.effects[[i]][[ph]][,"additive"]) + as.numeric(clin.effects[[i]][[ph]][,"additive.se"])
+      actual.min <- as.numeric(clin.effects[[i]][[ph]][,"actual"]) - as.numeric(clin.effects[[i]][[ph]][,"actual.se"])
+      actual.max <- as.numeric(clin.effects[[i]][[ph]][,"actual"]) + as.numeric(clin.effects[[i]][[ph]][,"actual.se"])
+
+      does.overlap <- sapply(1:length(add.min), function(x) segments.overlap(add.min[x], add.max[x], actual.min[x], actual.max[x]))
+      #label each effect as interesting or not based on the specified traits above
+      #if we want an interaction in one trait but not another, a significant 
+      #interaction is labeled interesting in the specified trait, but it is
+      #labeled interesting in other traits only if is not significant.
+      if(names(clin.effects[[i]])[ph] %in% int.traits){
+        is.interesting <- !does.overlap
+      }else{
+        is.interesting <- does.overlap
+      }
+      interesting.int[[ph]] <- clin.effects[[i]][[ph]][which(is.interesting),]
+  }
+    #str(interesting.int)
+    trait.spec <- Reduce("intersect", lapply(interesting.int, rownames))
+
+    if(length(trait.spec) > 0){
+      par(mfrow = c(1,2))
+      for(f in 1:length(trait.spec)){
+        spec.marker <- trait.spec[f]
+        marker.idx <- lapply(interesting.int, function(x) which(rownames(x) == spec.marker))
+        
+        if(is.interactive){quartz(width = 8, height = 4); par(mfrow = c(1,2))}
+          plot.chr <- substr(trait.spec[f], 2, 3)
+          split.marker <- strsplit(trait.spec[f], "_")[[1]]
+          marker.allele <- split.marker[[2]]
+          marker.pos <- substr(split.marker[1], 4, nchar(split.marker[1]))
+          bar.labels <- list(c("query", trait.spec[f], "additive", "actual"),
+            c(trait.spec[f], "query", "additive", "actual"))
+        
+          null <- lapply(1:length(interesting.int), 
+            function(x) plot_int_from_stats(interesting.int[[x]][marker.idx[[x]],],
+            bar.labels = bar.labels[[x]], names(interesting.int)[x]))
+          plot.label <- paste0("Chr ", plot.chr, " at ", marker.pos, "; allele ", marker.allele)
+          mtext(plot.label, side = 3, outer = TRUE, line = -2, font = 2)
+      }
+    }
+    all.int.effects <- lapply(interesting.int, 
+      function(x) apply(x[trait.spec,c("main1", "main2", "additive", "actual")], 2, as.numeric))
+    test <- Reduce("rbind", all.int.effects)
+    test <- Reduce("cbind", all.int.effects)
+    pheatmap(test, cluster_cols = FALSE)
+    plot.decomp(test, cols = allele.cols[alleles[[1]]])
+    add.diff <- lapply(all.int.effects, function(x) x[,"actual"] - x[,"additive"])
+
+    test <- Reduce("cbind", add.diff)
+    colnames(test) <- names(add.diff)
+    #pheatmap(test, cluster_cols = FALSE)
+    row.order <- hclust(dist(test))$order
+    pdf("~/Desktop/test.pdf", width = 7, height = 15)
+    imageWithText(test[row.order,], show.text = FALSE, split.at.vals = TRUE, 
+      col.scale = c("blue", "brown"), grad.dir = "ends", col.text.rotation = 0,
+      col.text.adj = 0.5, col.text.shift = 0.05, row.names = trait.spec[row.order],
+      row.text.shift = 0.1)
+    dev.off()
+    alleles <- lapply(interesting.int, function(x) as.numeric(x[trait.spec,12]))
+    par(mfrow = c(2,3))
+    for(x in 1:ncol(all.int.effects[[1]])){
+      if(i == 1){
+        plot.labels <- c("query", "test", "additive", "actual")
+      }else{
+        plot.labels <- c("test", "query", "additive", "actual")
+      }
+      plot.lim <- c(min(c(all.int.effects[[1]][,x], all.int.effects[[2]][,x])), 
+        max(c(all.int.effects[[1]][,x], all.int.effects[[2]][,x])))
+      plot(all.int.effects[[1]][,x], all.int.effects[[2]][,x], xlim = plot.lim,
+      ylim = plot.lim, col = allele.cols[alleles[[1]]], pch = 16,
+      xlab = names(all.int.effects)[1], ylab = names(all.int.effects)[2],
+      main = plot.labels[x])
+      abline(h = 0, v = 0)
+    }
+    plot(add.diff[[1]], add.diff[[2]], xlab = names(all.int.effects)[1], 
+      ylab = names(all.int.effects)[2], main = "Deviation from Additive",
+      pch = 16, col = allele.cols[alleles[[1]]])
+    abline(h = 0, v = 0)
+  }
+dev.off()
+
+```
+
 
 ```{r synthetic_viability, eval = FALSE}
 #look for allele pairs that are never found together

@@ -1,0 +1,101 @@
+---
+title: "FLZ"
+author: Anna L Tyler
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    code_folding: hide
+    collapsed: no
+    toc: no
+---
+
+
+## Introduction
+
+The purpose of this workflow is to combine known FLZ 
+resistance genes with QTL we see in the outbred yeast.
+
+The plots below show the singlescan results for the 
+eigentraits. 
+
+
+```{r}
+library(here)
+library(igraph)
+
+all.fun <- list.files(here("Code"), full.names = TRUE, pattern = ".R")
+for(i in 1:length(all.fun)){source(all.fun[i])}
+load_latest_cape(here("Code", "cape"))
+```
+
+```{r read_data}
+flz.genes <- read.delim(here("Data", "fluconazole_phenotype_annotations.txt"),
+    skip = 1, comment.char = "!")
+
+yeast.genes <- read.csv(here("Data", "pgmap.csv"))
+
+flz.single <- readRDS(here("Results", "FLZ_resistance_modifier", "cross_singlescan.RDS"))
+alleles.present <- as.numeric(dimnames(flz.single$singlescan_effects)[[3]])
+col <- categorical_pal(8)[alleles.present]
+markers <- rownames(flz.single$singlescan_effects)
+chr <- as.numeric(substr(markers[1:(length(markers)-1)], 2, 3))
+pos <- as.numeric(sapply(markers[1:(length(markers)-1)], function(x) substr(x, 4, nchar(x))))
+```
+
+
+```{r place_genes}
+gene.idx <- sapply(flz.genes[,2], function(x) which(yeast.genes[,"feature"] == x))
+gene.table <- yeast.genes[gene.idx,]
+```
+
+## Trait Scans and Genes {.tabset .tabset-fade .tabset-pills}
+
+The following
+
+```{r compare, fig.width = 10, fig.height = 12, results = "asis"}
+u_chr <- unique(chr)
+traits <- colnames(cross.data$ET)
+for(ch in 1:length(u_chr)){
+    cat("### Chr", ch, "\n")
+    chr.gene.idx <- which(gene.table[,"chr"] == ch)
+    chr.locale <- which(chr == ch)
+    chr.effects <- flz.single$singlescan_t_stats[chr.locale,,]
+
+    layout.mat <- matrix(c(1:4), ncol = 2, byrow = TRUE)
+    layout(layout.mat, widths = c(1,0.2))
+    for(tr in 1:length(traits)){
+        xlim <- c(min(pos[chr.locale]), max(pos[chr.locale]))
+        ylim <- c(min(chr.effects[,tr,]), max(chr.effects[,tr,])*1.1)
+
+        par(mar = c(4,4,4,0))
+        plot.new()
+        plot.window(xlim = xlim, ylim = ylim)
+        for(a in 1:dim(chr.effects)[3]){
+            points(pos[chr.locale], chr.effects[,tr,a], col = col[a], type = "l", lwd = 3)
+        }
+        axis(1);axis(2)
+        mtext(paste("Position on Chr", ch), side = 1, line = 2.5)
+        mtext("t statistic", side = 2, line = 2.5)
+        mtext(paste("Chr", ch, traits[tr]), side = 3, line = 2.5, font = 2, cex = 1.5)
+        segments(x0 = gene.table[chr.gene.idx,"start"], 
+            x1 = gene.table[chr.gene.idx,"stop"], y0 = ylim[2], lwd = 2,
+            col = "darkgray")
+        gene.names <- gene.table[chr.gene.idx,"gene"]
+        no.name.idx <- which(gene.names == "")
+        gene.names[no.name.idx] <- gene.table[chr.gene.idx[no.name.idx], "feature"]
+        text(x = rowMeans(gene.table[chr.gene.idx,c("start", "stop")]),
+            y = ylim[2], adj = 1, labels = gene.names,
+            srt = 90, cex = 0.7)
+
+        #legend
+        par(mar = c(4,0,4,1))
+        plot.new()
+        plot.window(xlim = c(0,1), ylim = c(0,1))
+        legend(x = 0, y = 1, lty = 1, col = col, legend = alleles.present,
+            lwd = 3)
+    }
+    cat("\n\n")
+
+}
+
+```

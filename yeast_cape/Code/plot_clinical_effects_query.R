@@ -44,14 +44,15 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
         pheno.groups <- apply(geno_pairs, 1, function(x) phenoV[intersect(which(geno1 == x[1]), which(geno2 == x[2]))])
         #boxplot(pheno.groups);abline(h = 0)
         group.means <- sapply(pheno.groups, function(x) mean(x, na.rm = TRUE))
-        #group.se <- sapply(pheno.groups, function(x) sd(x, na.rm = TRUE)/sqrt(length(x)))
+        group.se <- sapply(pheno.groups, function(x) sd(x, na.rm = TRUE)/sqrt(length(x)))
         ref.effect <- group.means[1]
         centered.means <- group.means - ref.effect
-        source.effect <- centered.means[4]
-        target.effect <- centered.means[2]
-        actual.effect <- centered.means[3]
+        source.effect <- centered.means[4]; source.se <- group.se[4]
+        target.effect <- centered.means[2]; target.se <- group.se[2]
+        actual.effect <- centered.means[3]; actual.se <- group.se[3]
 
         add.pred <- source.effect + target.effect
+        add.se <- source.se + target.se
 
         if(is.finite(add.pred)){
             #are the main effects pushing in the same direction 
@@ -63,11 +64,6 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
             }
 
             sign.flipped = FALSE
-            #if(main.effect == "coherent"){
-            #    if(sign(actual.effect) != sign(source.effect)){
-            #        sign.flipped = TRUE
-            #    }
-            #}
             if(sign(add.pred) != sign(actual.effect)){
                 sign.flipped = TRUE
             }
@@ -84,8 +80,11 @@ plot_clinical_effects_query <- function(data_obj, geno_obj,
                 main.effect <- "none"
             }
 		
-		pheno.result <- c("main1" = source.effect, "main2" = target.effect, 
-        "additive" = add.pred, "actual" = actual.effect, "main.effects" = main.effect, 
+		pheno.result <- c("main1" = source.effect, "main1.se" = source.se, 
+        "main2" = target.effect, "main2.se" = target.se,
+        "additive" = add.pred, "additive.se" = add.se,
+        "actual" = actual.effect, "actual.se" =  actual.se,
+        "main.effects" = main.effect, 
         "effect" = int.effect, "sign.flipped" = sign.flipped)
 		return(pheno.result)
     }
