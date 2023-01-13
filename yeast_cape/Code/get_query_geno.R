@@ -6,6 +6,7 @@ get_query_geno <- function(data_obj, geno_obj, query_genotype){
 
     #create a large 2D matrix with all alleles
     geno <- get_geno(data_obj, geno_obj)
+    
     gene <- matrix(NA, nrow = nrow(geno), ncol = dim(geno_obj)[2]*(dim(geno)[3]-1)) #take off the query allele, which is the last marker
     start_idx <- 1
     n_alleles <- dim(geno)[2]
