@@ -1,0 +1,6 @@
+susceptibility to FLZ
+chr15_831400 allele 3
+
+The same marker used for FLZ_susceptibility_modifier_2, but a different allele.
+Allele 2 at this marker has a big susceptibility effect
+Allele 3 at this marker has a big resistance effect

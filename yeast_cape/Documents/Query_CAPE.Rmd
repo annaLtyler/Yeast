@@ -33,8 +33,11 @@ test.ind  <- as.logical(args[4])
 #exp.name <- "MSS11_query"; roi <- c("MSS11" = "chr13_588112"); query.alleles <- 3
 #exp.name <- "GAL80_query"; roi <- c("GAL80" = "chr13_171614"); query.alleles <- 3
 #exp.name <- "GAL1_7_10_query"; roi <- c("GAl1/7/10" = "chr02_271559"); query.alleles <- 6
-exp.name <- "FLZ_resistance_modifier"; roi = c("chr13" = "chr13_800923"); query.alleles = 3
+#exp.name <- "FLZ_resistance_modifier"; roi = c("chr13" = "chr13_800923"); query.alleles = 3
 #exp.name <- "FLZ_susceptibility_modifier"; roi = c("chr1" = "chr1_36048"); query.alleles = 2
+exp.name <- "FLZ_resistance_modifier2"; roi = c("chr15" = "chr15_831400"); query.alleles = 3
+#exp.name <- "FLZ_susceptibility_modifier2"; roi = c("chr15" = "chr15_831400"); query.alleles = 2
+
 
 if(is.na(delete_previous)){
   delete_previous <- FALSE

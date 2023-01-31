@@ -1,0 +1,4 @@
+susceptibility to FLZ
+chr13_800923 allele 3
+
+This was just a pretty big effect relative to other alleles
