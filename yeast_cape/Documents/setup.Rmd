@@ -124,7 +124,7 @@ trait.cor.decomp <- plot.decomp(trait.cor, label.points = TRUE)
 singlescan.dir <- here("Results", "all_singlescan")
 cape_obj_file <- file.path(singlescan.dir, "cross.RDS")
 
-saveRDS(pheno_obj, file.path(singlescan.dir))
+saveRDS(pheno_obj, file.path(singlescan.dir, "pheno_obj.RDS"))
 if(!file.exists(cape_obj_file)){
   cape_obj <- run_cape(pheno_obj, geno_obj, 
     results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
@@ -200,14 +200,18 @@ pos <- lapply(chr_idx, function(x) pheno_obj$marker_location[x])
 
 #pdf("~/Desktop/yeast.pdf", width = 10, height = 6)
 for(ph in 1:length(all.allele.effects)){
-  cat("###", colnames(pheno_obj$pheno)[ph], "\n")
+  cat("###", colnames(pheno_obj$pheno)[ph], "{.tabset .tabset-fade .tabset-pills}\n")
+
+  ylim <- c(min(all.allele.effects[[ph]], na.rm = TRUE), 
+          max(all.allele.effects[[ph]], na.rm = TRUE))
+
   for(ch in 1:length(u_chr)){
     cat("#### Chr", ch, "\n")
     layout.mat <- matrix(c(1:2), ncol = 2, byrow = TRUE)
     layout(layout.mat, widths = c(1,0.2))
 
-    ylim <- c(min(all.allele.effects[[ph]][,chr_idx[[ch]]], na.rm = TRUE), 
-            max(all.allele.effects[[ph]][,chr_idx[[ch]]], na.rm = TRUE))
+    #ylim <- c(min(all.allele.effects[[ph]][,chr_idx[[ch]]], na.rm = TRUE), 
+    #        max(all.allele.effects[[ph]][,chr_idx[[ch]]], na.rm = TRUE))
     xlim = c(min(pos[[ch]]), max(pos[[ch]]))
  
     par(mar = c(4,4,4,0))
@@ -236,7 +240,8 @@ cat("\n\n")
 #dev.off()
 ```
 
-## CAPE singlescan
+
+## CAPE singlescan {.tabset .tabset-fade .tabset-pills}
 
 These plots show the singlescans relative to allele 5
 
