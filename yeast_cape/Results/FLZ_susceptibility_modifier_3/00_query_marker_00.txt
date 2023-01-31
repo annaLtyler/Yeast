@@ -1,0 +1,4 @@
+susceptibility to FLZ
+chr15_412168 allele 6
+
+This allele has a positive effect in YPD and a negative effect in FLZ

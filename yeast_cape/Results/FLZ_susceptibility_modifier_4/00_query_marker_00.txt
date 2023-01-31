@@ -1,0 +1,4 @@
+susceptibility to FLZ
+chr07_471011 allele 5
+
+This allele has a positive effect in YPD and a negative effect in FLZ
