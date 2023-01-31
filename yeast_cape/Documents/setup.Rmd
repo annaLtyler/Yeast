@@ -52,6 +52,10 @@ pheno_obj$pheno <- apply(pheno_obj$pheno, 2, function(x) x - mean(x, na.rm = TRU
 geno_obj <- cross_obj[[2]]$geno
 #str(geno_obj)
 
+#fix marker position.
+marker.pos <- as.numeric(sapply(strsplit(dimnames(geno_obj)[[3]], "_"), function(x) x[2]))
+pheno_obj$marker_location <- marker.pos
+
 ```
 
 ## Allele Frequency
@@ -80,6 +84,23 @@ axis(2)
 mtext(side = 3, "Allele Frequencies")
 ```
 
+Remove the first half of chromosome 9 because it has
+allele frequencies hitting 0 and 1.
+
+```{r chr9}
+chr9.locale <- which(pheno_obj$chromosome == 9)
+to.remove <- chr9.locale[1:(length(chr9.locale)/2)]
+
+pheno_obj$chromosome <- pheno_obj$chromosome[-to.remove]
+pheno_obj$marker_num <- pheno_obj$marker_num[-to.remove]
+pheno_obj$marker_location <- pheno_obj$marker_location[-to.remove]
+pheno_obj$geno_names[[3]] <- pheno_obj$geno_names[[3]][-to.remove]
+saveRDS(pheno_obj, here("Results", "General", "pheno_obj.RDS"))
+
+geno_obj <- geno_obj[,,-to.remove]
+saveRDS(geno_obj, here("Results", "General", "geno_obj.RDS"))
+```
+
 ## Trait Structure
 
 The following correlation heat map shows that there are some pretty highly
@@ -103,6 +124,7 @@ trait.cor.decomp <- plot.decomp(trait.cor, label.points = TRUE)
 singlescan.dir <- here("Results", "all_singlescan")
 cape_obj_file <- file.path(singlescan.dir, "cross.RDS")
 
+saveRDS(pheno_obj, file.path(singlescan.dir))
 if(!file.exists(cape_obj_file)){
   cape_obj <- run_cape(pheno_obj, geno_obj, 
     results_file = "cross.RDS", p_or_q = 0.05, n_cores = 4, 
@@ -141,7 +163,7 @@ The following plots show the effect sizes from the single scans for
 each trait. This will help us identify pleiotropy for selection of 
 trait combinations.
 
-```{r singlescan}
+```{r standard_singlescan}
 get_model_effects <- function(y, x){
   model <- lm(y~x)
   return(coef(model))
@@ -152,7 +174,7 @@ all.allele.effects.file <- here("Results", "General", "allele.effects.RDS")
 if(!file.exists(all.allele.effects.file)){
   all.allele.effects <- vector(mode = "list", length = ncol(pheno_obj$pheno))
   names(all.allele.effects) <- colnames(pheno_obj$pheno)
-  for(ph in 2:ncol(pheno_obj$pheno)){
+  for(ph in 1:ncol(pheno_obj$pheno)){
     print(colnames(pheno_obj$pheno)[ph])
     allele.effects <- matrix(NA, nrow = ncol(geno_obj), ncol = dim(geno_obj)[[3]])
     for(a in 1:ncol(geno_obj)){
@@ -180,11 +202,12 @@ pos <- lapply(chr_idx, function(x) pheno_obj$marker_location[x])
 for(ph in 1:length(all.allele.effects)){
   cat("###", colnames(pheno_obj$pheno)[ph], "\n")
   for(ch in 1:length(u_chr)){
-    
+    cat("#### Chr", ch, "\n")
     layout.mat <- matrix(c(1:2), ncol = 2, byrow = TRUE)
     layout(layout.mat, widths = c(1,0.2))
 
-    ylim <- c(min(all.allele.effects[[ph]][,chr_idx[[ch]]]), max(all.allele.effects[[ph]][,chr_idx[[ch]]]))
+    ylim <- c(min(all.allele.effects[[ph]][,chr_idx[[ch]]], na.rm = TRUE), 
+            max(all.allele.effects[[ph]][,chr_idx[[ch]]], na.rm = TRUE))
     xlim = c(min(pos[[ch]]), max(pos[[ch]]))
  
     par(mar = c(4,4,4,0))
@@ -206,7 +229,7 @@ for(ph in 1:length(all.allele.effects)){
   plot.window(xlim = c(0,1), ylim = c(0,1))
   legend(x = 0, y = 1, lty = 1, col = col, legend = 1:8,
       lwd = 3)
-
+  cat("\n\n")
   }
 cat("\n\n")
 }
