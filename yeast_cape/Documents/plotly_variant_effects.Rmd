@@ -16,7 +16,7 @@ library(plotly)
 
 #exp.name = "GAL1_7_10_query"
 #exp.name = "GAL3_query"
-exp.name = "FLZ_susceptibility_modifier"
+exp.name = "FLZ_susceptibility_modifier_2"
 
 ```
 

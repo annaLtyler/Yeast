@@ -17,7 +17,8 @@ library(igraph)
 
 #exp.name = "GAL1_7_10_query"; title = "GAL1/7/10 modifiers"
 #exp.name = "GAL3_query"; title = "GAL3 introgression modifiers"
-exp.name = "FLZ_resistance_modifier";title = "Modifiers of FLZ resistance"
+exp.name = "FLZ_resistance_modifier_2";title = "FLZ resistance modifier 2 - Chr 15 allele 3"
+exp.name = "FLZ_susceptibility_modifier_4";title = "FLZ resistance modifier 4 - Chr 7 allele 5"
 ```
 
 ```{r title, results = "asis"}
@@ -79,7 +80,7 @@ for(dir in 1:length(clin.effects)){
     ph.mat <- clin.effects[[dir]][[ph]]
     ph.mat[which(ph.mat[,"sign.flipped"] == "FALSE"),"sign.flipped"] <- ""
     ph.mat[which(ph.mat[,"sign.flipped"] == "TRUE"),"sign.flipped"] <- "flipped"
-    ph.classes <- unlist(lapply(1:nrow(ph.mat), function(x) rep(paste(ph.mat[x,5:7], collapse = "_"), 4)))
+    ph.classes <- unlist(lapply(1:nrow(ph.mat), function(x) rep(paste(ph.mat[x,c("main.effects", "effect", "sign.flipped")], collapse = "_"), 4)))
     xcat <- rep(c("Main1", "Main2", "Additive", "Actual"), nrow(ph.mat))
     marker.label <- unlist(lapply(rownames(ph.mat), function(x) rep(x, 4)))
     just.marker <- sapply(strsplit(gsub("X", "", marker.label), "_"), function(x) x[1])
@@ -88,8 +89,9 @@ for(dir in 1:length(clin.effects)){
     gene.list <- lapply(1:length(marker.chr), function(x) get_gene_names(marker.chr[x], marker.pos[x]))
     geneV <- sapply(gene.list, function(x) paste(x, collapse = ", "))
     marker.info <- paste0(paste0("Chr", marker.chr), "-", marker.pos, "\n", geneV)
-    ypos <- as.numeric(unlist(lapply(1:nrow(ph.mat), function(x) ph.mat[x,1:4])))
-    allele <- unlist(lapply(1:nrow(ph.mat), function(x) rep(ph.mat[x,8],4)))
+    ypos <- as.numeric(unlist(lapply(1:nrow(ph.mat), function(x) ph.mat[x,c("main1", "main2", "additive", "actual")])))
+    allele.col <- grep("allele", colnames(ph.mat))
+    allele <- unlist(lapply(1:nrow(ph.mat), function(x) rep(ph.mat[x,allele.col],4)))
     subj <- unlist(lapply(1:nrow(ph.mat), function(x) rep(x, 4)))
 
     df <- data.frame( "subject" = subj,
@@ -102,7 +104,7 @@ for(dir in 1:length(clin.effects)){
         "allele" = allele)
 
     pl = qplot(effect_type, effect, data = df, color = I(categorical_pal(8)[as.numeric(allele)]), 
-      main = paste(names(clin.effects[[dir]][ph]), names(clin.effects)[dir])) + 
+      main = paste(names(clin.effects[[dir]])[ph], names(clin.effects)[dir])) + 
       geom_line(aes(group = subject), color = categorical_pal(8)[as.numeric(allele)]) +
       aes(x = effect_type, y = effect, text = marker_info) + 
       facet_wrap(class~.)
@@ -112,7 +114,7 @@ for(dir in 1:length(clin.effects)){
     colScale <- scale_colour_manual(name = "allele",values = allele_colors)
 
     pl = qplot(effect_type, effect, data = df, color = allele,
-      main = paste(names(clin.effects[[dir]][ph]), names(clin.effects)[dir])) + 
+      main = paste(names(clin.effects[[dir]])[ph], names(clin.effects)[dir])) + 
       geom_line(aes(group = subject)) +
       aes(x = effect_type, y = effect, text = marker_info) + 
       facet_wrap(class~.) +
