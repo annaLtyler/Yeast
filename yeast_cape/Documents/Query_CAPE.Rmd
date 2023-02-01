@@ -38,7 +38,7 @@ test.ind  <- as.logical(args[4])
 #exp.name <- "FLZ_susceptibility_modifier_3"; roi = c("chr15" = "chr15_621216"); query.alleles = 6
 #exp.name <- "FLZ_susceptibility_modifier_4"; roi = c("chr7" = "chr07_471011"); query.alleles = 5
 #exp.name <- "FLZ_resistance_modifier_2"; roi = c("chr15" = "chr15_234651"); query.alleles = 3
-#exp.name <- "FLZ_susceptibility_modifier_2"; roi = c("chr15" = "chr15_621216"); query.alleles = 2
+exp.name <- "FLZ_susceptibility_modifier_2"; roi = c("chr15" = "chr15_621216"); query.alleles = 2
 
 
 if(is.na(delete_previous)){
